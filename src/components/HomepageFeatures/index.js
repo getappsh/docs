@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Our Platform',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/vector2.svg').default,
     description: (
       <>
         Docusaurus was designed from the ground up to be easily installed and
@@ -24,7 +24,7 @@ const FeatureList = [
   },
   {
     title: 'Architecture',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/trace.svg').default,
     description: (
       <>
         Designed for efficient management of high workloads using Event Stream processing.

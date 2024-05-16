@@ -10,7 +10,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'GA Site',
   tagline: 'Managed Digital Assets',
-  favicon: 'img/favicon.ico',
+    favicon: 'img/graynowords.png',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -19,7 +19,7 @@ const config = {
   baseUrl: '/',
 
   // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
+  // If you aren't using GitHub pages, yo u don't need these.
   organizationName: 'getApp', // Usually your GitHub org/user name.
   projectName: 'docusaurus', // Usually your repo name.
 
@@ -66,10 +66,10 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'GA Site',
+        title: 'GetApp',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/graynowords.png',
         },
         items: [
           {
@@ -78,7 +78,8 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+            { to: '/support', label: 'Our Support', position: 'left' },
+            { to: '/about', label: 'About the Product', position: 'left' },
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
@@ -129,7 +130,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} GetApp, Inc.`,
       },
       prism: {
         theme: prismThemes.github,
