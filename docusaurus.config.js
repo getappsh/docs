@@ -4,24 +4,24 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'GA Site',
   tagline: 'Managed Digital Assets',
-    favicon: 'img/graynowords.png',
+  favicon: 'img/graynowords.png',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://docs.getapp.sh',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, yo u don't need these.
-  organizationName: 'getApp', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'getappsh', // Usually your GitHub org/user name.
+  projectName: 'docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -78,8 +78,8 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
-            { to: '/support', label: 'Our Support', position: 'left' },
-            { to: '/about', label: 'About the Product', position: 'left' },
+          { to: '/support', label: 'Our Support', position: 'left' },
+          { to: '/about', label: 'About the Product', position: 'left' },
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
