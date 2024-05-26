@@ -68,7 +68,7 @@ const config = {
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
           petstore: { // the <id> referenced when running CLI commands
-            specPath: "examples/petstore.yaml", // path to OpenAPI spec, URLs supported
+            specPath: "https://api-asio-getapp-2.apps.okd4-stage-getapp.getappstage.link/docs/", // path to OpenAPI spec, URLs supported
             outputDir: "api/petstore", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
