@@ -69,7 +69,7 @@ const config = {
         config: {
           petstore: { // the <id> referenced when running CLI commands
             specPath: "https://api-asio-getapp-2.apps.okd4-stage-getapp.getappstage.link/docs/", // path to OpenAPI spec, URLs supported
-            outputDir: "api/petstore", // output directory for generated files
+            outputDir: "docs/api/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
             },
