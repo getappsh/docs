@@ -8,7 +8,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'GA Site',
+  title: 'GetApp Site',
   tagline: 'Managed Digital Assets',
   favicon: 'img/graynowords.png',
 
@@ -101,7 +101,7 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
-          { to: '/support', label: 'Our Support', position: 'left' },
+          { to: '/usecase', label: 'Use Cases', position: 'left' },
           { to: '/about', label: 'About the Product', position: 'left' },
           {
             href: 'https://github.com/facebook/docusaurus',
