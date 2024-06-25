@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\components",
+    "\\src\\components\\HomepageFeatures",
     "\\src\\pages"
   ],
-  "SelectedNode": "\\src\\pages\\about.md",
+  "SelectedNode": "\\src\\pages\\index.module.css",
   "PreviewInSolutionExplorer": false
 }
