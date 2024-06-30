@@ -45,6 +45,8 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/getappsh',
+          docRootComponent: "@theme/DocRoot",
+          docItemComponent: "@theme/ApiItem" // derived from docusaurus-theme-openapi-docs
         },
         blog: {
           showReadingTime: true,
@@ -67,8 +69,8 @@ const config = {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
-          petstore: { // the <id> referenced when running CLI commands
-            specPath: "https://api-asio-getapp-2.apps.okd4-stage-getapp.getappstage.link/docs-yaml", // path to OpenAPI spec, URLs supported
+          api: { // the <id> referenced when running CLI commands
+            specPath: "./docs-yaml", // path to OpenAPI spec, URLs supported
             outputDir: "docs/api/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
