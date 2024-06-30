@@ -24,7 +24,9 @@ jobs:
         run: yarn install --frozen-lockfile
           
       - name: Genrate Open-Api Docs
-        run: yarn docusaurus gen-api-docs api
+        run: | 
+          yarn docusaurus clean-api-docs api
+          yarn docusaurus gen-api-docs api
         
       - name: Build website
         run: yarn build
