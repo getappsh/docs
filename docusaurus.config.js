@@ -74,6 +74,7 @@ const config = {
             outputDir: "docs/api/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
+              categoryLinkSource: "tag",
             },
           },
           agent: {
@@ -81,6 +82,7 @@ const config = {
             outputDir: "docs/agent",
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
+              categoryLinkSource: "tag"
             },
           }
         }
