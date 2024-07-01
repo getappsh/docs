@@ -4,7 +4,7 @@ const sidebar: SidebarsConfig = {
   apisidebar: [
     {
       type: "doc",
-      id: "agent/agent-rest-api",
+      id: "agent/getapp-agent-rest-api",
     },
     {
       type: "category",
