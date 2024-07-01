@@ -1,0 +1,219 @@
+---
+id: project-management-controller-get-device-by-platform
+title: "Get all devices in platform"
+description: "Get all devices in platform"
+sidebar_label: "Get all devices in platform"
+hide_title: true
+hide_table_of_contents: true
+api: eJx9VE1v2zAM/SuGThuQ1e2wXYJhQNpuRQZ0C9oMOxTBwNhsrFa2VIlOFxj+7yVl56s1lktkkiIfHx/VKOvQA2lbTXM1VjNvHzCja6hghSVWdGEr8tYY9H9XSJe41hmeb2YG6N76Uo2UAw8lEvqgxneNqviD87h9gMenWnvk7ORrHCldiR+oYF/ICixBjRtFGyf3AnldrVTbLuRicLYKGMT/8fRU/nIMmddO8HI0Z8gYH8MUHzhndBZ7SR+CBDRvC4D3sOF7mrAMB3a7lL6lHy+MkO7KTi8HwI3U9eRi0D6dDZp/3Q6aA3oN5mddLtEPBjgbgl4aPIcqf9Y5UzYUBWvQBjjslqznsQ3ROVKkyYipG+ENhkuy7JAfO2El49uOP9nPXy0EZ1Z7TZs44CWCF7h3C5nR8TyukBIwJsljjZDoKjkQAquksCIyFlIUjvSjUnA6XZ+l7rXy0j5Luk2RNttTqyJ56050BwhvZdzd5LY4ew1I671p1B++cyZg5agff+Zs7CkriFwkTFf3NlLZE8fNfZg4p143PS8w6X3JZDZNwjOsVrGM4OtiTk8+n3zq1QqZqLXtxkslRJ32a/N/Ao/q7mZM+I+EI94rzll7I76O3DveCS1AzjphHxMcM8Y64t2XGe/OzGzBGCVR0ywh4G9v2lbMTzX6Tcf9GljFS6GI1ZHrIGee8j2YgG8w79ZVvbvp34X3yZ784162K1vJwq7B1Njt/CNuDp+YdsGxBUIeZdn07kmWoaODi2+eB9HvTpNX30QDUB/t2CvBxOyDoL6cx4Bkbh+x+rqDSPIp+Nr2BQ/V2QI=
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get all devices in platform
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/projectManagement/devices/platform/{platform}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get all devices in platform
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"platform","required":true,"in":"path","schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"ID"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"MAC"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"IP"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"OS"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"serialNumber"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"possibleBandwidth"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"availableStorage"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"ID\": \"string\",\n    \"MAC\": \"string\",\n    \"IP\": \"string\",\n    \"OS\": \"string\",\n    \"serialNumber\": \"string\",\n    \"possibleBandwidth\": \"string\",\n    \"availableStorage\": \"string\"\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

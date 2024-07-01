@@ -1,0 +1,156 @@
+---
+id: project-management-controller-get-project-config-option
+title: "Get project's config option"
+description: "Get project's config option"
+sidebar_label: "Get project's config option"
+hide_title: true
+hide_table_of_contents: true
+api: eJyVU01v00AQ/SvWXriEJkVwiRBS+KqKhKhoEIcKoYkzsbe1d5fZScCy8t+ZWdtJ7Qv0ZHv2vZnZ955b4wMSsPXuemuW5ob8Peb8GRwUWKPjd94x+apC+lkg98dS3NniS1CamZkABDUyUjTLux8zQxiDdxHlszUvFgt9bDHmZDvG0ggpl8bSX88ghMrmaYn5fVRAa2JeYg36xk1AofiNTtZppCuz7dqHCnjnqY6PoEAEjSAt46gemawrzPE4M0pJA5/Iky2x8NQP/3/eSeV420SBPYUtdLZc4dmeTv+vGN+zV0CCQKHyD5DsbKERSyLme7LcCKI1GwRCUq+OcjR25go5C12LZzHL06DMD06Ly6XXnEgWkvFcysccgp0fLudhGp6hMslLRDqcwjJsdquGd7IO+/Up0Iv3pVn/8jHZJ/VP39dS7BUrmUNS27qdT0r2ssmlnq9CMNPLrkvM+rNsdXOdxd9QFGmM7tdhFhevLl72eYVc86oTgo9cQ0qqgxr/Kdxo7slixj+iUQXWGem5pyolOol6J3+F1UUuu8iPhT3XRtKKnKUspuy23UDEb1Qdj1r+tUdqOsEPQBY2qov4LwSEbQpDax5QIGaV5xh0wgGqfQro9PfU1JyScPVBHYC9Ln262MSu1H2Iu2se9X79NgGytX9A90YOuh1YP2WOJPsvTySZcA==
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get project's config option
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/projectManagement/projectConfigOption"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get project's config option
+
+## Request
+
+<div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"platforms"}
+                        required={false}
+                        schemaName={"string[]"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"array","items":{"type":"string"}}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"formations"}
+                        required={false}
+                        schemaName={"string[]"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"array","items":{"type":"string"}}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"categories"}
+                        required={false}
+                        schemaName={"string[]"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"array","items":{"type":"string"}}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"operationsSystem"}
+                        required={false}
+                        schemaName={"string[]"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"array","items":{"type":"string"}}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"platforms\": [\n    \"string\"\n  ],\n  \"formations\": [\n    \"string\"\n  ],\n  \"categories\": [\n    \"string\"\n  ],\n  \"operationsSystem\": [\n    \"string\"\n  ]\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

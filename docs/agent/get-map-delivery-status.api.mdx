@@ -1,0 +1,280 @@
+---
+id: get-map-delivery-status
+title: "This service message allows the sender to receive information about the status of the stamp download in the device."
+description: "The possible states for the stamp download process (start, end, error, cancel, continue, download.)"
+sidebar_label: "This service message allows the sender to receive information about the status of the stamp download in the device."
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VUtv2zAM/iuCTi3gNkG37pBb0BRbDgWKNDsFRaDYTKzOljRJTlcY/u8jJblN6mY7bRfrQYr8+PHhlnuxc3yy4nfCsHlttPXsgs2gknuwL/wx4wW43ErjpVZ8wpclMKOdk5sKmPPCg2NbbZkvw7E2rNDPqtKiYMbqHJxjZ3hvfcZAFfixVtuM5ULlUOGqlZeqgez12eU5z7g2YAV5nBfocwd+XQuzLhKqNfltHOoZYUUNHiyF0HKFB9SXIYy1hZ8NOL+WBWpKAm+EL3FPAmkBTXuLrrnLS6gFn7Tcvxgy4LyVase77pGUndHKgSP51XhMyzElaJHCAOVJJoypZB7Aj54cKbRDB3rzBLk/grJKsBcR9ZxAB34pB0glMuJlRNFTNRP+0Khq6g1YfIb5qAWC4VvU8rzLeGD9DpMhdjCMM8OnVSUwo5EReuC8rEMQS1nDUs+Sy4PHEkPeHfvDqy+fB+YyXksl66bmkzGafh/mkPY+8A+AgiIzK/5AJYXnmVaAyy3Fh+tNKKsKiLx70TiS3aQSC9opCqTUS08AeV/qD7Gmuu6UaOY1Skl+/S+rINRwZKBxN7qgQ50yN6iE+lRKEWVshhPkJtN/y+anK36UvQNypsYE1hepPwI3HWH1pU5dGzoUW27CR9i/o5j5Ud/Gowhk1A76tQsNu9UBX+9vh9Syxe3D8mJ6P+fv51KiX+SB/jQIplayb2JfYfMjMkwIENA3Od0iEhdNjC+v6QKnm6+FOlBbltIxB3aPBliinImq0s8uzj2cbIAjUDMLOWBsjMDb2D9MbHTj+/mI8TK9/WhaShVuCyAvl+/ja9+K6z+N4FQXHn75kalEpLCxFWGJSV1xTCrvGzogTn+NvsZwMxkOY6ziEjkmA227EQ6+26rr6BpV8PVkhdu9sDKOEJzrhXS0x6raisrBH7g5W6RWOmenYkiXQhHOvagaiOXzA14+/Hd0j/ioBIEpDmCi3jTPwfgDC4OOp5/HazN8vV1ig/wGGvqSfw==
+sidebar_class_name: "get api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  This service message allows the sender to receive information about the status of the stamp download in the device.
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/map/import/delivery/status/{import_request_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+The possible states for the stamp download process (start, end, error, cancel, continue, download.)
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"import_request_id","in":"path","required":true,"schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"downloadData"}
+                        required={false}
+                        schemaName={"float"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number","format":"float"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"errorMessage"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"estimationTimeToDownload"}
+                        required={false}
+                        schemaName={"int64"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int64","nullable":true,"minimum":0}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"importRequestId"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"state"}
+                        required={true}
+                        schemaName={"DeliveryStatus"}
+                        qualifierMessage={"**Possible values:** [`Start`, `Done`, `Error`, `Cancelled`, `Pause`, `Continue`, `Download`]"}
+                        schema={{"type":"string","enum":["Start","Done","Error","Cancelled","Pause","Continue","Download"],"title":"DeliveryStatus"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"downloadData\": 0,\n  \"errorMessage\": \"string\",\n  \"estimationTimeToDownload\": 0,\n  \"importRequestId\": \"string\",\n  \"state\": \"Start\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

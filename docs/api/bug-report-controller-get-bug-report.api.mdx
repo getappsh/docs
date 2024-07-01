@@ -1,0 +1,308 @@
+---
+id: bug-report-controller-get-bug-report
+title: "Get Bug Report"
+description: "This endpoint allows a user to fetch the details of a bug report using its unique identifier."
+sidebar_label: "Get Bug Report"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VMFuEzEQ/RXLJ5CSpkVwiRBSS6EqF1Bb4BBFyLs72XW7sV17NiGK9t+Z8brbpNmCeqCHNPHMeJ7fvDdbaR14hdqay0JO5VlTXoGzHj9ag97WNfhfJWB/LEeygJB77biECm4qHQSYwlltUKi6tusglGgCeIFWLADzSmAFogBUug7CLiicNaXw8ULK1KYUGoNojL5vQOgCDOqFBn9E3ZzyagkIPsjpbCsN/aCuVE9wR9LDfaM9EHL0DYykZkhOYUWxkFewVHK6lbhxXBTQUyvZtnMuDM6aAIHjb46P+d/+w+iGnDggLBxTztU6jzxNbgMnbA8b2OwWcqbIeWYVdXd9B/YxzTTLDLxsn1B5gHMka1uG774ejKmSoP0gXp4rLmClc/g3PF0M91YBv7tCIRTn9ME5C+uXiuiQfDpGTaMYDReSegz1Imgvq+3GO4Dm6/UwCSvSlMpquEbriZHBJGfXRPcQ/5kyxVoXJJehaHLGii5Pj0gpmbU1KENKoidorPnsPLJ9jpYrO2m/5OntrpZnvb4fBPBk3P1w91rNH9H0fo2A+I9iqmQPJaRiLChJJFdTaYC88Ro30WYZKM+czeZsFvJfZXk70CaIlmTC5EQ5PVmdTAjruEMx2UbcLZsP/Krz7M7V12yY5InUILkostodjdKXzw+sffl588hXhegiW9osbBxJevEF4PjUuYH9BCLFxOm3SxHWqixjm9WDd+Tx0bujt8nvKme/t1E2AZcqeittHbpnl7QD//b74r9vxcQGwm+cuFrR2iPATbcpuvHMaGVpfuUJM9qPiH5MO3HRXCp6IWdut5kKQDprWz6mdn7TTW6lvGZ7RVEUOvB3EsJC1QH+8vxXV0nLr8VzYNOhMhsGqeoGup17B5t+v7dzSqxAFVGK2xQ7zXNwuFN1sJv3NHvxieWjmj2TP9FavH0Q0fuzmCBu7B2YDz0+5J+Mr23/AJJJerI=
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get Bug Report
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/bug-report/{bugId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This endpoint allows a user to fetch the details of a bug report using its unique identifier.
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"bugId","required":true,"in":"path","schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"bugId"}
+                        required={true}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"description"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"logsUrl"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"agentVersion"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                device
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__required"}
+                              >
+                                required
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"id"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"lastUpdatedDate"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"format":"date-time","type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"lastConnectionDate"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"format":"date-time","type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"name"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"OS"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"availableStorage"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"power"}
+                              required={false}
+                              schemaName={"number"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"number"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"bandwidth"}
+                              required={false}
+                              schemaName={"number"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"number"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"operativeState"}
+                              required={false}
+                              schemaName={"boolean"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"boolean"}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"reportDate"}
+                        required={true}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"bugId\": 0,\n  \"description\": \"string\",\n  \"logsUrl\": \"string\",\n  \"agentVersion\": \"string\",\n  \"device\": {\n    \"id\": \"string\",\n    \"lastUpdatedDate\": \"2024-06-30T16:12:05.997Z\",\n    \"lastConnectionDate\": \"2024-06-30T16:12:05.997Z\",\n    \"name\": \"string\",\n    \"OS\": \"string\",\n    \"availableStorage\": \"string\",\n    \"power\": 0,\n    \"bandwidth\": 0,\n    \"operativeState\": true\n  },\n  \"reportDate\": \"2024-06-30T16:12:05.997Z\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -1,0 +1,202 @@
+---
+id: login-controller-get-refresh-token
+title: "Get Refresh Token"
+description: "This service message allows a user to get a refresh token."
+sidebar_label: "Get Refresh Token"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVNuO0zAQ/ZXIz2mzRfDSt7IsaBESq90iHkqFpsk08a4TG3vSi6L+OzNJ2nQvgBC0UmKPx+NzzhynUdahB9K2us7UVH2yua4ubUXeGoP+e450i2uPoZjbB6xUrDIMqddOdnD+vNAhCug3OsWoxBAgxwiMsdsQQVTzSkQ24io8810hDnClMZdy4KFEQh/UdLGMlccfNQZ6a7O9mjbtVHtkWORrjFXKsLAiWQLnjE5b2Ml9ECSNCmmBJciI9g4Zm13dY0pyjheSpDF0Zc/4DNmBvK5ydTjEijQZCZ0zf0eW12SVQ85WoSv26mIir8eiqP+GFdKUNf0V1FjhzrFCs/actfUl8EhlQDgiXSKXe7bjD+xPCVd/WfkQn/Vr8Qj4k0OXg8BtIBylFeUhFy90NpRMtkdhxZjOhlYeoIJnCTidbCaJkbykL8/L4sSTnQKmtde0vxOxOz1XCB79qQOCoQ/F/eD9kevHr/OBZUHkWo7SwNvBplc7KJ1QeWqrM0F1tbat0j3pD0ijmXMvXCWM+rVodnMdhS3keYtMKHU5F+M349e9vSCV5ggo0aaEtp0VlP0ZUe/e6MWL2wwO/bc73AtEuKPEGeCuMaDaGzmiaxabwWlhMeFH27DBEdLiQjrLWU2zgoBfvDkcJMwa+33XyA14DSsRb7Hk6gVCJk1cNOoBOUVddlRGc8Ei6aYWTM8u3iE+7pixPR39NvfcfDef78QMq/7DVNpM9njYChN+TtU3/vPEtvJ2nxmJN8pAldcsKOd0deX3ExYl4hk=
+sidebar_class_name: "post api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get Refresh Token
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/v1/login/refresh"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows a user to get a refresh token.
+
+## Request
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"refreshToken"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"201"}
+        value={"201"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"accessToken"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"expireAt"}
+                        required={false}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"refreshToken"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"refreshExpireAt"}
+                        required={false}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"accessToken\": \"string\",\n  \"expireAt\": \"2024-06-30T16:12:05.834Z\",\n  \"refreshToken\": \"string\",\n  \"refreshExpireAt\": \"2024-06-30T16:12:05.834Z\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

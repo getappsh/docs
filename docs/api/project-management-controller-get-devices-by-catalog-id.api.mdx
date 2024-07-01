@@ -1,0 +1,219 @@
+---
+id: project-management-controller-get-devices-by-catalog-id
+title: "Get all devices with catalogId"
+description: "Get all devices with catalogId"
+sidebar_label: "Get all devices with catalogId"
+hide_title: true
+hide_table_of_contents: true
+api: eJyFVFFP20AM/ivRPW1SR2DaXqppUgsb6iQ2BEx7QNXkJiY5uOSOO6esivLfsS+htDTS+tKc7bM/+/t8rbIOPZC29SJXU3Xp7T1mdAE1FFhhTae2Jm+NQf+3QDrDtc4wzDenQGBswXcmyoGHCgl9UNPbVtV84EzZToTHx0Z75ALkG5woXXOAAyrZF7ISK1DTVtHGycVAXteF6rqlXAzO1gGD+D8eH8tfjiHz2glkjuYMGUNkpOID54zOYjvpfZCA9rAAeA8bvqcJq7BjtytpXRryMhTSfdnF2Qi4ibqYnY7aF5ej5l/Xo+aAXoP52VQr9KMBzoagVwbnUOdPOueRjUXBGrQBDrsm65m5sXFOFGkyYupZvMJwRpYd8mMnFMLfiwKSVwmopeDMGq9pExleIXiBe7sUjvb5OEdKwJgk75WSPGkqk10tsFJKK1JjOUXxSEsqBafT9Unq3uovHRKl2xxpu/3sVJzgupfeDsxr4byn7wXsIATpfzBNho/v1lfA8lE//tywcZhbSeTi1HR9Z+M8h+lxhx9mzqm3nd+UmAy+ZHa5SMITFEUsI/j6mOOjz0efBslCJpLteo6pgijWYXn+O8W90luuCf9R6gzwfnHaxhvx9RO+5d3QguWkF/j+lGPGWErA7dSZvh54vCUDlVRtu4KAv73pOjE/Nug3PQFrYD2vZE6sk1wH+Way78AEPEC9XVz17mp4Id4nrwzsd/OyvLWs7hpMg/32P+Bm77XplhxcIuRRoe3gn2UZOtq5efBSiJS32jz/JkqAZm/d3sgmZh9F9WUeA5Ib+4D11y1GkqPg67pn7+Hceg==
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get all devices with catalogId
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/projectManagement/devices/catalogId/{catalogId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get all devices with catalogId
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"catalogId","required":true,"in":"path","schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"ID"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"MAC"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"IP"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"OS"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"serialNumber"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"possibleBandwidth"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"availableStorage"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"ID\": \"string\",\n    \"MAC\": \"string\",\n    \"IP\": \"string\",\n    \"OS\": \"string\",\n    \"serialNumber\": \"string\",\n    \"possibleBandwidth\": \"string\",\n    \"availableStorage\": \"string\"\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -1,0 +1,253 @@
+---
+id: get-map-update-by-id
+title: "This service message allows the consumer to get the update information for the given map"
+description: "This service message allows the consumer to get the update information for the given map"
+sidebar_label: "This service message allows the consumer to get the update information for the given map"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VE1v2zAM/SuCThvgzkGHXnwLtmLLYcCQtacgCBibsdXZkibR2QLD/32k7Xy0ybUny3wkRT4+qtMEZdTZSv8Ar+7Uwu7RkgsHvU608xiAjLOLQme6RNo04DetL4Bwsz1sTKET7SFAg4RBsnTa8g87m8a7QEv802KkhfgZy2YPVPE5sN0E5KwUWkx0zCtsQGedpoOX8EjB2FL3/Vqco3c2YhT8fjaTT4ExD8ZLbezNGXNniQsXDLyvTT7Unb5EceiuL3DbF8zpVSkrOY+lxuehR+HAB2GBzHj9CTln2jpXI1jdJ1P8jS4STYZqMTHLiynHV3IMCfjwnk0NA2GKCaiNX1whPw3GCOWN/o7AdQ/JNNkbwEXqM2y49BIDX7ZzoQEaTZ/v5XZjTdM2OptdMjP3/jEEF5bTuAduGH/NylNloooY9iZHNVWroK7d36ioQsWUxbbBoMgpFuxgGwWrjB0r4USKTwNUGpa7YlUPpFDlJqEPumapZjplMDXHrUiPAki7NwrvB4nv3EDBsaWSo9Ty8dfT3fznQr/tZZow5MOEp8WZB6O+w742g6J45ihcnHGx7nnZxhSzTw9i8C5SA/bC7R15etXEad6E/yj1NYx1t6EWbORwpcfAE4uXK5bo7O1bwaqsuCEJ7LotRHwOdd+LmT04OlvxcQ/BwFZo5kenMFHOPLwd1BGvajwtkv6wnFbjo+Krb9Y+GcFKnXuoWxxn9RsPNx62fs0hFULBWpdSRq95nqOni/ir/ZWX7aS4b49PLPf/mJHo9A==
+sidebar_class_name: "get api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  This service message allows the consumer to get the update information for the given map
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/map/inventory/isUpdate/{importRequestId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows the consumer to get the update information for the given map
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"importRequestId","in":"path","required":true,"schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"isUpdate"}
+                        required={true}
+                        schemaName={"boolean"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"boolean"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"reqId"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"isUpdate\": true,\n  \"reqId\": \"string\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

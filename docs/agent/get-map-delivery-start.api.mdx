@@ -1,0 +1,184 @@
+---
+id: get-map-delivery-start
+title: "This service message allows the sender to continue downloading a stamp from a map that has been stopped."
+description: "This service message allows the sender to continue downloading a stamp from a map that has been stopped."
+sidebar_label: "This service message allows the sender to continue downloading a stamp from a map that has been stopped."
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VMFu2zAM/RVBpw1I66BDL74Fa4HlMKxIs1MQBIzNxOpsSZPodIHhfx9pO2ky57yTbT2Senx8dKMJ9lGnK/0dvJpX3gVSd+oJS3PAcNTriXYeA5Bxdp7rVO+RNhX4TT5EbCJBID3RHgJUSBikWqMtf3C46SpuAv6uMdLG5BxpLAMeqOB3AUxArkyhxomOWYEV6LTRdPRSIFIwdq/bdi3B0TsbMQr+MJ3KI8eYBeOFH0frdqIfbwITnTlLaEkw8L40WddU8hYloBnf7LZvmNEVx1XfFtMkoDp+dbl8VBgj7FG08kHUItNTPAHjbiaDPjeAi9IfsGHqewx82c6FCqg/+vIgtxtrqrrS6bTlbDJUSsLM++cQXFgMkrGAreDXqiwLE1XEcDAZqoGtgrJ071FRgQzZHIMip0Q8Y2tUuXu3pYOc2SpQTLbyahdcxR9sC84CUgVEtUW0DDvvMb/vRKLCiYG8i71deP6pTjgp6U2SnCyVdJZKmpF32s48O9cJc2p0zzNVi+fX5d3sZa7/7XCYO2Td3AdTzoJR3+BQshFZEnYCikIfuJwykdiXmN4/yoHwrsBehP1H9a6aOruC8A8lvoS+jzqUgvXCrjTXE7k6DbsKw0Z3DuuO0vFysoULmQ/nN80WIv4MZdvKMYdwcrri1wMEA1tRn/c8N1HeebI7KCOOqJ63Tn9aDHv0WfHlN1sYDsEKzQOUNfYj/IXHm/+Sds1JBQLL3JHp42ZZhp4uKozWXX4mZ0O+/Hhd8nr8BeIkvS0=
+sidebar_class_name: "post api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  This service message allows the sender to continue downloading a stamp from a map that has been stopped.
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/map/import/delivery/start/{import_request_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows the sender to continue downloading a stamp from a map that has been stopped.
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"import_request_id","in":"path","required":true,"schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

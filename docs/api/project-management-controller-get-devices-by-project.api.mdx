@@ -1,0 +1,219 @@
+---
+id: project-management-controller-get-devices-by-project
+title: "Get all devices using component of the projectId"
+description: "Get all devices using component of the projectId"
+sidebar_label: "Get all devices using component of the projectId"
+hide_title: true
+hide_table_of_contents: true
+api: eJydVE1v2zAM/SuGThuQ1emwXYJhQNpsRQZ0K9oOOxTBwNhsrFaWVElOFxj+7yUl56v1ablEJiny8fFRrTAWHQRp9LwUE3HlzAMW4RI0rLBGHc6NDs4ohe7vCsMM17JAf7bp48RIWHBQY0DnxeSuFZo+KI9Nfso5Eg6fGumQ0gfX4EhIzQEQKvL5osIaxKQVYWP5om7qJTrRdQu+6K3RHj37P47H/FeiL5y0DJiiKUNBAAkn+8BaJYvYTP7gOaB9WwCcgw3dkwFrf2A3y21DjikJMpWdzw5ifHBSr0Q3EpfT80H7/GrQ/Otm0OzRSVA/U8tDAdZ4L5cKz0CXz7IkyoaiYA1SAYXdBONobgNBFBVkUGxKM7xGPwuGHPwjJ6x4ftv5Z3sBiAXjLBonwyZOeIngGO7dgmd0PI8LDBkolZVJJ1njqXpWmJrmSLkyc5+FCrNDdZB2KsPSI3lFOXGTIgcr8/Vpbl/rMe9Tbz15u0vWicjoOknxAPYNayCNcwu+Fwbz0ZtG/eG7cTWQnMSPP7dk7HmsQrCRRanvTeS3Z5M6/jC1Vrxm4pba7H3Z9Gqe+WdYrWIZxpdixiefTz71EoaCJdylmYcaonj7ZfoPVo/A7NQQ8F/IrQLaQCrUOMW+xPgdbY9kdKdpBY5Zjxlj8b2XTpN9SaK7IuCcqG2X4PG3U13H5qcG3SYNZA2k9yXzRjoqpeczjf4elMc3mHeLLd5d9y/I+2w/keNetsutebXXoBpMr8Mjbo5eo25BwRVCGRXc9v5pUaANBzffvCQs9Z1SL76xMqA5WsdXMorZB1F9OYsB2a15RP11hzHwJ+Pruhcmv+jH
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get all devices using component of the projectId
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/projectManagement/devices/project/{projectId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get all devices using component of the projectId
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"projectId","required":true,"in":"path","schema":{"type":"number"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"ID"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"MAC"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"IP"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"OS"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"serialNumber"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"possibleBandwidth"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"availableStorage"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"ID\": \"string\",\n    \"MAC\": \"string\",\n    \"IP\": \"string\",\n    \"OS\": \"string\",\n    \"serialNumber\": \"string\",\n    \"possibleBandwidth\": \"string\",\n    \"availableStorage\": \"string\"\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

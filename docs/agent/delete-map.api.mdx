@@ -1,0 +1,184 @@
+---
+id: delete-map
+title: "This service message allows the consumer to delete the map of the given request id"
+description: "This service message allows the consumer to delete the map of the given request id"
+sidebar_label: "This service message allows the consumer to delete the map of the given request id"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VE2PmzAQ/SuWT63ENtFWe+EWdZEaqZWqND1FUTWBCXgL2LUH2gjx3zsD5DvXnhjPh/3mzRs6TZAHHW/0V3DqSS3rFmuy/qC3kbYOPZCx9TLTsc6wRMKfFTgdaQceKj56qe10zQdOMZWznlb4u8FAXBRpU7PbARVse/Ybj3wX+QYjHdICK9Bxp+ngpDyQN3Wu+34rycHZOmCQ+PN8Lp8MQ+qNE0ScrftIvzwMRDq1NXEfEgPnSpMObczegiR09y/b3RumdIVxMzbFMAmoCZ9sJocKQ4AchR3nhR8yI8Rj4L6baGLnQeDi6nPYMPQcPT+2t74CGl0fn+V1U5uqqXQ877maDJVSsHAu8d761UQZE9hL/JqVdWGCCuhbk6Ka0CooS/snKCpQMWWhqdArsmoc9eDmcSu7H8zcsDaUH6erTDbQQYU9i2MQBs861jOum5mjmGbdjTL6QRp7O7R9bCPnZLVKvq+fFt+W+hb/NFVIh6lOglt4oz5DW7LMuGGeM0r/57h4WxbpeMX8w4s4nA1UQX2R9l+4uYJ/mi7hX5q5EkbEjS8lNpK20eNunWhjO75dKRZewfglu+t2EPCHL/te3JzBJfGGzRa8gZ2wyruZmSA2T2kPZcA7YKdd0e9Wk/rfK376IeDJCbWAa6FscBzNLzw82P9+yyUFQsZyFihj1iJN0dFF/d2Kyg/gJK3X5EuyTljU/wC1tZlZ
+sidebar_class_name: "delete api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  This service message allows the consumer to delete the map of the given request id
+</h1>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/map/inventory/{importRequestId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows the consumer to delete the map of the given request id
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"importRequestId","in":"path","required":true,"schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

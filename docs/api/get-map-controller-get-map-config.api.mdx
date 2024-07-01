@@ -1,0 +1,333 @@
+---
+id: get-map-controller-get-map-config
+title: "Get Map Configurations"
+description: "This service message returns an object of map configurations."
+sidebar_label: "Get Map Configurations"
+hide_title: true
+hide_table_of_contents: true
+api: eJylVe9P2zAQ/Vcif9qkQmHavlTTpEIH6qZqaCnaB1RN1+TaGBzb2E6hi/K/785J+dkC075A6nu+e3d+fq6FseggSKPHuRiIUwwTsMdGB2eUQvd7uVlYyKXoiRx95qRlPKGnhfSJR7eSGSYleg9LTByGymmfgE7M/BKzkJhFUoJNspikaqv5fcpmwUGJAZ0Xg4taaPpBWXPkfESnJxxeV9IhMQuuwp6QXNVCKCjmswJLEINahLXlfT44qZeiaWa80Vsqgp7jHw4O+N9j7pSBCAXUgWNgrZJZZNa/9Ayonxdo22HejqcWZJs+RyVX6NZTWaKpwkRq/2CTrso5OtH0xARuaZRDh5Befy+3QsoISeUfHOvJ0S7IGY2NDkeNzI1WBvLt5fIu+hNDy+1F1GvkqV9pcpmN9YpGZtx6TLNzK1Cv7mDtvBk8gWBK8yq8lHq4AqlgrjC1kOHOYVnKMdaZqjxLXJ+hy4g/6XRH4lj/3KktutpERzQq7bsbsxOVyoA7AD5PaYLE4YyVvA2xUOCL10ABHN3ODcqQftfPcT2B1B1dL5GOfmi1poUTTj4tUKcj+pWO+DOubWIRN+PLvoBK0f3Y7I3c7xRAemal7hh9bOGNWIKG4wKzK2JM+j+3OQT0I/rD8IVxNFI2BlrYC6zk3vNpxBzRYdrt/7KbhymD4qU7sxsFQ4EmxmDJBsXmuEdxHo3HrHIyrKNvzREcNTK4mLH1kKEVhr2UDid6HB+f6IOV/dVhnxTZb43Q9+uN0zVsZ6T41ggfpE/Zglqpbop0vsRcu6Ve93Gy6fTbr+l9j0UINnYo9cLE6XedcjdDa7eYOiZdLBmejRN/A8tlLMP8WszB/qf9j52DQsYOyhWs8aGE6J2dlVOehCaWHD+y/qcl63sn/u8npes64G3oWwX0YBCxqr3P7VFckNlL7uZQRINo2+ADoa/B3eNDp1BQP4yv6zl4JFNoGl6+rsjs23NagZPsQVEGufT8TUe/AOXxhSbf/ezetffJLsrdImi+sWSFFbZv1hWuHz6RzYywBUIe9Vd34WGWoQ0PNj573h4J9fQr6wWqRz7zRFwx+1ZSn48iIJmaK9Rf7igG/sn8muYvWcLoZw==
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get Map Configurations
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/map/configs/{deviceId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message returns an object of map configurations.
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"deviceId","required":true,"in":"path","schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"deliveryTimeoutMins"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"MaxMapAreaSqKm"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"maxMapSizeInMB"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"maxParallelDownloads"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"downloadRetryTime"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"downloadTimeoutMins"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"periodicInventoryIntervalMins"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"periodicConfIntervalMins"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"periodicMatomoIntervalMins"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"minAvailableSpaceMB"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"mapMinInclusionInPercentages"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"matomoUrl"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"matomoDimensionId"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"matomoSiteId"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"sdStoragePath"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"flashStoragePath"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"targetStoragePolicy"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={"**Possible values:** [`SDOnly`, `FlashThenSD`, `SDThenFlash`, `FlashOnly`]"}
+                        schema={{"type":"string","enum":["SDOnly","FlashThenSD","SDThenFlash","FlashOnly"],"default":"SDOnly"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"sdInventoryMaxSizeMB"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"flashInventoryMaxSizeMB"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"lastCheckingMapUpdatesDate"}
+                        required={false}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"lastConfigUpdateDate"}
+                        required={false}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"deliveryTimeoutMins\": 0,\n  \"MaxMapAreaSqKm\": 0,\n  \"maxMapSizeInMB\": 0,\n  \"maxParallelDownloads\": 0,\n  \"downloadRetryTime\": 0,\n  \"downloadTimeoutMins\": 0,\n  \"periodicInventoryIntervalMins\": 0,\n  \"periodicConfIntervalMins\": 0,\n  \"periodicMatomoIntervalMins\": 0,\n  \"minAvailableSpaceMB\": 0,\n  \"mapMinInclusionInPercentages\": 0,\n  \"matomoUrl\": \"string\",\n  \"matomoDimensionId\": \"string\",\n  \"matomoSiteId\": \"string\",\n  \"sdStoragePath\": \"string\",\n  \"flashStoragePath\": \"string\",\n  \"targetStoragePolicy\": \"SDOnly\",\n  \"sdInventoryMaxSizeMB\": 0,\n  \"flashInventoryMaxSizeMB\": 0,\n  \"lastCheckingMapUpdatesDate\": \"2024-06-30T16:12:05.914Z\",\n  \"lastConfigUpdateDate\": \"2024-06-30T16:12:05.914Z\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

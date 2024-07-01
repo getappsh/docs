@@ -1,0 +1,184 @@
+---
+id: download-file
+title: "Endpoint to download a file based on the provided filename."
+description: "Returns the requested `File` on success or an `AppError` on failure."
+sidebar_label: "Endpoint to download a file based on the provided filename."
+hide_title: true
+hide_table_of_contents: true
+api: eJytU02P0zAQ/SuWTyCFtlq0l9wqtsDeUFlOVUWnyTTxktjGnhSqKP+dmXxsu9uFE6c4fuPxm/eeW01QRJ1u9B1W5ojhpLeJzjFmwXgyzupUr5GaYKOiElXAnw1GwlztPpoKd8pZFZsswxiVCwqs2i29X4XgQo8dwFRNwJlOtPMYQFre59w0d79s5SD/fuA2jHoIUCNhEDKttvzDVQL2y0QboeKBSl4LCxOQ+1BoMNExK7EGnbaaTl7ORQrGFrrrtlIcvbMRo+A3i4V8ng+ou0TfvgokOnOW0JJg4H1lsn6E+WOUgvb6Zrd/xIyecdzocYRIQE384HL5qVkyKFDk9kG0ITNQnIDraZJRlleAi9Zn2DD1AgNfdnChBhq23t/I7caauql1uuj4NBmq5MBk3XqUjAXsBGdjSieuFUi9V+xCquf5GJn5ZKZEYt5OpnW9awfXM5puKFhMtV59fXi3/HKvX0ZtFByyXvAxBMtg1Gc4VpwA5sIWoFA747LLNOLQYjG7lQ3vItVgL8pWNveO51fk1ERYgRK2ag+RI815lYyzHUeT8/80yOwlz/Yci//1OkbLCH/T3FcwzNqESi4b9N7oSW+hc6E4/6ZPD4XjVPLoUt62Mta3UHWdbDM1PppueHmEYGAvhvBTy02UNdt7gCriP0Z9sx4z/Vb9jfG4CVZIHqFqcHD1B54un3O35doSIed0CocBXrJSni4OXr04ec9PYfy0euCA/gFlhp+a
+sidebar_class_name: "get api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Endpoint to download a file based on the provided filename.
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/delivery/downloadFile/{filename}"}
+>
+  
+</MethodEndpoint>
+
+
+
+Returns the requested `File` on success or an `AppError` on failure.
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"filename","in":"path","required":true,"schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
