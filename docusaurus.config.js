@@ -87,9 +87,12 @@ const config = {
           }
         }
       },
-    ]
+    ],
   ],
-  themes: ["docusaurus-theme-openapi-docs"], // export theme components
+  markdown: {
+    mermaid: true,
+  },
+  themes: ["docusaurus-theme-openapi-docs", "@docusaurus/theme-mermaid"], // export theme components
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -166,7 +169,7 @@ const config = {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
-    }),
+    })
 };
 
 export default config;
