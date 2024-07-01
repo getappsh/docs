@@ -1,0 +1,295 @@
+---
+id: get-map-controller-set-map-config
+title: "Set Map Configurations"
+description: "This service message sets an object of map configurations."
+sidebar_label: "Set Map Configurations"
+hide_title: true
+hide_table_of_contents: true
+api: eJylVmFv2zYQ/SsCP9sxk7XBYAwDkngdvMGYUTkY0LQYaOlssZFIlqScuEL+++5IOUpiy+4wGDCku8fj3eneIxumDVjhpVbTnI3Z7+Bnwtxo5a0uS7D/uJ1hJddswHJwmZWG8IheFNIlDuxGZpBU4JxYA757lwiV6OVXyHyiV0klTJKFCHXcyp1hKCOsqMCDdWx892XALHyrwflrnW/ZuAmv0gIm5W0NA4YBPChPLmFMKbMQafTVUSYNc1kBlaAnvzWAucXtaR9LJXoJjrw5lHIDdruQFejaz6RyLxapulqCZU8DNhOPWPeVBZF++7M6CKkCJJXfYapm132QOZaJnSwn+kGVWuSHt8tb70fwMbejqFPJY71S5zKbqg22TNvtFHtnN6I8uYI+9A+DZ8LrSp+EV1JdbYQsxbKE1IgMeptlMMZUZWXtaB7VHGyG+eNQ9QQO+9/a8oXXeSvVuvNOsFXKtePdi0qlhx6Ay1PsIOYwF744iFiVwhWnQF7YNfgdSuP8bvdxAwZYHdKBpZO/VLlFwwcKvihApRN8Syf0GGw7X8B9IWauRF0iP3ZrQ+7PE4DzTJPa0/pQwg9iEepvCsjuMWOc/1uTCw9ugn8EX2mLLcUFZB16muTBfjdCjKAIcfl/WU3NlL4k07MyTbxGB7ksOIMCEyfmgvPI+ZeiFSOINckO6d0Qo1ADHWS1lR4/y13DliAslovC9IQulKlCkzyaOihK+MhsJIwcbc5HOLejKG+OURi7eda0XcyU1CnmtIvcShaV0ZoG7cOHXRP++HvRlV94b0LqpHgfO6387VFUpoRebeP7Wsb3tYv3aRU/qE28R4v4Se3hx7SGH9cW3qMl/JR28Fda0bHtgES8de6UobO/EYTOsa8Dne8g/TuWHyYqP0JMfpyIOPoX74b8cvgTX5xfjs8vxvz92c8Xl59YH/n6V+DMSbXSQQxa4hFtrow5cCGApPUlV/Np4h7Eeh1GmzgRMfzs/dk7Fg90kdGBTlNttPOVCEe5EoEVKfgEy0puXt0c3m7ZdBeD/3cdaWnm4dGPTCmkorrreLZEwt/hxUNSKedhOkysIdAeqV5gAYRpmqVwgIP29ERm5KndRjHYCCtpboOq4AIQeZCYht0DTcNNLGS4oEwIXtaU0d5t55UizW9JI5btpanSOS2x4gGN9D9mn/GHL9rE9tHNiuwNjoFa19ghxMSw9BlE/er8eqNMIdnWJdT2RZK/XAdAstD3oH5FRyzJ0ysmjLH/BUeUm7o=
+sidebar_class_name: "put api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Set Map Configurations
+</h1>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/api/v1/map/configs"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message sets an object of map configurations.
+
+## Request
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"deliveryTimeoutMins"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"MaxMapAreaSqKm"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"maxMapSizeInMB"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"maxParallelDownloads"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"downloadRetryTime"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"downloadTimeoutMins"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"periodicInventoryIntervalMins"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"periodicConfIntervalMins"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"periodicMatomoIntervalMins"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"minAvailableSpaceMB"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"mapMinInclusionInPercentages"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"matomoUrl"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"matomoDimensionId"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"matomoSiteId"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"sdStoragePath"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"flashStoragePath"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"targetStoragePolicy"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`SDOnly`, `FlashThenSD`, `SDThenFlash`, `FlashOnly`]"}
+          schema={{"type":"string","enum":["SDOnly","FlashThenSD","SDThenFlash","FlashOnly"],"default":"SDOnly"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"sdInventoryMaxSizeMB"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"flashInventoryMaxSizeMB"}
+          required={false}
+          schemaName={"number"}
+          qualifierMessage={undefined}
+          schema={{"type":"number"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"lastCheckingMapUpdatesDate"}
+          required={false}
+          schemaName={"date-time"}
+          qualifierMessage={undefined}
+          schema={{"format":"date-time","type":"string"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"lastConfigUpdateDate"}
+          required={false}
+          schemaName={"date-time"}
+          qualifierMessage={undefined}
+          schema={{"format":"date-time","type":"string"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

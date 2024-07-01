@@ -1,0 +1,342 @@
+---
+id: discovery-controller-im-pull-discovery-devices
+title: "IM Pull Discovery Devices"
+description: "This service message allows an IM device to pull the discovery context of other agents."
+sidebar_label: "IM Pull Discovery Devices"
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VW1v0zAQ/iuWP4HULh2CLxVC2gugITGmrcCHUqFrcku8ObGxnW4l6n/nzknabmv3AUErNbHv/Z7nro00Fh0EZaqzTI7lqfKpWaBbnpgqOKM1up+qvKi1XktOcaFS9HIgM/SpU5aNyXRSKC88OpaKEr2HHAVobe68gEqcfRZZtBTBCEsORShQZL1XkVJAvA/CXAtDEifIvAr+gOJYcFBiQOfleDobSIe/avTh2GRLOW7iUTmk9IOrcSCjpyqwCKzVKo3lJTee02ykTwssgd/C0iIlDs7BksKogKXfuvfBqSqXK/5wUG9N5TFqvBqN+PGwAfLfhTbzG0wDl+4Yn6DasG0DGagnSUbVrE5xokpk+bVxJVAmMoOAw8C3g6dGqSmt//uEqD7QJt+TUQVtKk8EBLinvpzX5RzdTg2HGsHjuQm4CxJyoVyoQV+p39shqtYjF0ZV58YtdxrPyfW3Noc9rcTFc3Jfz0+ocaZihu7vnkyVS2sN7sVa+zSYl5LpFFTQbLItkR3RejpPN4A/hLfHbbbx005lP6SX6Dt/0WWAnEenUxLDzdixC49p7VSgVk0bOUdwjMl0tiIRTV1heC9Y4yP6EAo6JWBVsjhM2vQSVSY80MnGKzt1i/XA9hGumP8toH2cbii4hO5q0L186An86ftkQ90iBBsbyDN1uVkE7++htNyJaY8TxVXVtYnwdE36iGF4ZO2O1YWik4mjizPh7yDPYyqLngVydPDm4HU34pDyiHMW3JcSIktatkvac7wuxXpfij0Ls9lsi/+4O7u2sTixGlTF/K2d5vgtmlNaVYpLPYwZchimcMlwUyi+3GZLwUwgo6bhKfrq9GrF1wQEDxujvQCnYB6xmFGwAiGLjGrkLS4j5WPZwwmnxuq6jsPzeGGuBr3FUZqiDc/qbpP14ssVM2be/T+UJmMbB3d0yb9j+YO+dDARisjHeN9IDVVeU/dIp/XLIEPNfVpP+SOexsr6BVAtt7J8exwVxMTcYvWOBG01gY+UMfn+A/lhlmo=
+sidebar_class_name: "post api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  IM Pull Discovery Devices
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/v1/device/im/pull/discovery"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows an IM device to pull the discovery context of other agents.
+
+## Request
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><span
+          style={{"opacity":"0.6"}}
+        >
+           array
+        </span><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <li>
+          <div
+            style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+          >
+            Array [
+          </div>
+        </li><div
+          style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+        >
+          
+          
+          string
+          
+          
+        </div><li>
+          <div
+            style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+          >
+            ]
+          </div>
+        </li>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"deviceId"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"produceTime"}
+                        required={true}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                comps
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object[]
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__required"}
+                              >
+                                required
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <li>
+                              <div
+                                style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                              >
+                                Array [
+                              </div>
+                            </li><SchemaItem
+                              collapsible={false}
+                              name={"catalogId"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"name"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"versionNumber"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"releaseNotes"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"virtualSize"}
+                              required={false}
+                              schemaName={"number"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"number"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"category"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"baseVersion"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"prevVersion"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"subComponents"}
+                              required={false}
+                              schemaName={"undefined[]"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"array","items":"circular(ComponentDto)"}}
+                            >
+                              
+                            </SchemaItem><li>
+                              <div
+                                style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                              >
+                                ]
+                              </div>
+                            </li>
+                          </div>
+                        </details>
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"deviceId\": \"string\",\n    \"produceTime\": \"2024-06-30T16:12:05.942Z\",\n    \"comps\": [\n      {\n        \"catalogId\": \"string\",\n        \"name\": \"string\",\n        \"versionNumber\": \"string\",\n        \"releaseNotes\": \"string\",\n        \"virtualSize\": 0,\n        \"category\": \"string\",\n        \"baseVersion\": \"string\",\n        \"prevVersion\": \"string\",\n        \"subComponents\": [\n          null\n        ]\n      }\n    ]\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

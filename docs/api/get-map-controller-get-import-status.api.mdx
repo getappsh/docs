@@ -1,0 +1,330 @@
+---
+id: get-map-controller-get-import-status
+title: "Get Import Status"
+description: "This service message allows the consumer to get status information and tracking of the packaging process."
+sidebar_label: "Get Import Status"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9V11PKzcQ/SvuPrVSLoGqfYmurhQ+lQpQBLRVhVBxdieJYdfe2t6EvVH+e8/YG9hkc6HtQ19gbc+M5+PM+GSVmJKs9MroUZYMkgvyV7I8Mdpbk+dk/5yRHxWlsf7WS1+5pJdk5FKrSlaBwt1cOeHILlRKoiDn5IyEzHOzdMLPSaRGu6ogK7wRsCVcMCOUnhpbhHuF1JnwVqbPSs+EmQa1Eks5443SmhRmD3BzKa0syJN1yeB+lWgs4IEK7t3QXxU5jyB6icW3soR4vK2olyh2tJR+jjOXzqmQyWCV+LpkdectrknW6wdWdCX8JcfnPx4e8r/tcGEBEXnSns9kWeYqDVH0nxwLrLoXmMkTpZ7dt5xrr6L5Xbe7HsHZmPPOUS8hXRVIQoKqWLY90mNrZvCfK3RqNOHfidQp5fgYy8rxxpm1xvKadBbNnL2UIVG9ZGjTuVrg8wH3UhD8MIQgdmIyes/D4Xh8UOlnbZaaXTu7HP12dvPHvi1t/LmpdNbeyyCTG7l379r44UKqXE5yap8rvZC5ysYBQlsnEVV0Z8yltNtHlWYzJzlJeyJRQpxdDdue86rlIS8nx+Zl5EbxutYeHBvpoa7HJq9nZqNML1xwdNc5fKaNvG0A0K4f70tLsuVna+u2QHslD7uN+NhK9ONAXJBGX+ci1BxdmJGA9yJXzlOG9gtdxjUSnydW9L+Ix93SwMh/UN6kCNrXRkz5M0hnlANethZL5edihm8t0DkyNzOhsq6dTZFh57T55NnwakZ5KsQ0ZPLbym2EsKEtZY6oxkSSGwl4a8VGtWt0G1Yw13yxW514FI+4IN8ThawnSFdsNYE7nCmwzh11L9lBKG756BpvjMhZtoeIhIMB4gqlDOI9pd1GOdu/ZW+UcxWuSNPKOrGc4xZvax6/GNspi0eDrw63euNf4aTdRbsQKWTZRkcLFZ1mg+ox1hw/RtIEQdWbfHeUdroRqne4LN4RjejgNc91qTQXDk9SLcoov2Vvp4dhK2QvDMKt7MXpHkJq63e6vY3KpXR4OdHkWS0aQWSRX0d41DyDKMl3WxbbcwLGhli+QYKrlykeyZPKAyDAXwV4NMaFU1+peX1rIWcIfp/pMG/aph1v7JpWOsW5e9f4geBHrSEJ+57gXuKVz3krIOrUm6jg5Skw//GD9GQmWy8pkDchyzZi4eJrifNIPiCRSU+fvCp4xnae36h0prN/rlJupvibEwp0YUY2MKeprHLYOOS3Hfn5WIpr8LHU1BhfwgW/l0V8Naa4pAWowLuGjtj9OGt+tfleS1OA/jqwrvdqh/a4QsmQJ+lDCVtnbS55Qy4er4OEnDGtYwb6CRb4gXOEhlK+DmxvgiEEhwf3D8zUgIm5YcIKThmYIcjdIOnLUvUXR320XT92YD9SqP5qh26tmQqCtUYu2brrlulbRNPmxobTsfvNVq/5ON9g4pff797QMPe+DEEzyQ2paoLn0IZluYdDk2jOxHA8Em4pZ7E47F+UOTz4+eCnhn3KlAvNN5TG+UIG3tmwYdgRMcliP2NfvRHY/5W8N8nx9OL7ZY5xwICqItBi+e7BpxUHfYQ/KCH+xqolr0y4lwx2eTNqN0cWWH21mmACAbzrNW9DwtaxugtpVaCJjCSMLf4GeqYSj/A7+fn+pvkl8YP4VgTNJh4M9lzmFcVfCc9U7/ltsmZ2PceED0heNVLDNKXSt/Q7vyu2IH9xxmCTFefstQ93kBms7/Xt83EQEHfmmfSXV089L9m/9fpvTv/VIg==
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get Import Status
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/map/import/status/{importRequestId}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows the consumer to get status information and tracking of the packaging process.
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"importRequestId","required":true,"in":"path","schema":{"type":"string"}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"importRequestId"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"status"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={"**Possible values:** [`Start`, `InProgress`, `Done`, `Cancel`, `Pause`, `Error`, `Pending`, `Expired`, `Archived`]"}
+                        schema={{"type":"string","enum":["Start","InProgress","Done","Cancel","Pause","Error","Pending","Expired","Archived"]}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                error
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"errorCode"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={"**Possible values:** [`APP.unknown`, `DELIVERY.unknown`, `DELIVERY.notFound`, `DELIVERY.download`, `DELIVERY.downloadNotAvailable`, `DELIVERY.invalidPackage`, `DELIVERY.packageTooLarge`, `DELIVERY.unableClearCache`, `MAP.unknown`, `MAP.notFound`, `MAP.bBoxIsInvalid`, `MAP.bBoxNotInAnyPolygon`, `MAP.exportMapFailed`, `MAP.requestInProgress`, `MAP.areaTooLarge`, `MAP.areaTooSmall`]"}
+                              schema={{"type":"string","enum":["APP.unknown","DELIVERY.unknown","DELIVERY.notFound","DELIVERY.download","DELIVERY.downloadNotAvailable","DELIVERY.invalidPackage","DELIVERY.packageTooLarge","DELIVERY.unableClearCache","MAP.unknown","MAP.notFound","MAP.bBoxIsInvalid","MAP.bBoxNotInAnyPolygon","MAP.exportMapFailed","MAP.requestInProgress","MAP.areaTooLarge","MAP.areaTooSmall"],"description":"`APP.unknown`: General Error code not listed in the enum <br /> `DELIVERY.unknown`: Error code not listed in the enum <br /> `DELIVERY.notFound`: No found the delivery with given catalog id <br /> `DELIVERY.download`: Download of delivery item failed <br /> `DELIVERY.downloadNotAvailable`: Delivery item not yet available for download <br /> `DELIVERY.invalidPackage`: Package of given catalog id is invalid, maybe expired or some else <br /> `DELIVERY.packageTooLarge`:  Package of given catalog id is too large, no space in cache<br /> `DELIVERY.unableClearCache`:  Some issue occurs when trying to clear cache <br /> `MAP.unknown`: Error code not listed in the enum <br /> `MAP.notFound`: No found the map with given id <br /> `MAP.bBoxIsInvalid`: BBox is probably invalid <br /> `MAP.bBoxNotInAnyPolygon`: The given BBox in not contains in any polygon <br /> `MAP.exportMapFailed`: Some error occurs when import map <br /> `MAP.requestInProgress`: Delivery was already requested and in processing! <br /> `MAP.areaTooLarge`: Area too large to distribute, reduce request size and try again <br /> `MAP.areaTooSmall`: Area too small to distribute, increase request size and try again . "}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"message"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                metaData
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"jobId"}
+                              required={false}
+                              schemaName={"number"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"number"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"exportStart"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"format":"date-time","type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"exportEnd"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"format":"date-time","type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"progress"}
+                              required={false}
+                              schemaName={"integer"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","default":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"size"}
+                              required={false}
+                              schemaName={"integer"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","default":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"area"}
+                              required={false}
+                              schemaName={"integer"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","default":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"footprint"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"zoomLevel"}
+                              required={false}
+                              schemaName={"integer"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","default":1}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"packageUrl"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"fileName"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"importRequestId\": \"string\",\n  \"status\": \"Start\",\n  \"error\": {\n    \"errorCode\": \"APP.unknown\",\n    \"message\": \"string\"\n  },\n  \"metaData\": {\n    \"jobId\": 0,\n    \"exportStart\": \"2024-06-30T16:12:05.905Z\",\n    \"exportEnd\": \"2024-06-30T16:12:05.905Z\",\n    \"progress\": 0,\n    \"size\": 0,\n    \"area\": 0,\n    \"footprint\": \"string\",\n    \"zoomLevel\": 1,\n    \"packageUrl\": \"string\",\n    \"fileName\": \"string\"\n  }\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

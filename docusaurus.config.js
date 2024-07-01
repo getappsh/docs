@@ -76,9 +76,12 @@ const config = {
               groupPathsBy: "tag", // group sidebar items by operation "tag"
             },
           },
-          burgers: {
-            specPath: "examples/food/burgers/openapi.yaml",
-            outputDir: "api/food/burgers",
+          agent: {
+            specPath: "openapi.json",
+            outputDir: "docs/agent",
+            sidebarOptions: { // optional, instructs plugin to generate sidebar.js
+              groupPathsBy: "tag", // group sidebar items by operation "tag"
+            },
           }
         }
       },

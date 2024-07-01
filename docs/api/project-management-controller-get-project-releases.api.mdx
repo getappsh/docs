@@ -1,0 +1,264 @@
+---
+id: project-management-controller-get-project-releases
+title: "Get project release"
+description: "Get project release"
+sidebar_label: "Get project release"
+hide_title: true
+hide_table_of_contents: true
+api: eJx9VMtu20AM/BVhTy1g10kfF6MokL6CFGgRJCl6MIKClml5E0m74VJOXUH/XlIvy45SXyyRXGp2OMPSOI8EbF1+sTJzc0nuDmP+DjkkmGHOn1zO5NIU6XeC3KavMEUIGMzEeCDIkJGCmS9Kk8uLtPFNnbScGMKHwhJKd6YCJ8bmWgC8kVyIN5iBmZdVdauVwbtc+85L8/rkRP9WGGKyXgHKMTkSCyDBpTnwPrVxDX52F7Sg3Hc0vPMKBYhgJ+csYxYGcbdUhHoDUgrYNp+VdpC6RMnoSwOTzRNTTdrrjSR8Crx2lI0mNQHNDUayW+HuuRw1RP9wjGH8sCUuIL22f4e48iJbImleroOJo93o4cKnDlbXDFyMdJ8YlD4yVQkAMeosV+4x1zOSn67JZdOCUgmvwaZTdtMubbreWifx8GZQ1GR0IvlUuE9k6qGWCax0TkjkyNwKvBVK5U5F+BxEKQoYF2R5958S70QlzxdUQ4kuDkkRUbLlFPfO6KT/mZ0c1Z+UQKLq70qivXu0QYew9scSgWQy88WtCv5Q3OfIUWucqB288CHm2ji1ptiv9psYZ25m4O1sezrzx37tIrOy92DVxQa2DUjbxrMDhNfqnUZoHc7WUEpAG5q0D19rUUv8268bCbakbph9TanN164mu6VPLjc9894cX/pmg1Gbi84uL6LwCElSf6b3hTl59e7V29b6EHO9LnSsgTOofdNunXECD77XT5/xj3CVgmwjdYLIWHINuQtZLFYBnDbb4ZDgfUye5sNFd8yyMLsRjNqwLJcS+klpVWn4oUC1pHK/BbKwVIpEHSsb9FmmvYY04BPs/e4zL65ayb6M9uQf3qnbf7m6agtpgc0CvcfdwYau1GsbcV+ty7LNn8Uxeh6cfLJsVcC9OM+/qAigUP56jo8UU3cfRfX+Y10Q3bh7zD/0GFlfFV9V/QPLn0yo
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get project release
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/projectManagement/project/{projectId}/projectReleases"}
+>
+  
+</MethodEndpoint>
+
+
+
+Get project release
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"projectId","required":true,"in":"path","schema":{}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"catalogId"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"platform"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"formation"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"version"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"releaseNotes"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"virtualSize"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"category"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"uploadStatus"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={"**Possible values:** [`started`, `downloading-from-url`, `fail-to-download`, `uploading-to-s3`, `fail-to-upload`, `in-progress`, `ready`, `error`]"}
+                        schema={{"type":"string","enum":["started","downloading-from-url","fail-to-download","uploading-to-s3","fail-to-upload","in-progress","ready","error"]}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"deploymentStatus"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"securityStatus"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"policyStatus"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"catalogId\": \"string\",\n    \"name\": \"string\",\n    \"platform\": \"string\",\n    \"formation\": \"string\",\n    \"version\": \"string\",\n    \"releaseNotes\": \"string\",\n    \"virtualSize\": 0,\n    \"category\": \"string\",\n    \"uploadStatus\": \"started\",\n    \"deploymentStatus\": \"string\",\n    \"securityStatus\": \"string\",\n    \"policyStatus\": \"string\"\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

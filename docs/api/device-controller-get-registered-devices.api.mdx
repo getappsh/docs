@@ -1,0 +1,201 @@
+---
+id: device-controller-get-registered-devices
+title: "Get Registered Devices"
+description: "This service message allows retrieval of all registered devices."
+sidebar_label: "Get Registered Devices"
+hide_title: true
+hide_table_of_contents: true
+api: eJytU02P0zAQ/SuRz922i+BSIaTCwmq5gGhXHKrVapJME+86trGnLVWU/86Mk25bKAckLo07bz7e+D23ynkMQNrZu1LN1A1udYEfnKXgjMHwWCF9w0pHwoBlj0Y1UiXGImgvdVy1rHXMIgZBswZjhAozMMbtYhaQgsYtmMytJcaBQ7us7PuNuaGHAA1yOKrZ6mGkAkbvbORhs1a9mk7lcz6UiwrmiZYEA++NLtIik6coCa2KRY0NyIn2HrnE5U9YkEwLsjbpvr0uT3Ii07WV6kbKQKR7XwLx4vwjOWsXGuB5SqJXpBvkZhcL+Qotz2I6/1Zr+RYusvmyuBiGLWgDucEFucDXfjHJux2GE8RumpwDjORgy50uqb6IDt7YcvNhiSEld84gWNVxEmky+GKdG3Ic7RIAlYg5AIpFjVhsgqY9R1uVIwRhtXroGGLtaycOZMMlOwglNQGvJ9vrSW+U4SP+E7O9eOXQdiF695Iemg8mSJz70Gg4fDrI8fn78ihETeTTVtquXVp42O4W6Wru/QXrYzZg2fzrXRZ3UFVpjPDrc6bjN+PXg12hELt2SZRIDSSj9qLLjOz42LK/vLb2aPv/8fCGxQl/0sQb0FaE3wQjg3oVVvy4tCx0nagkMQ+HKLLWvImktW0OEe+D6ToJ/9hg2PcKbSFoMWlSmwsQyiR9q56RU9S8KNCL7kx3I3T+eM5nHrn9KJLB5sy2v+mbug8Q2P1J77fvU0K2dM9o3zHQcyD5y3PYu78AIhO+PA==
+sidebar_class_name: "get api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Get Registered Devices
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/api/v1/device/devices"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows retrieval of all registered devices.
+
+## Request
+
+<div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"id"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"lastUpdatedDate"}
+                        required={false}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"lastConnectionDate"}
+                        required={false}
+                        schemaName={"date-time"}
+                        qualifierMessage={undefined}
+                        schema={{"format":"date-time","type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"OS"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"availableStorage"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"power"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"bandwidth"}
+                        required={false}
+                        schemaName={"number"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"operativeState"}
+                        required={false}
+                        schemaName={"boolean"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"boolean"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"id\": \"string\",\n  \"lastUpdatedDate\": \"2024-06-30T16:12:05.981Z\",\n  \"lastConnectionDate\": \"2024-06-30T16:12:05.981Z\",\n  \"name\": \"string\",\n  \"OS\": \"string\",\n  \"availableStorage\": \"string\",\n  \"power\": 0,\n  \"bandwidth\": 0,\n  \"operativeState\": true\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -1,0 +1,423 @@
+---
+id: get-maps-status
+title: "This service message allows the consumer to get the updated state and status information for the map list"
+description: "This service message allows the consumer to get the updated state and status information for the map list"
+sidebar_label: "This service message allows the consumer to get the updated state and status information for the map list"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VttOGzEQ/ZWVn0ODaOlD3lJAbaTSIi5PEULO7iQx9drGHqeEKP/eGTuXDdmKtKrKS7z2zPicMxezECgnQfSG4lK64qgYmBkYtH4u7jvCOvASlTWDSvTEBPChli48BJQYg+gID8FZE4D8F+Lk+Jh/KgilV469yIeMSmuQQvKZdE6rMkXsPgY2WIhQTqGWvMK5A3KR3ss5+SmEOjT27egRSky3PkXloWLQtCZsHUG4rjzDRQWMTIU7V0kEPmO4wHTc1oLBeGheqwjlBDzZj62vJeat9ye0YaLWcqTJCn2EZUeA95fQxBbQKzNpMx0rDd9kDYcZW4uODvEg6y3HrfXIWg3SiOVrSd7QkaSpYokJaWf9lZQd2WgqQvDJPtPXi7X1V5iBpjVKTyVxDcHqmNK9J3HTd48RQdQyYObQHyNp/1Y2Pn7Y04F4KqPqWIveMUU0h0q9pdgGrClH2/ke9YOQ7yDdKvmnvny/QubCPcs5DgmzxOmh1CfUuc2aMLEe7d471lZim3fuuDZRgnqBv2yo3KIt4MEw56EoqVmRS7MCrWbg52nptE1zqiHHTYq0Chlzo2v9fUxBfh+dnDyTPbeG7xgYctY625zR+FIm8v6VjIF/z6QpQes0XC68t8zxzqjs1cRznhDWNP1uMprl/R755R78GM7RiiX/dcTpP5qqrV1vcrtnqc5sxR81VYactMzL9UFb6tvbbrkT+qDKaC/zvnNJ5+vVe7MWZ1eV26kKRQA/UyUUK7QFZcT+DAVOoSDJQqzBF2gL6t60F/MELVIBFtLkVQyFMhkbhS5olYxpohZaBUwq4dSuHkWx7j3R5eexu3keOUaivaYxoYwV1xc3t0f9q4F4jX+VVVmmrGZJRd+r4oucUTGmgUnUmP/2nHepH0IOcfzuNI0CG7CWpmH2P7XZYbVJOsIzdp2WmUj0ae5l3Yb8VoVNIXLpTYkBHywWIxngzuvlkrefIrd+b0jLmfQqt9HwngJOQVb8glCX/4A5C1eW4BjOTOqY/q943SbcjJs8fr64par6BSqjHCM=
+sidebar_class_name: "get api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  This service message allows the consumer to get the updated state and status information for the map list
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/maps/status"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service message allows the consumer to get the updated state and status information for the map list
+
+## Request
+
+<div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"area"}
+                        required={false}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"errMes"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"fileName"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"footprint"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"isUpdated"}
+                        required={true}
+                        schemaName={"boolean"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"boolean"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                mapProperties
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__required"}
+                              >
+                                required
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"boundingBox"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"lastUpdateAfter"}
+                              required={false}
+                              schemaName={"int64"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","format":"int64","nullable":true,"minimum":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"name"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"productId"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"productName"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"targetResolution"}
+                              required={true}
+                              schemaName={"int64"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","format":"int64","minimum":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"zoomLevel"}
+                              required={true}
+                              schemaName={"int64"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","format":"int64","minimum":0}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"path"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"progress"}
+                        required={false}
+                        schemaName={"float"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number","format":"float","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"reqId"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"size"}
+                        required={false}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"state"}
+                        required={true}
+                        schemaName={"MapState"}
+                        qualifierMessage={"**Possible values:** [`create`, `delivery`, `deploy`]"}
+                        schema={{"type":"string","enum":["create","delivery","deploy"],"title":"MapState"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"status"}
+                        required={false}
+                        schemaName={"object"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","enum":["Start","Done","Installing","Continue","Pause","Cancelled","Error","Uninstall"],"title":"DeploymentStatus"}}
+                      >
+                        
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"area\": 0,\n    \"errMes\": \"string\",\n    \"fileName\": \"string\",\n    \"footprint\": \"string\",\n    \"isUpdated\": true,\n    \"mapProperties\": {\n      \"boundingBox\": \"string\",\n      \"lastUpdateAfter\": 0,\n      \"name\": \"string\",\n      \"productId\": \"string\",\n      \"productName\": \"string\",\n      \"targetResolution\": 0,\n      \"zoomLevel\": 0\n    },\n    \"path\": \"string\",\n    \"progress\": 0,\n    \"reqId\": \"string\",\n    \"size\": 0,\n    \"state\": \"create\",\n    \"status\": \"Start\"\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

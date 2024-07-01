@@ -1,0 +1,153 @@
+---
+id: project-management-controller-create-token
+title: "Create Upload token for a Project"
+description: "Create Upload token for a Project"
+sidebar_label: "Create Upload token for a Project"
+hide_title: true
+hide_table_of_contents: true
+api: eJyNk8Fu2zAMhl/F0GkFvLoZtkswDMg6bOiAYcGaoociGBiHidU6lkrJ2QLD7z5SVuw43aGnKCRF//x+qlHGIoHXprpZq6mak3nE3P+ACra4w8pfm8qTKUuk3zkheFyYJ6xUqiwQ7NAjOTV9aFTFf/i+7e5zr1QRPteakNt6qjFVupIC8AXnXF7gDtS0adulVDprKofcqlHvribys0aXk7aijK/xlZyVsCDJgbWlzoPq7NFJQTN0VP5gRYpZiRJRSjKj1137qLAbY6h2nnS1VW2bKq99iQOLUPnFG861IQ1bGfmYTgZWikdxmNek/SFAWSEQEh+XMuV4outAM7mzpYF14uUjycZQAklszMqZb2HEFmtcmETgTVUGVmf7SWbPzTpGsqb3oc3GtjmkfefZidhbYdfhOUqOQIVDDKXx8NXQDtgG9f1+wcHIr/DeBnq62pjANVL8hv7tzFp1Pv+iwCTmktn8JnF/YLsNnxF9Xc3V5YfL99F6yH1YlzTA2EEwL27da1iOvt7b7vEvUyuBd5M711SGFQmYH3jNtMiZdDs0Rj3E+DQ9XftT3sy4EOu4WdOswOEdlW0r4eca6dC5sAfSsBJYvDJr7eTMpm+gdPhCd/8K1Jtf8X1dJIMN43liEKqDzAFljd1TesLD6K22Sy4uENZhWZuYn+U5Wn9y88Wzk63ud3T+81b2AWqB1wM+W57Q/r+yPn4OBUkA96kXGcwUgW37D2uNmZI=
+sidebar_class_name: "post api-method"
+info_path: docs/api/get-app
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Create Upload token for a Project
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/api/v1/projectManagement/project/{projectId}/createToken"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create Upload token for a Project
+
+## Request
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"name":"projectId","required":true,"in":"path","schema":{}}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"201"}
+        value={"201"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"projectToken"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"projectToken\": \"string\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

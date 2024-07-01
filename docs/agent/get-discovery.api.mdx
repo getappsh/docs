@@ -1,0 +1,543 @@
+---
+id: get-discovery
+title: "get_discovery"
+description: "get_discovery"
+sidebar_label: "get_discovery"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVktvGjEQ/iuRT62UFFS1PeQWAWqRoiQK9ISiyuwOi1OvvfGDNEX898542cW7bJ700HIB7Hl833g+e9bM8cyy0xkbCpvoFZgHdnPMdAGGO6HVOGWnLAP3I623j5kBW2hlAf3W7GO/T18p2MSIgnzQA40SrRwoR3u8KKRIQrzerSWDNbPJEnJOv9xDAejCjeEUXDjIbbSu57eQuJD1zgsDKYFVPAdcQjwWg174fA6GcnLHpc4QNHIoDLFwooS529qFts4IlbFNcIRMI7muzRSkCMyJipSXC0TwNDwDC0yEXOzEceOGUEhN3ILPHrS5cFsGu+wCi5cFTgttcu7KpS+fcCEXSuQ+Z6d9Au6NwSpPBdZjD3vknCLBEydC1ZSXks8lGjrjISKIYJ23XXFAUcIZC3Tw/1ArijQyRhPGAVcJSAnE+Yp7S3sDPH+hPATreyU1D6fihKPMbNjMSSi2VkM8qQiDqg635rJAK9fwIDRvZ7+NMrJogYatWj5xEs1QrZOpwk4KgPRJPqn2FCT2CWU+mNHE6eLtUZrNuwsz11oCV4S34G7ZlWAvVimILnGVC493nNULd88NIcx5ETSON0fcSWO8MKbkvdnstxfb3HQ2fMXpdXru1u9f0iBBGiy5yoA0AZ3onhPkWFm85mRpEymwFmUk1Eq835UovZryJDg50qoE+ngdD5RfiHGo+OpAh0qnCrK9CP+PEzhM6DlYyzM419m/quWg1k7+YRDowqIXi/JBfZnCd+PB7uKLXq3XzBJt946bMyJ3GXB2cjOA1hYutIOORxkN7LPvdTy1hYqEvqsHmvomjI5goHMc7qK2wzx+Xq/G6VojG0uESbzk5l1tfQ126PR7CtKc1brorIRxnsuJ+A0vei83HaDLhLhHn+PWVNqeY3NwS70dcFn1mrFebdLD9XNhaU+ohQ6gtgnPMkx2dD2aTE/OrsasnWk7//IkXEVlk7IzI46+8RXeDcQWJ2LAGTraj6qE//ofPocnVluXcxWZIaijmEUjc102B79cr5C8TOaNpL2SYbMtKo7YAkvMRdvr9Rz77ruRmw0t3/kw/M7w54obUfbo7AbDLoGndJgorp/wQBSTBAqq14pLH1qkPfpTp9d1/zqa4lH9AQs6SyU=
+sidebar_class_name: "get api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  get_discovery
+</h1>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/discovery/getList"}
+>
+  
+</MethodEndpoint>
+
+
+
+get_discovery
+
+## Request
+
+<div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                        >
+                          Array [
+                        </div>
+                      </li><SchemaItem
+                        collapsible={false}
+                        name={"catalogId"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"category"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                delivery
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__nullable"}
+                              >
+                                nullable
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"bitNumber"}
+                              required={false}
+                              schemaName={"int64"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","format":"int64","minimum":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"currentTime"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deliveryStatus"}
+                              required={false}
+                              schemaName={"DeliveryStatus"}
+                              qualifierMessage={"**Possible values:** [`Start`, `Done`, `Error`, `Cancelled`, `Pause`, `Continue`, `Download`]"}
+                              schema={{"type":"string","enum":["Start","Done","Error","Cancelled","Pause","Continue","Download"],"title":"DeliveryStatus"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"downloadData"}
+                              required={false}
+                              schemaName={"float"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"number","format":"float"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"downloadDone"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"downloadEstimateTime"}
+                              required={false}
+                              schemaName={"int64"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","format":"int64","nullable":true,"minimum":0}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"downloadSpeed"}
+                              required={false}
+                              schemaName={"double"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"number","format":"double"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"downloadStart"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"downloadStop"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"isStartDeploy"}
+                              required={true}
+                              schemaName={"boolean"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"boolean"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"path"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"refId"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"type"}
+                              required={true}
+                              schemaName={"ItemType"}
+                              qualifierMessage={"**Possible values:** [`software`, `map`, `cache`]"}
+                              schema={{"type":"string","enum":["software","map","cache"],"title":"ItemType"}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                deploy
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__nullable"}
+                              >
+                                nullable
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"currentTime"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deployChangeState"}
+                              required={false}
+                              schemaName={"DeploymentStatus"}
+                              qualifierMessage={"**Possible values:** [`Start`, `Done`, `Installing`, `Continue`, `Pause`, `Cancelled`, `Error`, `Uninstall`]"}
+                              schema={{"nullable":true,"type":"string","enum":["Start","Done","Installing","Continue","Pause","Cancelled","Error","Uninstall"],"title":"DeploymentStatus"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deployDone"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deployEstimateTime"}
+                              required={false}
+                              schemaName={"int64"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","format":"int64","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deployStart"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deployStatus"}
+                              required={false}
+                              schemaName={"DeploymentStatus"}
+                              qualifierMessage={"**Possible values:** [`Start`, `Done`, `Installing`, `Continue`, `Pause`, `Cancelled`, `Error`, `Uninstall`]"}
+                              schema={{"nullable":true,"type":"string","enum":["Start","Done","Installing","Continue","Pause","Cancelled","Error","Uninstall"],"title":"DeploymentStatus"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"deployStop"}
+                              required={false}
+                              schemaName={"date-time"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","format":"date-time","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"messageLog"}
+                              required={false}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","nullable":true}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"refId"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"type"}
+                              required={true}
+                              schemaName={"ItemType"}
+                              qualifierMessage={"**Possible values:** [`software`, `map`, `cache`]"}
+                              schema={{"type":"string","enum":["software","map","cache"],"title":"ItemType"}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                offer
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__nullable"}
+                              >
+                                nullable
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"catalogId"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"isStartDownload"}
+                              required={true}
+                              schemaName={"boolean"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"boolean"}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"releaseNotes"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"status"}
+                        required={false}
+                        schemaName={"ComponentStatus"}
+                        qualifierMessage={"**Possible values:** [`discovery`, `offered`, `delivery`, `deploy`]"}
+                        schema={{"type":"string","enum":["discovery","offered","delivery","deploy"],"title":"ComponentStatus"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"subComponents"}
+                        required={false}
+                        schemaName={"undefined[]"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"array","items":"circular(ComponentResDto)"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"versionNumber"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"virtualSize"}
+                        required={false}
+                        schemaName={"double"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"number","format":"double"}}
+                      >
+                        
+                      </SchemaItem><li>
+                        <div
+                          style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                        >
+                          ]
+                        </div>
+                      </li>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"[\n  {\n    \"catalogId\": \"string\",\n    \"category\": \"string\",\n    \"delivery\": {\n      \"bitNumber\": 0,\n      \"currentTime\": \"2024-07-01T08:57:44.915Z\",\n      \"deliveryStatus\": \"Start\",\n      \"downloadData\": 0,\n      \"downloadDone\": \"2024-07-01T08:57:44.915Z\",\n      \"downloadEstimateTime\": 0,\n      \"downloadSpeed\": 0,\n      \"downloadStart\": \"2024-07-01T08:57:44.915Z\",\n      \"downloadStop\": \"2024-07-01T08:57:44.915Z\",\n      \"isStartDeploy\": true,\n      \"path\": \"string\",\n      \"refId\": \"string\",\n      \"type\": \"software\"\n    },\n    \"deploy\": {\n      \"currentTime\": \"2024-07-01T08:57:44.917Z\",\n      \"deployChangeState\": \"Start\",\n      \"deployDone\": \"2024-07-01T08:57:44.917Z\",\n      \"deployEstimateTime\": 0,\n      \"deployStart\": \"2024-07-01T08:57:44.917Z\",\n      \"deployStatus\": \"Start\",\n      \"deployStop\": \"2024-07-01T08:57:44.917Z\",\n      \"messageLog\": \"string\",\n      \"refId\": \"string\",\n      \"type\": \"software\"\n    },\n    \"name\": \"string\",\n    \"offer\": {\n      \"catalogId\": \"string\",\n      \"isStartDownload\": true\n    },\n    \"releaseNotes\": \"string\",\n    \"status\": \"discovery\",\n    \"subComponents\": [\n      null\n    ],\n    \"versionNumber\": \"string\",\n    \"virtualSize\": 0\n  }\n]"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

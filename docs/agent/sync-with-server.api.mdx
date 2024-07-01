@@ -1,0 +1,160 @@
+---
+id: sync-with-server
+title: "Sync devices discoveries with Get-app server"
+description: "This service pull and push devices discoveries from and to the server."
+sidebar_label: "Sync devices discoveries with Get-app server"
+hide_title: true
+hide_table_of_contents: true
+api: eJytkk2P2jAQhv+K5TO7oK32wg1Vq5ZD1dVC1QNCK+MMyWwd22tP0qIo/70zCRRoOZYLzny+88x0mkyZ9Xyjlz6Tcc4QBq++GFuhB72d6AKyTRjFrOd6XWFWGVKLFlRsnFPGF/zIlSpAjFkVmG1oISG/9ynUQwQFRRUMmZDu9USHCGnotSy4bD54+/oTqXodIzggQY7BZ2BxnX6YzeTvWovuJ/rxpmOibfAEnsRnYnRoh17TtywBnc62gtrIiw4ROCXs3sDS0Pa9wQSFIPGmBjYxF2ryx1DIRw05m3IgE5MMQThKPDnONTMl9KWoHArdclyUPruRpZcDg31ItaHR9OFBuqPHuqn1fNZzNiE5SVjE+JRSSC9HZLqXn2ilKgjeGLLMFg1V/DXFeirAvzPv1Qk3+n0YNJxqloxPvTyt1neL56X++w6OiI0dEI/z6UVC9dm0Dr3MxtBBxJz9YuVueSwxu38Ug2irjb8IW7G2m9ckB6I+Ad3xStWfQ7kS1p03//9u9bgXgl80jc6M4zXJSbuR6UZjLZdyTZVvpBLy7O66ncnwLbm+F/N7A+nAdn62JqHZCfPNlstWYApOnW86/QMOAtVaiLK91rhGZPxzz/32YtXPX1dr3v9vR5VR4g==
+sidebar_class_name: "post api-method"
+info_path: docs/agent/agent-rest-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<h1
+  className={"openapi__heading"}
+>
+  Sync devices discoveries with Get-app server
+</h1>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/im/syncWithServer"}
+>
+  
+</MethodEndpoint>
+
+
+
+This service pull and push devices discoveries from and to the server.
+
+## Request
+
+<div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"name"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"statusCode"}
+                        required={true}
+                        schemaName={"int32"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"integer","format":"int32","minimum":0}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"message\": \"string\",\n  \"name\": \"string\",\n  \"statusCode\": 0\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
