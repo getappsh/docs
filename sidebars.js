@@ -39,10 +39,10 @@ const sidebars = {
       type: 'category',
       link: {
           type: 'generated-index',
-          title: 'API docs',
-          description: 'Generated API docs for the OpenAPI spec',
+          title: 'Server docs',
+          description: 'Generated Server docs for the OpenAPI spec',
       },
-      items: require("./docs/api/sidebar.ts"),
+      items: require("./docs/server/sidebar.ts"),
     }
 
   ] 
