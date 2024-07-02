@@ -44,7 +44,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/getappsh',
+            'https://github.com/getappsh/docs',
           docRootComponent: "@theme/DocRoot",
           docItemComponent: "@theme/ApiItem" // derived from docusaurus-theme-openapi-docs
         },
@@ -53,7 +53,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/getappsh',
+            'https://github.com/getappsh/docs',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -120,7 +120,7 @@ const config = {
           { to: '/usecase', label: 'Use Cases', position: 'left' },
           { to: '/about', label: 'About the Product', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/getappsh/docs',
             label: 'GitHub',
             position: 'right',
           },
@@ -168,7 +168,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/getappsh/docs',
               },
             ],
           },
