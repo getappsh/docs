@@ -78,7 +78,7 @@ const config = {
             },
           },
           agent: {
-            specPath: "openapi.json",
+            specPath: "open-api/agent-docs.json",
             outputDir: "docs/agent",
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
@@ -111,6 +111,12 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
+          {
+            type: 'docSidebar',
+            sidebarId: 'apiSidebar',
+            position: 'left',
+            label: 'API',
+          },
           { to: '/usecase', label: 'Use Cases', position: 'left' },
           { to: '/about', label: 'About the Product', position: 'left' },
           {
@@ -128,7 +134,7 @@ const config = {
             items: [
               {
                 label: 'Docs',
-                to: '/docs/Root/intro',
+                to: '/docs/root/intro',
               },
             ],
           },
