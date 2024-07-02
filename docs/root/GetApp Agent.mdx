@@ -16,6 +16,8 @@ To activate the agent, you first need to register it by calling the appropriate 
 
 **Description**: Registers the agent by providing the necessary platform and formation information.
 
+[View OpenAPI Docs](/docs/agent/update-general-device)
+
 # Software Management
 
 ### Discovery
@@ -26,6 +28,8 @@ To provide your software, start the discovery process:
 
 **Description**: Initiates the discovery of available software and updates.
 
+[View OpenAPI Docs](/docs/agent/start-discovery)
+
 ### Get Offerings
 
 To see all available software and updates:
@@ -34,6 +38,8 @@ To see all available software and updates:
 
 **Description**: Retrieves a list of all available software and updates.
 
+[View OpenAPI Docs](/docs/agent/get-offering)
+
 ### Download Software
 
 When you decide to download a software update, use the following API call:
@@ -41,6 +47,8 @@ When you decide to download a software update, use the following API call:
 **Endpoint**: `POST /delivery/startItem/{catalog_id}`
 
 **Description**: Starts the download of the specified software update.
+
+[View OpenAPI Docs](/docs/agent/start-delivery)
 
 ### Query Delivery Status
 
@@ -53,6 +61,8 @@ To query the delivery status of a software update:
 **Parameters**:
 - `catalog_id`: The ID of the catalog item to check the status for.
 
+[View OpenAPI Docs](/docs/agent/get-delivery-status)
+
 ### Install Software
 
 When the download is finished, install the software using the following API call:
@@ -62,7 +72,9 @@ When the download is finished, install the software using the following API call
 **Description**: Initiates the installation of the downloaded software.
 
 **Parameters**:
-- `deployStatus`: Set this to \"Start\" to begin the installation.
+- `deployStatus`: Set this to "Start" to begin the installation.
+
+[View OpenAPI Docs](/docs/agent/deploy-message)
 
 ## Flow Diagram
 
@@ -78,6 +90,8 @@ graph TD;
       F -->|POST /deploy/messageItem| G[Software Installed]
 ```
 
+
+<br/><br/>
 
 # Map Export Process
 
@@ -95,6 +109,8 @@ To start the export process, use the following API call:
 - `boundingBox`: The bounding box of the area to export, in string format.
 - `footprint`: The footprint of the area to export, in string format.
 
+[View OpenAPI Docs](/docs/agent/map-import-create)
+
 ### Query Export Status
 
 To check the status of the export request, use the following API call:
@@ -105,6 +121,8 @@ To check the status of the export request, use the following API call:
 
 **Parameters**:
 - `import_request_id`: The ID of the export request to check the status for.
+
+[View OpenAPI Docs](/docs/agent/get-map-create-status)
 
 ### Download Exported File
 
@@ -117,6 +135,8 @@ Once the export is complete, download the file using the following API call:
 **Parameters**:
 - `import_request_id`: The ID of the export request to download the file for.
 
+[View OpenAPI Docs](/docs/agent/get-map-delivery-start)
+
 ### Query Delivery Status
 
 To check the delivery status of the exported file, use the following API call:
@@ -128,16 +148,19 @@ To check the delivery status of the exported file, use the following API call:
 **Parameters**:
 - `import_request_id`: The ID of the export request to check the delivery status for.
 
+[View OpenAPI Docs](/docs/agent/get-map-delivery-status)
+
 ## Flow Diagram
 
 Here is a visual representation of the map export process:
 
 ```mermaid
-graph TD
-	 A[Register Agent] -->|PUT /generalDevice| B[Create Export Request]
-	 B[Create Export Request] -->|POST /map/import/create| C[Query Export Status]
-	 C -->|GET /map/import/create/status/`import_request_id`| D[Download Exported File]
-	 D -->|POST /map/import/delivery/start/`import_request_id`| E[Query Delivery Status]
-	 E -->|GET /map/import/delivery/status/`import_request_id`| F[Map Exported]
+graph TD;
+    A[Register Agent] -->|PUT /generalDevice| B[Create Export Request]
+    B -->|POST /map/import/create| C[Query Export Status]
+    C -->|GET /map/import/create/status/`import_request_id`| D[Download Exported File]
+    D -->|POST /map/import/delivery/start/`import_request_id`| E[Query Delivery Status]
+    E -->|GET /map/import/delivery/status/`import_request_id`| F[Map Exported]
+
 ```
 
