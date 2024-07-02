@@ -1,166 +1,155 @@
 ---
 sidebar_position: 4
+title: GetApp Agent
 ---
 
-# GetApp Agent
+# GetApp Agent Documentation
 
-The Agent API allows you to manage software and maps.
+Welcome to the documentation for the GetApp Agent API, which provides functionalities for managing software updates and exporting maps.
 
-# Registration
+## Registration
 
-To activate the agent, you first need to register it by calling the appropriate API endpoint.
+To activate the agent, you must first register it by calling the appropriate API endpoint.
 
 ### Register Agent
 
 **Endpoint**: `PUT /generalDevice`
 
-**Description**: Registers the agent by providing the necessary platform and formation information.
+**Description**: Registers the agent by providing necessary platform and formation information.
 
 [View OpenAPI Docs](/docs/agent/update-general-device)
 
-# Software Management
+## Software Management
 
-### Discovery
+### Software Discovery
 
-To provide your software, start the discovery process:
+Initiate the discovery process to find available software updates.
 
 **Endpoint**: `POST /discovery/start`
 
-**Description**: Initiates the discovery of available software and updates.
+**Description**: Starts the discovery of available software and updates.
 
 [View OpenAPI Docs](/docs/agent/start-discovery)
 
-### Get Offerings
+### Get Software Offerings
 
-To see all available software and updates:
+Retrieve a list of all available software and updates.
 
 **Endpoint**: `GET /offering/getList`
 
-**Description**: Retrieves a list of all available software and updates.
+**Description**: Retrieves a list of available software and updates.
 
 [View OpenAPI Docs](/docs/agent/get-offering)
 
-### Download Software
+### Download Software Update
 
-When you decide to download a software update, use the following API call:
+Start downloading a specific software update identified by `catalog_id`.
 
 **Endpoint**: `POST /delivery/startItem/{catalog_id}`
 
-**Description**: Starts the download of the specified software update.
+**Description**: Initiates the download of the specified software update.
 
 [View OpenAPI Docs](/docs/agent/start-delivery)
 
 ### Query Delivery Status
 
-To query the delivery status of a software update:
+Check the delivery status of a software update download.
 
 **Endpoint**: `GET /delivery/getStatusItem/{catalog_id}`
 
 **Description**: Retrieves the status of the specified software update download.
 
 **Parameters**:
-- `catalog_id`: The ID of the catalog item to check the status for.
+- `catalog_id`: ID of the software update to check.
 
 [View OpenAPI Docs](/docs/agent/get-delivery-status)
 
 ### Install Software
 
-When the download is finished, install the software using the following API call:
+Initiate the installation of downloaded software.
 
 **Endpoint**: `POST /deploy/messageItem/`
 
-**Description**: Initiates the installation of the downloaded software.
+**Description**: Initiates the installation of downloaded software.
 
 **Parameters**:
-- `deployStatus`: Set this to "Start" to begin the installation.
+- `deployStatus`: Set to "Start" to begin installation.
 
 [View OpenAPI Docs](/docs/agent/deploy-message)
 
-## Flow Diagram
-
-Here is a visual representation of the flow:
 
 ```mermaid
 graph TD;
-      A[Register Agent] -->|PUT /generalDevice| B[Start Discovery]
-      B -->|POST /discovery/start| C[Get Offerings]
-      C -->|GET /offering/getList| D[Download Software]
-      D -->|POST /delivery/startItem/`catalog_id`| E[Query Delivery Status]
-      E -->|GET /delivery/getStatusItem/`catalog_id`| F[Install Software]
-      F -->|POST /deploy/messageItem| G[Software Installed]
+    A[Register Agent] -->|PUT /generalDevice| B[Start Discovery]
+    B -->|POST /discovery/start| C[Get Offerings]
+    C -->|GET /offering/getList| D[Download Software]
+    D -->|"POST /delivery/startItem/{catalog_id}"| E[Query Delivery Status]
+    E -->|"GET /delivery/getStatusItem/{catalog_id}"| F[Install Software]
+
 ```
 
+## Map Export Process
 
-<br/><br/>
-
-# Map Export Process
-
-The Map Export API allows you to export maps in a GeoPackage (GPKG) format. The process involves several steps, starting with initiating the export request and ending with downloading the exported file.
+The Map Export API allows exporting maps in GeoPackage (GPKG) format.
 
 ### Create Export Request
 
-To start the export process, use the following API call:
+Initiate the export of a map by providing the bounding box or footprint.
 
 **Endpoint**: `POST /map/import/create`
 
-**Description**: Initiates the export of a map by providing the bounding box or footprint.
-
-**Parameters**:
-- `boundingBox`: The bounding box of the area to export, in string format.
-- `footprint`: The footprint of the area to export, in string format.
+**Description**: Initiates the export of a map by specifying the bounding box or footprint.
 
 [View OpenAPI Docs](/docs/agent/map-import-create)
 
 ### Query Export Status
 
-To check the status of the export request, use the following API call:
+Retrieve the status of a map export request.
 
 **Endpoint**: `GET /map/import/create/status/{import_request_id}`
 
-**Description**: Retrieves the status of the specified export request.
+**Description**: Retrieves the status of the specified map export request.
 
 **Parameters**:
-- `import_request_id`: The ID of the export request to check the status for.
+- `import_request_id`: ID of the map export request.
 
 [View OpenAPI Docs](/docs/agent/get-map-create-status)
 
 ### Download Exported File
 
-Once the export is complete, download the file using the following API call:
+Initiate the download of the exported map file.
 
 **Endpoint**: `POST /map/import/delivery/start/{import_request_id}`
 
-**Description**: Initiates the download of the exported map file.
+**Description**: Initiates the download of the exported map file for a specific request.
 
 **Parameters**:
-- `import_request_id`: The ID of the export request to download the file for.
+- `import_request_id`: ID of the map export request.
 
 [View OpenAPI Docs](/docs/agent/get-map-delivery-start)
 
 ### Query Delivery Status
 
-To check the delivery status of the exported file, use the following API call:
+Check the delivery status of the exported map file.
 
 **Endpoint**: `GET /map/import/delivery/status/{import_request_id}`
 
-**Description**: Retrieves the status of the file download for the specified export request.
+**Description**: Retrieves the delivery status of the exported map file for a specific request.
 
 **Parameters**:
-- `import_request_id`: The ID of the export request to check the delivery status for.
+- `import_request_id`: ID of the map export request.
 
 [View OpenAPI Docs](/docs/agent/get-map-delivery-status)
 
 ## Flow Diagram
 
-Here is a visual representation of the map export process:
+Here is a visual representation of the workflows for software management and map export:
 
 ```mermaid
 graph TD;
-    A[Register Agent] -->|PUT /generalDevice| B[Create Export Request]
-    B -->|POST /map/import/create| C[Query Export Status]
-    C -->|GET /map/import/create/status/`import_request_id`| D[Download Exported File]
-    D -->|POST /map/import/delivery/start/`import_request_id`| E[Query Delivery Status]
-    E -->|GET /map/import/delivery/status/`import_request_id`| F[Map Exported]
+    G[Register Agent] -->|PUT /generalDevice| H[Create Export Request]
+    H -->|POST /map/import/create| I[Query Export Status]
+    I -->|"GET /map/import/create/status/{import_request_id}"| J[Download Exported File]
+    J -->|"POST /map/import/delivery/start/{import_request_id}"| K[Query Delivery Status]
 
 ```
-
