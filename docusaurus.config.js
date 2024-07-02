@@ -69,9 +69,9 @@ const config = {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
-          api: { // the <id> referenced when running CLI commands
+          server: { // the <id> referenced when running CLI commands
             specPath: "https://api-getapp-dev.apps.okd4-stage-getapp.getappstage.link/docs-yaml", // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api/", // output directory for generated files
+            outputDir: "docs/server/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
               categoryLinkSource: "tag",
@@ -135,6 +135,10 @@ const config = {
               {
                 label: 'Docs',
                 to: '/docs/root/intro',
+              },
+              {
+                label: 'API',
+                to: '/docs/category/agent',
               },
             ],
           },
