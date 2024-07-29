@@ -8,7 +8,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'GetApp Site',
+  title: 'GetApp Developer Site',
   tagline: 'Managed Digital Assets',
   favicon: 'img/graynowords.png',
 
