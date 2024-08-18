@@ -6,6 +6,28 @@
     "version": "0.5"
   },
   "paths": {
+    "/connection/status": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "summary": "Retrieves connection status to GetApp server",
+        "description": "Retrieves connection status to GetApp server",
+        "operationId": "get_connection_status",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionStatusDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/delivery/cancelItem/{catalog_id}": {
       "post": {
         "tags": [
@@ -634,7 +656,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/ComponentReqDto"
+                  "$ref": "#/components/schemas/DiscoverComponentDto"
                 }
               }
             }
@@ -1228,13 +1250,126 @@
         }
       }
     },
+    "/map/inventory": {
+      "get": {
+        "tags": [
+          "Map - Inventory"
+        ],
+        "summary": "Retrieve the list of maps in the inventory.",
+        "description": "This endpoint returns a list of all maps currently available in the inventory.\nThe list provides detailed information about each map, including its metadata, paths,\nand imaging dates.",
+        "operationId": "get_inventory_maps",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DetailedMapInventory"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/map/inventory/approveDelete/{importRequestId}": {
+      "post": {
+        "tags": [
+          "Map - Inventory"
+        ],
+        "summary": "Approve deletion of a specific map identified by its import request ID.",
+        "description": "This endpoint approves the deletion of a map that has been requested for deletion.\nMaps will not be deleted until they are approved by this endpoint or by updating the `getmap.json` file.",
+        "operationId": "approve_map_delete",
+        "parameters": [
+          {
+            "name": "importRequestId",
+            "in": "path",
+            "description": "The unique identifier of the map import request",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapStorageStatusEnum"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/map/inventory/deletionRequests": {
+      "get": {
+        "tags": [
+          "Map - Inventory"
+        ],
+        "summary": "Retrieve maps that are requested for deletion.",
+        "description": "This endpoint retrieves a list of maps that have been requested for deletion.\nTo approve the deletion of a map, use the endpoint `/map/inventory/approveDelete/{importRequestId}`.",
+        "operationId": "get_deletion_requested",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/map/inventory/discover": {
       "post": {
         "tags": [
           "Map - Inventory"
         ],
-        "summary": "Initiates the discovery process for the inventory of maps.",
-        "description": "Initiates the inventory discovery process and returns a response indicating the status.",
+        "summary": "Initiate the discovery process for the map inventory.",
+        "description": "This endpoint initiates the discovery process for the inventory of maps\nand returns a response indicating the status of the operation.",
         "operationId": "inventory_discover",
         "responses": {
           "200": {
@@ -1258,8 +1393,8 @@
         "tags": [
           "Map - Inventory"
         ],
-        "summary": "Retrieves the update information for all maps.",
-        "description": "Retrieves and returns the update information for all maps.",
+        "summary": "Retrieve update information for all maps.",
+        "description": "This endpoint retrieves and returns update information for all maps in the inventory.",
         "operationId": "get_maps_updates",
         "responses": {
           "200": {
@@ -1293,13 +1428,14 @@
         "tags": [
           "Map - Inventory"
         ],
-        "summary": "Retrieves the update information for a specific map.",
-        "description": "Retrieves and returns the update information for the map identified by `importRequestId`.",
+        "summary": "Retrieve update information for a specific map.",
+        "description": "This endpoint retrieves and returns update information for the map identified by the given `importRequestId`.",
         "operationId": "get_map_update_by_id",
         "parameters": [
           {
             "name": "importRequestId",
             "in": "path",
+            "description": "The unique identifier of the map import request",
             "required": true,
             "schema": {
               "type": "string"
@@ -1330,18 +1466,105 @@
         }
       }
     },
+    "/map/inventory/obsolete": {
+      "get": {
+        "tags": [
+          "Map - Inventory"
+        ],
+        "summary": "Retrieve a list of all obsoleted maps.",
+        "description": "This endpoint retrieves a list of all maps (identified by the given `importRequestId`) that have been marked as obsoleted in the inventory.",
+        "operationId": "get_obsoleted",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/map/inventory/{importRequestId}": {
+      "put": {
+        "tags": [
+          "Map - Inventory"
+        ],
+        "summary": "Update properties of a specific map identified by its import request ID.",
+        "description": "This endpoint updates the properties of the map identified by `importRequestId`, such as its name,\nand returns a response indicating the update status.",
+        "operationId": "put_map",
+        "parameters": [
+          {
+            "name": "importRequestId",
+            "in": "path",
+            "description": "The unique identifier of the map import request",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MapPutDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapStatusDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Map - Inventory"
         ],
-        "summary": "Deletes a specific map identified by its import request ID.",
-        "description": "Deletes the map identified by `importRequestId` and returns a response indicating the deletion status.",
+        "summary": "Request deletion of a specific map identified by its import request ID.",
+        "description": "This endpoint requests the deletion of a map. The map will not be deleted immediately;\nit will be marked for deletion and requires approval, either through this API or by updating the `getmap.json` file.",
         "operationId": "delete_map",
         "parameters": [
           {
             "name": "importRequestId",
             "in": "path",
+            "description": "The unique identifier of the map import request",
             "required": true,
             "schema": {
               "type": "string"
@@ -1350,7 +1573,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapStorageStatusEnum"
+                }
+              }
+            }
           },
           "500": {
             "description": "",
@@ -1370,13 +1600,14 @@
         "tags": [
           "Map - Inventory"
         ],
-        "summary": "Retrieves the current status of a specific map import request.",
-        "description": "Retrieves and returns the current status of the map identified by `import_request_id`.",
+        "summary": "Retrieve the current status of a specific map import request.",
+        "description": "This endpoint retrieves and returns the current status of the map identified by the given `import_request_id`.",
         "operationId": "get_map_status",
         "parameters": [
           {
             "name": "import_request_id",
             "in": "path",
+            "description": "The unique identifier of the map import request",
             "required": true,
             "schema": {
               "type": "string"
@@ -1407,13 +1638,101 @@
         }
       }
     },
+    "/maps/events/download-failed": {
+      "get": {
+        "tags": [
+          "Server-Sent Events"
+        ],
+        "summary": "Subscribe to the \"map download/import failed\" event.",
+        "description": "This endpoint allows clients to subscribe to server-sent events (SSE) that notify\nthem when a map download or import has failed. The response includes basic information\nabout the map associated with the failed operation.",
+        "operationId": "download_failed_map_event",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseMapInventory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/events/new": {
+      "get": {
+        "tags": [
+          "Server-Sent Events"
+        ],
+        "summary": "Subscribe to the \"new map\" event.",
+        "description": "This endpoint allows clients to subscribe to server-sent events (SSE) that notify\nthem when a new map is added to the inventory. The response includes detailed\ninformation about the new map.",
+        "operationId": "new_map_event",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailedMapInventory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/events/obsoleted": {
+      "get": {
+        "tags": [
+          "Server-Sent Events"
+        ],
+        "summary": "Subscribe to the \"obsoleted map\" event.",
+        "description": "This endpoint allows clients to subscribe to server-sent events (SSE) that notify\nthem when a map in the inventory has been obsoleted (i.e., replaced or updated).\nThe response includes basic information about the obsoleted map.",
+        "operationId": "obsoleted_map_event",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseMapInventory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/maps/events/request-delete": {
+      "get": {
+        "tags": [
+          "Server-Sent Events"
+        ],
+        "summary": "Subscribe to the \"map request-delete\" event.",
+        "description": "This endpoint allows clients to subscribe to server-sent events (SSE) that notify\nthem when a map in the inventory has been marked for deletion. The response includes\nbasic information about the map marked for deletion.",
+        "operationId": "request_delete_map_event",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseMapInventory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/maps/status": {
       "get": {
         "tags": [
           "Map - Inventory"
         ],
-        "summary": "Retrieves the current status of all map import requests.",
-        "description": "Retrieves and returns the current status of all map import requests.",
+        "summary": "Retrieve the current status of all map import requests.",
+        "description": "This endpoint retrieves and returns the current status of all map import requests in the inventory.",
         "operationId": "get_maps_status",
         "responses": {
           "200": {
@@ -1526,49 +1845,38 @@
           }
         }
       },
+      "BaseMapInventory": {
+        "type": "object",
+        "description": "Represents the base inventory information of a map.",
+        "required": [
+          "reqId",
+          "name"
+        ],
+        "properties": {
+          "errMes": {
+            "type": "string",
+            "description": "Optional error message, typically used to indicate issues with the map.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the map or the inventory item."
+          },
+          "reqId": {
+            "type": "string",
+            "description": "Request ID associated with the map inventory."
+          }
+        }
+      },
       "Command": {
         "type": "string",
         "enum": [
           "Discovery"
         ]
       },
-      "ComponentReqDto": {
-        "type": "object",
-        "required": [
-          "name",
-          "versionNumber",
-          "catalogId"
-        ],
-        "properties": {
-          "catalogId": {
-            "type": "string"
-          },
-          "category": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "releaseNotes": {
-            "type": "string"
-          },
-          "subComponents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ComponentReqDto"
-            }
-          },
-          "versionNumber": {
-            "type": "string"
-          },
-          "virtualSize": {
-            "type": "number",
-            "format": "double"
-          }
-        }
-      },
       "ComponentResDto": {
         "type": "object",
+        "description": "Software DTO struct ['ComponentResDto']\n\nused for Agent client to received the installed and deployed softwares list",
         "required": [
           "name",
           "versionNumber",
@@ -1637,6 +1945,21 @@
           "delivery",
           "deploy"
         ]
+      },
+      "ConnectionStatusDto": {
+        "type": "object",
+        "required": [
+          "connected"
+        ],
+        "properties": {
+          "connected": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          }
+        }
       },
       "Delivery": {
         "type": "object",
@@ -1719,13 +2042,9 @@
         "type": "object",
         "required": [
           "importRequestId",
-          "state"
+          "status"
         ],
         "properties": {
-          "downloadData": {
-            "type": "number",
-            "format": "float"
-          },
           "errorMessage": {
             "type": "string",
             "nullable": true
@@ -1739,10 +2058,25 @@
           "importRequestId": {
             "type": "string"
           },
-          "state": {
-            "$ref": "#/components/schemas/DeliveryStatus"
+          "progress": {
+            "type": "number",
+            "format": "float"
+          },
+          "status": {
+            "$ref": "#/components/schemas/DeliveryStatusEnum"
           }
         }
+      },
+      "DeliveryStatusEnum": {
+        "type": "string",
+        "enum": [
+          "Start",
+          "InProgress",
+          "Done",
+          "Pause",
+          "Cancel",
+          "Error"
+        ]
       },
       "Deploy": {
         "type": "object",
@@ -1830,6 +2164,46 @@
           "Uninstall"
         ]
       },
+      "DetailedMapInventory": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseMapInventory"
+          },
+          {
+            "type": "object",
+            "required": [
+              "bBox",
+              "paths"
+            ],
+            "properties": {
+              "bBox": {
+                "type": "string",
+                "description": "Bounding box of the map, usually represented as a string."
+              },
+              "beginImagingDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Optional start date of imaging for the map, if applicable.",
+                "nullable": true
+              },
+              "endImagingDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Optional end date of imaging for the map, if applicable.",
+                "nullable": true
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to the .gpkg and .json files on the filesystem."
+              }
+            }
+          }
+        ],
+        "description": "Represents a detailed inventory of a map, containing various attributes related to the map."
+      },
       "DeviceStatusDto": {
         "type": "object",
         "required": [
@@ -1850,6 +2224,42 @@
           },
           "deviceId": {
             "type": "string"
+          }
+        }
+      },
+      "DiscoverComponentDto": {
+        "type": "object",
+        "description": "Software DTO struct ['DiscoverComponentDto']\n\nused for Agent client to discover the installed and deployed softwares",
+        "required": [
+          "name",
+          "versionNumber",
+          "catalogId"
+        ],
+        "properties": {
+          "catalogId": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "releaseNotes": {
+            "type": "string"
+          },
+          "subComponents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiscoverComponentDto"
+            }
+          },
+          "versionNumber": {
+            "type": "string"
+          },
+          "virtualSize": {
+            "type": "number",
+            "format": "double"
           }
         }
       },
@@ -1931,6 +2341,7 @@
       },
       "MapCreateDto": {
         "type": "object",
+        "description": "Map DTO struct ['MapCreateDto']\n\nused for 'Agent UI' client at 'import create' message",
         "required": [
           "mapProperties"
         ],
@@ -1956,6 +2367,7 @@
       },
       "MapCreateStatusResDto": {
         "type": "object",
+        "description": "Map DTO struct ['MapCreateStatusResDto']\n\nused the response the 'Agent UI' client as 'import create' message or 'get import create status' request",
         "required": [
           "importRequestId",
           "status"
@@ -1980,6 +2392,7 @@
       },
       "MapDeployStatusMesDto": {
         "type": "object",
+        "description": "Map DTO struct ['MapDeployStatusMesDto']\n\nused to ger from Agent UI a deploy message",
         "required": [
           "status"
         ],
@@ -1995,6 +2408,7 @@
       },
       "MapIsUpdateDto": {
         "type": "object",
+        "description": "Map DTO struct ['MapIsUpdateDto']\n\nused to response the Agent UI client with the 'is_updated' status",
         "required": [
           "reqId",
           "isUpdate"
@@ -2010,6 +2424,7 @@
       },
       "MapProps": {
         "type": "object",
+        "description": "Map DTO struct ['MapProps']\n\nfor app inner using",
         "required": [
           "productName",
           "productId",
@@ -2051,6 +2466,7 @@
       },
       "MapPropsDto": {
         "type": "object",
+        "description": "Map DTO struct ['MapPropsDto']\n\nused for 'Agent UI' client at 'import create' message",
         "required": [
           "boundingBox"
         ],
@@ -2094,6 +2510,16 @@
           }
         }
       },
+      "MapPutDto": {
+        "type": "object",
+        "description": "Inventory DTO struct ['MapPutDto']",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
       "MapState": {
         "type": "string",
         "enum": [
@@ -2104,16 +2530,40 @@
       },
       "MapStatusDto": {
         "type": "object",
+        "description": "Inventory DTO struct ['MapStatusDto']",
         "required": [
+          "createdDate",
+          "updatedDate",
           "reqId",
           "mapProperties",
           "isUpdated",
+          "storageStatus",
           "state"
         ],
         "properties": {
           "area": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "beginImagingDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "downloadDuration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "minimum": 0
+          },
+          "endImagingDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "errMes": {
@@ -2133,10 +2583,6 @@
           },
           "mapProperties": {
             "$ref": "#/components/schemas/MapProps"
-          },
-          "path": {
-            "type": "string",
-            "nullable": true
           },
           "progress": {
             "type": "number",
@@ -2161,19 +2607,29 @@
               }
             ],
             "nullable": true
+          },
+          "storageStatus": {
+            "$ref": "#/components/schemas/MapStorageStatusEnum"
+          },
+          "updateBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "MepStatusMsgDto": {
-        "type": "object",
-        "required": [
-          "importRequestId"
-        ],
-        "properties": {
-          "importRequestId": {
-            "type": "string"
-          }
-        }
+      "MapStorageStatusEnum": {
+        "type": "string",
+        "enum": [
+          "initializing",
+          "ready",
+          "deleteRequest",
+          "deleteApprove",
+          "deleted"
+        ]
       },
       "Offer": {
         "type": "object",
@@ -2454,6 +2910,10 @@
     {
       "name": "Installation Machine",
       "description": "Endpoints related to managing communication and synchronization tasks for an Installation Machine within the system."
+    },
+    {
+      "name": "Server-Sent Events",
+      "description": "Endpoints related to subscription to Sever Events."
     }
   ]
 }
