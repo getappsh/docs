@@ -781,9 +781,9 @@
         "tags": [
           "General"
         ],
-        "summary": "Health Check of GetApp Agent",
+        "summary": "Health Check",
         "description": "This endpoint performs a health check on the GetApp agent, including checking the status of the network connection and server connectivity.\nThe network connection status is determined by attempting to connect to the URL specified in the `NETWORK_AVAILABILITY_URL` environment variable.",
-        "operationId": "get_connection_status",
+        "operationId": "health_check",
         "responses": {
           "200": {
             "description": "",
