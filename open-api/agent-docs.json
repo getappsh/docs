@@ -9,7 +9,7 @@
     "/analyses/map": {
       "post": {
         "tags": [
-          "Map - Analytics"
+          "Analytics"
         ],
         "summary": "Allows the consumer report map usage.",
         "description": "Allows the consumer to report types of map usage for analysis purposes",
@@ -34,24 +34,30 @@
         }
       }
     },
-    "/connection/status": {
-      "get": {
+    "/analyses/map/ui": {
+      "post": {
         "tags": [
-          "General"
+          "Analytics"
         ],
-        "summary": "Retrieves connection status to GetApp server",
-        "description": "Retrieves connection status to GetApp server",
-        "operationId": "get_connection_status",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConnectionStatusDto"
-                }
+        "summary": "Allows the consumer report map ui usage.",
+        "description": "Allows the consumer to report map UI interactions for analysis purposes",
+        "operationId": "matomo_js",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatomoBody"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
           }
         }
       }
@@ -763,6 +769,28 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health-check": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "summary": "Health Check of GetApp Agent",
+        "description": "This endpoint performs a health check on the GetApp agent, including checking the status of the network connection and server connectivity.\nThe network connection status is determined by attempting to connect to the URL specified in the `NETWORK_AVAILABILITY_URL` environment variable.",
+        "operationId": "get_connection_status",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthCheck"
                 }
               }
             }
@@ -2022,21 +2050,6 @@
           "deploy"
         ]
       },
-      "ConnectionStatusDto": {
-        "type": "object",
-        "required": [
-          "connected"
-        ],
-        "properties": {
-          "connected": {
-            "type": "boolean"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "Delivery": {
         "type": "object",
         "required": [
@@ -2377,6 +2390,17 @@
           }
         }
       },
+      "HealthCheck": {
+        "type": "object",
+        "required": [
+          "network"
+        ],
+        "properties": {
+          "network": {
+            "$ref": "#/components/schemas/NetworkConnection"
+          }
+        }
+      },
       "IMCommandDto": {
         "type": "object",
         "required": [
@@ -2660,8 +2684,14 @@
           "downloadDuration": {
             "type": "integer",
             "format": "int32",
-            "nullable": true,
-            "minimum": 0
+            "description": "download duration in seconds",
+            "nullable": true
+          },
+          "downloadETA": {
+            "type": "integer",
+            "format": "int32",
+            "description": "download estimated time in seconds",
+            "nullable": true
           },
           "endImagingDate": {
             "type": "string",
@@ -2733,6 +2763,60 @@
           "deleted"
         ]
       },
+      "MatomoBody": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MatomoEventTypes"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "MatomoEventTypes": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "NetworkConnection": {
+        "type": "object",
+        "required": [
+          "internetConnection",
+          "serverConnection"
+        ],
+        "properties": {
+          "errMsg": {
+            "type": "string",
+            "description": "An optional error message if there was an issue with the connections.",
+            "nullable": true
+          },
+          "internetConnection": {
+            "type": "boolean",
+            "description": "Indicates whether the agent has an active internet connection."
+          },
+          "serverConnection": {
+            "type": "boolean",
+            "description": "Indicates whether the agent can successfully connect to the server."
+          }
+        }
+      },
       "ObsoletedMapsEvent": {
         "type": "object",
         "description": "Represents an event to check if any maps are obsoleted in the inventory.",
@@ -2740,9 +2824,10 @@
           "obsoleted"
         ],
         "properties": {
-          "obsoleted": {
-            "type": "boolean",
-            "description": "Indicates whether there is any map in the inventory that is obsoleted."
+          "errMsg": {
+            "type": "string",
+            "description": "Optional error message, typically used to indicate issues encountered during\nthe obsolescence check.",
+            "nullable": true
           },
           "lastCheck": {
             "type": "string",
@@ -2750,10 +2835,9 @@
             "description": "The last time the inventory was checked against the server to determine\nif there are any obsolete maps.",
             "nullable": true
           },
-          "errMsg": {
-            "type": "string",
-            "description": "Optional error message, typically used to indicate issues encountered during\nthe obsolescence check.",
-            "nullable": true
+          "obsoleted": {
+            "type": "boolean",
+            "description": "Indicates whether there is any map in the inventory that is obsoleted."
           }
         }
       },
@@ -3034,16 +3118,16 @@
       "description": "Endpoints for managing and querying map inventory, including status updates, inventory discovery, and deletion operations."
     },
     {
-      "name": "Map - Analytics",
-      "description": "Endpoints for managing and analyzing the usage of map data, including sending, updating, storing, and collecting this data for analytics purposes."
+      "name": "Server-Sent Events",
+      "description": "Endpoints related to subscription to Sever Events."
     },
     {
       "name": "Installation Machine",
       "description": "Endpoints related to managing communication and synchronization tasks for an Installation Machine within the system."
     },
     {
-      "name": "Server-Sent Events",
-      "description": "Endpoints related to subscription to Sever Events."
+      "name": "Analytics",
+      "description": "Endpoints for managing and analyzing the data usage, including sending, updating, storing, and collecting this data for analytics purposes."
     }
   ]
 }
