@@ -6,41 +6,13 @@
     "version": "0.5"
   },
   "paths": {
-    "/analyses/map": {
+    "/analyses": {
       "post": {
         "tags": [
           "Analytics"
         ],
-        "summary": "Allows the consumer report map usage.",
-        "description": "Allows the consumer to report types of map usage for analysis purposes",
-        "operationId": "map_analyses",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MapInteractionBody"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "500": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/analyses/map/ui": {
-      "post": {
-        "tags": [
-          "Analytics"
-        ],
-        "summary": "Allows the consumer report map ui usage.",
-        "description": "Allows the consumer to report map UI interactions for analysis purposes",
+        "summary": "Data Reporting",
+        "description": "This functionality allows the system to report raw data in the form of key-value pairs for analytical purposes.\nThe reported data provides flexible and comprehensive insights into various metrics, supporting improved decision-making, service optimization, and enhancing the overall user experience.",
         "operationId": "matomo_js",
         "requestBody": {
           "content": {
@@ -58,6 +30,56 @@
           },
           "500": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/analyses/event": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "summary": "Usage Event Reporting",
+        "description": "This functionality allows the system to receive and report various types of usage events for analytical purposes.\nThe collected data provides valuable insights into user interactions, supporting better decision-making, service optimization, and improving the overall user experience",
+        "operationId": "matomo_event",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatomoEventBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/config/map": {
+      "get": {
+        "tags": [
+          "General"
+        ],
+        "summary": "Map Configuration",
+        "description": "This endpoint returns the current configuration related to map management.",
+        "operationId": "map_config",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapConfig"
+                }
+              }
+            }
           }
         }
       }
@@ -911,17 +933,17 @@
         }
       }
     },
-    "/map/import/create/cancel/{import_request_id}": {
+    "/map/import/create/cancel/{reqId}": {
       "post": {
         "tags": [
           "Map Import - Create"
         ],
         "summary": "Allows the consumer to cancel a map creation process.",
-        "description": "Cancels the map creation process identified by `import_request_id`.",
+        "description": "Cancels the map creation process identified by `reqId`.",
         "operationId": "map_create_cancel",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -953,17 +975,17 @@
         }
       }
     },
-    "/map/import/create/status/{import_request_id}": {
+    "/map/import/create/status/{reqId}": {
       "get": {
         "tags": [
           "Map Import - Create"
         ],
         "summary": "Retrieves the current status of a map stamp creation.",
-        "description": "Retrieves and returns the current status of the specified map stamp creation identified by `import_request_id`.",
+        "description": "Retrieves and returns the current status of the specified map stamp creation identified by `reqId`.",
         "operationId": "get_map_create_status",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -995,17 +1017,17 @@
         }
       }
     },
-    "/map/import/delivery/cancel/{import_request_id}": {
+    "/map/import/delivery/cancel/{reqId}": {
       "post": {
         "tags": [
           "Map Import - Delivery"
         ],
         "summary": "Allows the sender to cancel downloading a map stamp.",
-        "description": "This endpoint cancels the download process for a map import request identified by `import_request_id`.",
+        "description": "This endpoint cancels the download process for a map import request identified by `reqId`.",
         "operationId": "get_map_delivery_cancel",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1030,17 +1052,17 @@
         }
       }
     },
-    "/map/import/delivery/delete/{import_request_id}": {
+    "/map/import/delivery/delete/{reqId}": {
       "delete": {
         "tags": [
           "Map Import - Delivery"
         ],
         "summary": "Allows the sender to delete a downloaded map stamp.",
-        "description": "This endpoint deletes the downloaded map stamp for a map import request identified by `import_request_id`.",
+        "description": "This endpoint deletes the downloaded map stamp for a map import request identified by `reqId`.",
         "operationId": "get_map_delivery_delete",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1065,17 +1087,17 @@
         }
       }
     },
-    "/map/import/delivery/pause/{import_request_id}": {
+    "/map/import/delivery/pause/{reqId}": {
       "post": {
         "tags": [
           "Map Import - Delivery"
         ],
         "summary": "Allows the sender to stop downloading a map stamp.",
-        "description": "This endpoint pauses the download process for a map import request identified by `import_request_id`.",
+        "description": "This endpoint pauses the download process for a map import request identified by `reqId`.",
         "operationId": "get_map_delivery_pause",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1100,17 +1122,17 @@
         }
       }
     },
-    "/map/import/delivery/start/{import_request_id}": {
+    "/map/import/delivery/start/{reqId}": {
       "post": {
         "tags": [
           "Map Import - Delivery"
         ],
         "summary": "Allows the sender to continue downloading a stamp from a map that has been stopped.",
-        "description": "This endpoint resumes the download process for a paused map import request identified by `import_request_id`.",
+        "description": "This endpoint resumes the download process for a paused map import request identified by `reqId`.",
         "operationId": "get_map_delivery_start",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1135,7 +1157,7 @@
         }
       }
     },
-    "/map/import/delivery/status/{import_request_id}": {
+    "/map/import/delivery/status/{reqId}": {
       "get": {
         "tags": [
           "Map Import - Delivery"
@@ -1145,7 +1167,7 @@
         "operationId": "get_map_delivery_status",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1177,17 +1199,17 @@
         }
       }
     },
-    "/map/import/deploy/status/{importRequestId}": {
+    "/map/import/deploy/status/{reqId}": {
       "get": {
         "tags": [
           "Map Import - Deploy"
         ],
         "summary": "Retrieves the installation status of a map stamp deployment.",
-        "description": "Retrieves and returns the installation status of the map stamp deployment identified by `importRequestId`.",
+        "description": "Retrieves and returns the installation status of the map stamp deployment identified by `reqId`.",
         "operationId": "get_map_deploy_status",
         "parameters": [
           {
-            "name": "importRequestId",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1219,17 +1241,17 @@
         }
       }
     },
-    "/map/import/deploy/{importRequestId}": {
+    "/map/import/deploy/{reqId}": {
       "post": {
         "tags": [
           "Map Import - Deploy"
         ],
         "summary": "Allows the sender to notify the installation status of a map stamp.",
-        "description": "Sends a message to notify the installation status of a map stamp identified by `importRequestId`.",
+        "description": "Sends a message to notify the installation status of a map stamp identified by `reqId`.",
         "operationId": "get_map_deploy",
         "parameters": [
           {
-            "name": "importRequestId",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1264,17 +1286,17 @@
         }
       }
     },
-    "/map/import/resume/{import_request_id}": {
+    "/map/import/resume/{reqId}": {
       "post": {
         "tags": [
           "Map Import - Create"
         ],
         "summary": "Allows the consumer to resume an existing map import process.",
-        "description": "Resumes the map import process identified by `import_request_id`, which can be used for maps in an error state\nor out-of-date maps, among other scenarios.",
+        "description": "Resumes the map import process identified by `reqId`, which can be used for maps in an error state\nor out-of-date maps, among other scenarios.",
         "operationId": "get_map_resume",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1341,7 +1363,7 @@
         }
       }
     },
-    "/map/inventory/approveDelete/{importRequestId}": {
+    "/map/inventory/approveDelete/{reqId}": {
       "post": {
         "tags": [
           "Map - Inventory"
@@ -1351,7 +1373,7 @@
         "operationId": "approve_map_delete",
         "parameters": [
           {
-            "name": "importRequestId",
+            "name": "reqId",
             "in": "path",
             "description": "The unique identifier of the map import request",
             "required": true,
@@ -1390,7 +1412,7 @@
           "Map - Inventory"
         ],
         "summary": "Retrieve maps that are requested for deletion.",
-        "description": "This endpoint retrieves a list of maps that have been requested for deletion.\nTo approve the deletion of a map, use the endpoint `/map/inventory/approveDelete/{importRequestId}`.",
+        "description": "This endpoint retrieves a list of maps that have been requested for deletion.\nTo approve the deletion of a map, use the endpoint `/map/inventory/approveDelete/{reqId}`.",
         "operationId": "get_deletion_requested",
         "responses": {
           "200": {
@@ -1502,17 +1524,17 @@
         }
       }
     },
-    "/map/inventory/isUpdate/{importRequestId}": {
+    "/map/inventory/isUpdate/{reqId}": {
       "get": {
         "tags": [
           "Map - Inventory"
         ],
         "summary": "Retrieve update information for a specific map.",
-        "description": "This endpoint retrieves and returns update information for the map identified by the given `importRequestId`.",
+        "description": "This endpoint retrieves and returns update information for the map identified by the given `reqId`.",
         "operationId": "get_map_update_by_id",
         "parameters": [
           {
-            "name": "importRequestId",
+            "name": "reqId",
             "in": "path",
             "description": "The unique identifier of the map import request",
             "required": true,
@@ -1551,7 +1573,7 @@
           "Map - Inventory"
         ],
         "summary": "Retrieve a list of all obsoleted maps.",
-        "description": "This endpoint retrieves a list of all maps (identified by the given `importRequestId`) that have been marked as obsoleted in the inventory.",
+        "description": "This endpoint retrieves a list of all maps (identified by the given `reqId`) that have been marked as obsoleted in the inventory.",
         "operationId": "get_obsoleted",
         "responses": {
           "200": {
@@ -1605,17 +1627,17 @@
         }
       }
     },
-    "/map/inventory/{importRequestId}": {
+    "/map/inventory/{reqId}": {
       "put": {
         "tags": [
           "Map - Inventory"
         ],
         "summary": "Update properties of a specific map identified by its import request ID.",
-        "description": "This endpoint updates the properties of the map identified by `importRequestId`, such as its name,\nand returns a response indicating the update status.",
+        "description": "This endpoint updates the properties of the map identified by `reqId`, such as its name,\nand returns a response indicating the update status.",
         "operationId": "put_map",
         "parameters": [
           {
-            "name": "importRequestId",
+            "name": "reqId",
             "in": "path",
             "description": "The unique identifier of the map import request",
             "required": true,
@@ -1666,7 +1688,7 @@
         "operationId": "delete_map",
         "parameters": [
           {
-            "name": "importRequestId",
+            "name": "reqId",
             "in": "path",
             "description": "The unique identifier of the map import request",
             "required": true,
@@ -1699,17 +1721,17 @@
         }
       }
     },
-    "/map/status/{import_request_id}": {
+    "/map/status/{reqId}": {
       "get": {
         "tags": [
           "Map - Inventory"
         ],
         "summary": "Retrieve the current status of a specific map import request.",
-        "description": "This endpoint retrieves and returns the current status of the map identified by the given `import_request_id`.",
+        "description": "This endpoint retrieves and returns the current status of the map identified by the given `reqId`.",
         "operationId": "get_map_status",
         "parameters": [
           {
-            "name": "import_request_id",
+            "name": "reqId",
             "in": "path",
             "description": "The unique identifier of the map import request",
             "required": true,
@@ -2261,14 +2283,10 @@
           {
             "type": "object",
             "required": [
-              "bBox",
+              "footprint",
               "paths"
             ],
             "properties": {
-              "bBox": {
-                "type": "string",
-                "description": "Bounding box of the map, usually represented as a string."
-              },
               "beginImagingDate": {
                 "type": "string",
                 "format": "date-time",
@@ -2280,6 +2298,10 @@
                 "format": "date-time",
                 "description": "Optional end date of imaging for the map, if applicable.",
                 "nullable": true
+              },
+              "footprint": {
+                "type": "string",
+                "description": "Footprint of the map, usually represented as a string."
               },
               "paths": {
                 "type": "array",
@@ -2439,6 +2461,23 @@
           }
         }
       },
+      "MapConfig": {
+        "type": "object",
+        "properties": {
+          "lastObsoleteCheck": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time when the last obsolescence check was performed.",
+            "nullable": true
+          },
+          "obsoleteCheckInterval": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The interval in minutes between obsolescence checks.",
+            "nullable": true
+          }
+        }
+      },
       "MapCreateDto": {
         "type": "object",
         "description": "Map DTO struct ['MapCreateDto']\n\nused for 'Agent UI' client at 'import create' message",
@@ -2505,32 +2544,6 @@
             "$ref": "#/components/schemas/DeploymentStatus"
           }
         }
-      },
-      "MapInteractionBody": {
-        "type": "object",
-        "required": [
-          "reqId",
-          "event"
-        ],
-        "properties": {
-          "event": {
-            "$ref": "#/components/schemas/MapInteractionEvent"
-          },
-          "reqId": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "MapInteractionEvent": {
-        "type": "string",
-        "enum": [
-          "on",
-          "off"
-        ]
       },
       "MapIsUpdateDto": {
         "type": "object",
@@ -2772,6 +2785,33 @@
                 "$ref": "#/components/schemas/MatomoEventTypes"
               }
             ],
+            "nullable": true
+          }
+        }
+      },
+      "MatomoEventBody": {
+        "type": "object",
+        "required": [
+          "category",
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
             "nullable": true
           }
         }
