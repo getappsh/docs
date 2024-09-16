@@ -64,6 +64,8 @@ jobs:
           asset_path: build.zip
           asset_name: build.zip
           asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           
   deploy:
     name: Deploy to GitHub Pages
