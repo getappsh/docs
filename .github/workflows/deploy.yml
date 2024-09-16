@@ -6,7 +6,10 @@ on:
       - main
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
-
+permissions:
+  contents: write  # Ensure permissions to write to repository content
+  packages: write  # Ensure permissions to upload release assets
+  
 jobs:
   build:
     name: Build Docusaurus
