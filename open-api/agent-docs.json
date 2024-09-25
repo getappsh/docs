@@ -69,7 +69,37 @@
         ],
         "summary": "Map Configuration",
         "description": "This endpoint returns the current configuration related to map management.",
-        "operationId": "map_config",
+        "operationId": "get_map_config",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapConfig"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "General"
+        ],
+        "summary": "Map Configuration",
+        "description": "This endpoint allows to update the configuration related to map management.",
+        "operationId": "set_map_config",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MapConfig"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "",
@@ -673,13 +703,83 @@
         }
       }
     },
+    "/discover/component": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Discover available components",
+        "description": "Initiates the component discovery process and returns a list of available components (offering).",
+        "operationId": "discover_comp",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComponentResDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discover/map": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Discover available map products",
+        "description": "Initiates the map discovery process and returns a list of available map products.",
+        "operationId": "discover_map",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MapProductDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/discovery/getList": {
       "get": {
         "tags": [
           "Discovery"
         ],
         "summary": "Retrieves a list of discovered components.",
-        "description": "Retrieves and returns a list of components that have been discovered.",
+        "description": "Retrieves and return a list of components that have been discovered.",
         "operationId": "get_discovery",
         "responses": {
           "200": {
@@ -1950,6 +2050,212 @@
   },
   "components": {
     "schemas": {
+      "AppError": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ClientError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InternetConnectionError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "UnauthorizedError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "InternalServerError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "MissingDataError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ParsingFailedError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "WritingDataError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ForbiddenError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "NotAllowedError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "ValidationError"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "msg"
+            ],
+            "properties": {
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "SQLError"
+                ]
+              }
+            }
+          }
+        ],
+        "description": "Represents various types of errors that can occur in the application.\n\nWhen serialized, it will be represented in the following format:\n\n```json\n{\n\"type\": \"ErrorType\",\n\"msg\": \"ErrorMessage\"\n}\n```\n\nWhere:\n- `type` is the specific error type (e.g., `ClientError`, `InternalServerError`).\n- `msg` is the associated error message (a string).",
+        "discriminator": {
+          "propertyName": "type"
+        }
+      },
       "AppErrorResponse": {
         "type": "object",
         "required": [
@@ -1979,9 +2285,12 @@
           "name"
         ],
         "properties": {
-          "errMsg": {
-            "type": "string",
-            "description": "Optional error message, typically used to indicate issues with the map.",
+          "error": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AppError"
+              }
+            ],
             "nullable": true
           },
           "name": {
@@ -2031,6 +2340,10 @@
             ],
             "nullable": true
           },
+          "latest": {
+            "type": "boolean",
+            "nullable": true
+          },
           "name": {
             "type": "string"
           },
@@ -2046,13 +2359,18 @@
             "type": "string"
           },
           "status": {
-            "$ref": "#/components/schemas/ComponentStatus"
+            "$ref": "#/components/schemas/ComponentState"
           },
           "subComponents": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ComponentResDto"
             }
+          },
+          "uploadDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "versionNumber": {
             "type": "string"
@@ -2063,7 +2381,7 @@
           }
         }
       },
-      "ComponentStatus": {
+      "ComponentState": {
         "type": "string",
         "enum": [
           "discovery",
@@ -2287,16 +2605,22 @@
               "paths"
             ],
             "properties": {
+              "availabilityDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Optional: The date when the map is made available for use, if applicable.",
+                "nullable": true
+              },
               "beginImagingDate": {
                 "type": "string",
                 "format": "date-time",
-                "description": "Optional start date of imaging for the map, if applicable.",
+                "description": "Optional: start date of imaging for the map, if applicable.",
                 "nullable": true
               },
               "endImagingDate": {
                 "type": "string",
                 "format": "date-time",
-                "description": "Optional end date of imaging for the map, if applicable.",
+                "description": "Optional: end date of imaging for the map, if applicable.",
                 "nullable": true
               },
               "footprint": {
@@ -2340,7 +2664,7 @@
       },
       "DiscoverComponentDto": {
         "type": "object",
-        "description": "Software DTO struct ['DiscoverComponentDto']\n\nused for Agent client to discover the installed and deployed softwares",
+        "description": "Software DTO struct ['DiscoverComponentDto']\n\nused for Agent client to discover the installed and deployed software",
         "required": [
           "name",
           "versionNumber",
@@ -2353,6 +2677,10 @@
           "category": {
             "type": "string"
           },
+          "latest": {
+            "type": "boolean",
+            "nullable": true
+          },
           "name": {
             "type": "string"
           },
@@ -2364,6 +2692,11 @@
             "items": {
               "$ref": "#/components/schemas/DiscoverComponentDto"
             }
+          },
+          "uploadDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "versionNumber": {
             "type": "string"
@@ -2471,9 +2804,29 @@
             "nullable": true
           },
           "obsoleteCheckInterval": {
-            "type": "integer",
-            "format": "int32",
-            "description": "The interval in minutes between obsolescence checks.",
+            "type": "number",
+            "format": "float",
+            "description": "The interval in hours between obsolescence checks.",
+            "nullable": true
+          },
+          "tileLayerSource": {
+            "type": "string",
+            "description": "The URL for the tile layer source.",
+            "nullable": true
+          },
+          "wmtsCapabilitiesUrl": {
+            "type": "string",
+            "description": "The URL for the capabilities' endpoint.",
+            "nullable": true
+          },
+          "wmtsTileUrl": {
+            "type": "string",
+            "description": "The URL and properties for the WMTS service, serialized as a JSON string.",
+            "nullable": true
+          },
+          "xyzTileUrl": {
+            "type": "string",
+            "description": "The URL for the XYZ tile service.",
             "nullable": true
           }
         }
@@ -2558,6 +2911,75 @@
           },
           "reqId": {
             "type": "string"
+          }
+        }
+      },
+      "MapProductDto": {
+        "type": "object",
+        "required": [
+          "id",
+          "productId",
+          "footprint"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "footprint": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "imagingTimeBeginUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "imagingTimeEndUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ingestionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "maxResolutionDeg": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "productId": {
+            "type": "string"
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "productSubType": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "productType": {
+            "type": "string",
+            "nullable": true
+          },
+          "productVersion": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "transparency": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -2864,9 +3286,12 @@
           "obsoleted"
         ],
         "properties": {
-          "errMsg": {
-            "type": "string",
-            "description": "Optional error message, typically used to indicate issues encountered during\nthe obsolescence check.",
+          "error": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AppError"
+              }
+            ],
             "nullable": true
           },
           "lastCheck": {
@@ -2888,13 +3313,30 @@
           "isStartDownload"
         ],
         "properties": {
+          "action": {
+            "$ref": "#/components/schemas/OfferAction"
+          },
           "catalogId": {
             "type": "string"
           },
           "isStartDownload": {
             "type": "boolean"
+          },
+          "itemType": {
+            "$ref": "#/components/schemas/ItemType"
+          },
+          "offeredDate": {
+            "type": "string",
+            "format": "date-time"
           }
         }
+      },
+      "OfferAction": {
+        "type": "string",
+        "enum": [
+          "offer",
+          "push"
+        ]
       },
       "OfferingCompRes": {
         "type": "object",
