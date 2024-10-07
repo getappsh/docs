@@ -108,6 +108,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: ${{ secrets.REGISTRY_URL }}/getapp-dev/docs:${{ env.RELEASE_TAG }}
+          tags: harbor.getapp.sh/getapp-dev/docs:${{ env.RELEASE_TAG }}
           push: true
 
