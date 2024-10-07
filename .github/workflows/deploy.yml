@@ -41,7 +41,7 @@ jobs:
           
       - name: Get current date and time
         id: get_datetime
-        run: echo "RELEASE_TAG=v1-$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+        run: echo "RELEASE_TAG=v1-$(date +'%d-%m-%Y')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -80,9 +80,34 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+      
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+  build_and_push_image:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensure all tags are fetched
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          registry: harbor.getapp.sh
+          username: "${{ secrets.REGISTRY_USERNAME }}"
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          tags: ${{ secrets.REGISTRY_URL }}/getapp-dev/docs:${{ env.RELEASE_TAG }}
+          push: true
+
