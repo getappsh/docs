@@ -70,7 +70,7 @@ const config = {
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
           server: { // the <id> referenced when running CLI commands
-            specPath: "https://api-getapp-dev.apps.okd4-stage-getapp.getappstage.link/docs-yaml", // path to OpenAPI spec, URLs supported
+            specPath: "https://api-getapp-getapp-dev.apps.sr.eastus.aroapp.io/docs-yaml", // path to OpenAPI spec, URLs supported
             outputDir: "docs/server/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
