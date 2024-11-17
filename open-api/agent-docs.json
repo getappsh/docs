@@ -752,10 +752,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MapProductDto"
-                  }
+                  "$ref": "#/components/schemas/MapOfferingDto"
                 }
               }
             }
@@ -791,6 +788,48 @@
                   "items": {
                     "$ref": "#/components/schemas/ComponentResDto"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discovery/set/component": {
+      "post": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Registers a component.",
+        "description": "This endpoint allows a program to register with GetApp by providing its program details.",
+        "operationId": "set_component",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscoverComponentDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentResDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppErrorResponse"
                 }
               }
             }
@@ -840,7 +879,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/generalDevice": {
@@ -1930,6 +1970,28 @@
         }
       }
     },
+    "/maps/events/on-change": {
+      "get": {
+        "tags": [
+          "Server-Sent Events"
+        ],
+        "summary": "Subscribe to the \"map change\" event.",
+        "description": "This endpoint allows clients to subscribe to server-sent events (SSE) that notify\nthem when a map changed.",
+        "operationId": "on_change_map_event",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapStatusDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/maps/events/request-delete": {
       "get": {
         "tags": [
@@ -2809,24 +2871,9 @@
             "description": "The interval in hours between obsolescence checks.",
             "nullable": true
           },
-          "tileLayerSource": {
+          "tileLayerProps": {
             "type": "string",
-            "description": "The URL for the tile layer source.",
-            "nullable": true
-          },
-          "wmtsCapabilitiesUrl": {
-            "type": "string",
-            "description": "The URL for the capabilities' endpoint.",
-            "nullable": true
-          },
-          "wmtsTileUrl": {
-            "type": "string",
-            "description": "The URL and properties for the WMTS service, serialized as a JSON string.",
-            "nullable": true
-          },
-          "xyzTileUrl": {
-            "type": "string",
-            "description": "The URL for the XYZ tile service.",
+            "description": "The properties for the available layer, like urls, source type, etc.",
             "nullable": true
           }
         }
@@ -2914,6 +2961,42 @@
           }
         }
       },
+      "MapOfferingDto": {
+        "type": "object",
+        "required": [
+          "products",
+          "push",
+          "status"
+        ],
+        "properties": {
+          "errorMsg": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MapProductDto"
+            }
+          },
+          "push": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/MapOfferingStatus"
+          }
+        }
+      },
+      "MapOfferingStatus": {
+        "type": "string",
+        "enum": [
+          "Success",
+          "Error"
+        ]
+      },
       "MapProductDto": {
         "type": "object",
         "required": [
@@ -2932,12 +3015,12 @@
           "id": {
             "type": "string"
           },
-          "imagingTimeBeginUtc": {
+          "imagingTimeBeginUTC": {
             "type": "string",
             "format": "date-time",
             "nullable": true
           },
-          "imagingTimeEndUtc": {
+          "imagingTimeEndUTC": {
             "type": "string",
             "format": "date-time",
             "nullable": true
@@ -3085,7 +3168,9 @@
         "type": "string",
         "enum": [
           "create",
+          "prepare",
           "delivery",
+          "validation",
           "deploy"
         ]
       },
@@ -3360,12 +3445,12 @@
       "OfferingRes": {
         "type": "object",
         "required": [
-          "software"
+          "software",
+          "maps"
         ],
         "properties": {
           "maps": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/MapOfferingDto"
           },
           "software": {
             "$ref": "#/components/schemas/OfferingCompRes"
@@ -3521,6 +3606,10 @@
           "location"
         ],
         "properties": {
+          "availableStorage": {
+            "type": "string",
+            "nullable": true
+          },
           "bandwidth": {
             "type": "integer",
             "format": "int64"
