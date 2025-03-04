@@ -78,7 +78,7 @@ const config = {
             },
           },
           agent: {
-            specPath: "https://mimio-api-proxy.apps.sr.eastus.aroapp.io/getapp-develop-public/agent/openapi.json",
+            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openapi.json",
             outputDir: "docs/agent",
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
