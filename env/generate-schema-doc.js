@@ -1,8 +1,6 @@
-// This script generates MDX files for environment variable documentation
-
-
 const fs = require("fs");
 const path = require("path");
+
 
 const schemaPath = path.join(__dirname, 'schema.json');
 const outputDir = path.join(__dirname, '../docs/env');
@@ -31,13 +29,6 @@ function escapeMDX(text) {
   return text.includes('{') || text.includes('}') ? '`' + text + '`' : text;
 }
 
-function renderEnum(enumValues) {
-  if (!Array.isArray(enumValues) || enumValues.length === 0) return '';
-  // Multiline with <br /> tags (no newlines in the string!)
-  return `<br /><strong>Options:</strong><br />${enumValues.map(ev => `- \`${ev}\``).join('<br />')}`;
-}
-
-// Format condition object to nice text like: key = "value" and ...
 function formatCondition(ifObj) {
   if (!ifObj || typeof ifObj !== 'object') return '';
 
@@ -54,11 +45,14 @@ function formatRequired(r) {
     const condition = formatCondition(r.if);
     return `<small><i>${condition}</i></small>`;
   }
-  return 'false'; // fallback
+  return 'false';
 }
 
-
 function mdxForScope(scope) {
+  let content = '';
+  let hasWarning = false;
+  let hasDeprecated = false;
+
   const header = `# ${scope.title}\n\n${scope.description || ''}\n\n`;
 
   const groups = {};
@@ -79,18 +73,43 @@ function mdxForScope(scope) {
     const rows = vars.map(v => {
       const required = formatRequired(v.required);
       const name = `\`${v.name}\``;
-      const description = escapeMDX(v.description || '');
-      const example = v.example != null ? `<br /><strong>Example:</strong> \`${v.example}\`` : '';
-      const enumList = v.type === 'enum' ? renderEnum(v.enum) : '';
 
-      return `| ${name} | ${description}${example}${enumList} | ${required} | \`${v.type}\` |`;
+      const descriptionParts = [];
+
+      if (v.description) {
+        descriptionParts.push(v.description.trim());
+      }
+
+      if (v.warning) {
+        hasWarning = true;
+        descriptionParts.push(`<Warning>${escapeMDX(v.warning)}</Warning>`);
+      }
+
+      if (v.deprecated) {
+        hasDeprecated = true;
+        const note = v.deprecationNote || 'This variable is deprecated.';
+        descriptionParts.push(`<Deprecated>${escapeMDX(note)}</Deprecated>`);
+      }
+
+
+      if (v.example != null) {
+        descriptionParts.push(`**Example:** \`${v.example}\``);
+      }
+
+      if (v.type === 'enum' && Array.isArray(v.enum)) {
+        const options = v.enum.map(ev => `- \`${ev}\``).join('<br />');
+        descriptionParts.push(`**Options:**<br />${options}`);
+      }
+
+      const description = descriptionParts.join('<br /><br />');
+      const type = `\`${v.type}\``;
+
+      return `| ${name} | ${description} | ${required} | ${type} |`;
     });
 
     const section = sectionTitle ? `## ${escapeMDX(sectionTitle)}\n\n` : '';
     return `${section}${tableHeader}\n${rows.join('\n')}\n`;
   }
-
-  let content = header;
 
   const allGroups = Object.entries(groups);
   for (let i = 0; i < allGroups.length; i++) {
@@ -103,15 +122,23 @@ function mdxForScope(scope) {
 
   if (ungrouped.length > 0) {
     if (allGroups.length > 0) content += `\n\n---\n\n`;
-    content += renderTable(ungrouped, 'Miscellaneous');
+    content += renderTable(ungrouped, allGroups.length ? 'Miscellaneous' : null);
   }
 
-  return content;
+  let imports = [];
+  if (hasWarning) imports.push(`import { Warning } from '../../src/components/EnvFeatures/warning';`);
+  if (hasDeprecated) imports.push(`import { Deprecated } from '../../src/components/EnvFeatures/deprecated.jsx';`);
+  const importBlock = imports.length ? imports.join('\n') + '\n\n' : '';
+
+
+
+  return importBlock + header + content;
+
 }
 
 for (const scope of scopes) {
   const slug = toSlug(scope.title);
-  const filePath = path.join(outputDir, `${slug}.md`);
+  const filePath = path.join(outputDir, `${slug}.mdx`);
   const mdxContent = mdxForScope(scope);
   fs.writeFileSync(filePath, mdxContent, 'utf8');
   pages.push({ slug, title: scope.title });
