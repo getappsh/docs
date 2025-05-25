@@ -103,7 +103,7 @@ function mdxForScope(scope) {
 
   if (ungrouped.length > 0) {
     if (allGroups.length > 0) content += `\n\n---\n\n`;
-    content += renderTable(ungrouped, 'General');
+    content += renderTable(ungrouped, 'Miscellaneous');
   }
 
   return content;
