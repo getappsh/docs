@@ -70,42 +70,45 @@ function mdxForScope(scope) {
   function renderTable(vars, sectionTitle = null) {
     const tableHeader = `| Name | Description | Required | Type |\n|------|-------------|----------|------|`;
 
-    const rows = vars.map(v => {
-      const required = formatRequired(v.required);
-      const name = `\`${v.name}\``;
+    const rows = vars
+      .filter(v => !v.hidden)
+      .map(v => {
 
-      const descriptionParts = [];
+        const required = formatRequired(v.required);
+        const name = `\`${v.name}\``;
 
-      if (v.description) {
-        descriptionParts.push(v.description.trim());
-      }
+        const descriptionParts = [];
 
-      if (v.warning) {
-        hasWarning = true;
-        descriptionParts.push(`<Warning>${escapeMDX(v.warning)}</Warning>`);
-      }
+        if (v.description) {
+          descriptionParts.push(v.description.trim());
+        }
 
-      if (v.deprecated) {
-        hasDeprecated = true;
-        const note = v.deprecationNote || 'This variable is deprecated.';
-        descriptionParts.push(`<Deprecated>${escapeMDX(note)}</Deprecated>`);
-      }
+        if (v.warning) {
+          hasWarning = true;
+          descriptionParts.push(`<Warning>${escapeMDX(v.warning)}</Warning>`);
+        }
+
+        if (v.deprecated) {
+          hasDeprecated = true;
+          const note = v.deprecationNote || 'This variable is deprecated.';
+          descriptionParts.push(`<Deprecated>${escapeMDX(note)}</Deprecated>`);
+        }
 
 
-      if (v.example != null) {
-        descriptionParts.push(`**Example:** \`${v.example}\``);
-      }
+        if (v.example != null) {
+          descriptionParts.push(`**Example:** \`${v.example}\``);
+        }
 
-      if (v.type === 'enum' && Array.isArray(v.enum)) {
-        const options = v.enum.map(ev => `- \`${ev}\``).join('<br />');
-        descriptionParts.push(`**Options:**<br />${options}`);
-      }
+        if (v.type === 'enum' && Array.isArray(v.enum)) {
+          const options = v.enum.map(ev => `- \`${ev}\``).join('<br />');
+          descriptionParts.push(`**Options:**<br />${options}`);
+        }
 
-      const description = descriptionParts.join('<br /><br />');
-      const type = `\`${v.type}\``;
+        const description = descriptionParts.join('<br /><br />');
+        const type = `\`${v.type}\``;
 
-      return `| ${name} | ${description} | ${required} | ${type} |`;
-    });
+        return `| ${name} | ${description} | ${required} | ${type} |`;
+      });
 
     const section = sectionTitle ? `## ${escapeMDX(sectionTitle)}\n\n` : '';
     return `${section}${tableHeader}\n${rows.join('\n')}\n`;
