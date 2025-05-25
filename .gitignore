@@ -22,3 +22,5 @@ yarn-error.log*
 /docs/agent/
 /docs/server/
 /src/pages/about.md
+docs/env
+env/schema.json

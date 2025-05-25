@@ -62,7 +62,7 @@ const config = {
     ],
   ],
 
- plugins: [
+  plugins: [
     [
       'docusaurus-plugin-openapi-docs',
       {
@@ -116,6 +116,12 @@ const config = {
             sidebarId: 'apiSidebar',
             position: 'left',
             label: 'API',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'evnSidebar',
+            position: 'left',
+            label: 'ENV',
           },
           { to: '/usecase', label: 'Use Cases', position: 'left' },
           { to: '/about', label: 'About the Product', position: 'left' },
