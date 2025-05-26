@@ -3,13 +3,20 @@ import React from 'react';
 type Variable = {
   name: string;
   type: string;
-  required?: boolean | { if: Record<string, string>; then: boolean };
-  description?: string;
+  required:
+  | boolean
+  | {
+    if: Record<string, string>;
+  }
+  | {
+    oneOf: Record<string, string>[];
+  }; description?: string;
   example?: string;
   enum?: string[];
   subTitle?: string;
   hidden?: boolean;
-  warning?: string;
+  warning?: string[];
+  notes?: string[];
   deprecated?: boolean;
   deprecationNote?: string;
   default?: string | number | boolean | null;
@@ -31,23 +38,69 @@ function escapeMDX(text: string): string {
 }
 
 function formatCondition(ifObj: Record<string, string>) {
-  return Object.entries(ifObj)
-    .map(([k, v]) => `${k} = "${v}"`)
-    .join(' and ');
+  const entries = Object.entries(ifObj);
+  return (
+    <>
+      {entries.map(([key, value], i) => (
+        <div
+          key={key}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '4px 0',
+          }}
+        >
+          <code style={{ padding: '2px 6px', backgroundColor: '#f0f0f0', borderRadius: 4 }}>
+            {`${key} = "${value}"`}
+          </code>
+          {i < entries.length - 1 && (
+            <span style={{ color: '#999', fontStyle: 'italic' }}>and</span>
+          )}
+        </div>
+      ))}
+    </>
+  );
 }
 
+
 function formatRequired(required: Variable['required']): React.ReactNode {
-  if (typeof required === 'boolean') return String(required);
-  if (required?.if && required.then !== undefined) {
-    const condition = formatCondition(required.if);
+  if (typeof required === 'boolean') {
+    return <code>{String(required)}</code>;
+  }
+
+  if ('if' in required && typeof required.if === 'object') {
     return (
-      <small>
-        <i>{condition}</i>
-      </small>
+      <div>
+        <small>
+          <i>Required if:</i>
+        </small>
+        <div style={{ marginLeft: 12, marginTop: 4 }}>{formatCondition(required.if)}</div>
+      </div>
     );
   }
-  return 'false';
+
+  if ('oneOf' in required && Array.isArray(required.oneOf)) {
+    return (
+      <div>
+        <small>
+          <i>Required if any of the following:</i>
+        </small>
+        <ul style={{ marginTop: 4, marginLeft: 20 }}>
+          {required.oneOf.map((cond, idx) => (
+            <li key={idx}>
+              <div>{formatCondition(cond)}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  return <code>false</code>;
 }
+
+
 
 // Component to render a single variable row
 function VariableRow({ variable }: { variable: Variable }) {
@@ -59,9 +112,20 @@ function VariableRow({ variable }: { variable: Variable }) {
       <td>
         {variable.description && <div>{variable.description.trim()}</div>}
 
-        {variable.warning && (
-          <div style={{ color: 'orange' }}>
-            ⚠️ {escapeMDX(variable.warning)}
+        {variable.warning && !!variable.warning.length && (variable.warning.map(w => (
+          <div key={w} style={{ color: 'orange' }}>
+            ⚠️ {escapeMDX(w)}
+          </div>
+        )))}
+
+        {variable.notes && !!variable.notes.length && (
+          <div>
+            <strong>Notes:</strong>
+            <ul>
+              {variable.notes.map((note, index) => (
+                <li key={index}>{escapeMDX(note)}</li>
+              ))}
+            </ul>
           </div>
         )}
 
