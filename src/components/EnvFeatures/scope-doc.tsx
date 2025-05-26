@@ -108,7 +108,7 @@ function VariableRow({ variable }: { variable: Variable }) {
 // Component to render a group section (subtitle + table with variables)
 export function GroupSection({ title, variables }: { title: string; variables: Variable[] }) {
   return (
-    <div key={title}>
+    <div key={title} style={{ marginBottom: '3em' }}>
       <table>
         <thead>
           <tr>
