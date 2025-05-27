@@ -37,6 +37,11 @@ function escapeMDX(text: string): string {
   return text.includes('{') || text.includes('}') ? '`' + text + '`' : text;
 }
 
+function containsHtml(str: string): boolean {
+  // Basic check for HTML tags - can be improved or replaced with a sanitizer library
+  return /<\/?[a-z][\s\S]*>/i.test(str);
+}
+
 function formatCondition(ifObj: Record<string, string>) {
   const entries = Object.entries(ifObj);
   return (
@@ -51,8 +56,22 @@ function formatCondition(ifObj: Record<string, string>) {
             padding: '4px 0',
           }}
         >
-          <code style={{ padding: '2px 6px', backgroundColor: '#f0f0f0', borderRadius: 4 }}>
-            {`${key} = "${value}"`}
+          <code
+            style={{
+              padding: '2px 6px',
+              backgroundColor: '#f0f0f0',
+              borderRadius: 4,
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            {`${key} = `}
+            {containsHtml(value) ? (
+              <span
+                dangerouslySetInnerHTML={{ __html: value }}
+              />
+            ) : (
+              `"${value}"`
+            )}
           </code>
           {i < entries.length - 1 && (
             <span style={{ color: '#999', fontStyle: 'italic' }}>and</span>
@@ -62,6 +81,7 @@ function formatCondition(ifObj: Record<string, string>) {
     </>
   );
 }
+
 
 
 function formatRequired(required: Variable['required']): React.ReactNode {
@@ -110,16 +130,24 @@ function VariableRow({ variable }: { variable: Variable }) {
         <code>{variable.name}</code>
       </td>
       <td>
-        {variable.description && <div>{variable.description.trim()}</div>}
-
-        {variable.warning && !!variable.warning.length && (variable.warning.map(w => (
-          <div key={w} style={{ color: 'orange' }}>
-            ⚠️ {escapeMDX(w)}
+        {variable.description && (
+          <div style={{ marginBottom: '0.5em' }}>
+            {variable.description.trim()}
           </div>
-        )))}
+        )}
 
-        {variable.notes && !!variable.notes.length && (
-          <div>
+        {variable.warning && variable.warning.length > 0 && (
+          <div style={{ marginBottom: '0.5em' }}>
+            {variable.warning.map(w => (
+              <div key={w} style={{ color: 'orange' }}>
+                ⚠️ {escapeMDX(w)}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {variable.notes && variable.notes.length > 0 && (
+          <div style={{ marginBottom: '0.5em' }}>
             <strong>Notes:</strong>
             <ul>
               {variable.notes.map((note, index) => (
@@ -129,42 +157,76 @@ function VariableRow({ variable }: { variable: Variable }) {
           </div>
         )}
 
-        {variable.deprecated && (
-          <div style={{ color: 'red' }}>
-            ⚠️ {escapeMDX(variable.deprecationNote || 'This variable is deprecated.')}
-          </div>
-        )}
-
         {variable.example != null && (
-          <div>
+          <div style={{ marginBottom: '0.5em' }}>
             <strong>Example:</strong> <code>{variable.example}</code>
           </div>
         )}
 
         {variable.type === 'enum' && Array.isArray(variable.enum) && (
-          <div>
-            <strong>Options:</strong>
-            <ul>
-              {variable.enum.map(opt => (
-                <li key={opt}>
+          <div style={{ marginBottom: '0.5em' }}>
+            <strong>Options:</strong>{' '}
+            {(() => {
+              const opts = variable.enum as string[];
+              return opts.map((opt, idx) => (
+                <span key={opt}>
                   <code>{opt}</code>
-                </li>
-              ))}
-            </ul>
+                  {idx < opts.length - 1 && ', '}
+                </span>
+              ));
+            })()}
+          </div>
+        )}
+
+        {variable.deprecated && (
+          <div style={{ marginBottom: '0.5em' }}>
+            <Deprecated>
+              {escapeMDX(variable.deprecationNote || 'This variable is deprecated.')}
+            </Deprecated>
           </div>
         )}
       </td>
       <td>{formatRequired(variable.required)}</td>
-      <td>
-        {variable.type}
-        {variable.default !== undefined && (
-          <>
-            <br />
-            <strong>Default:</strong>{' '}
-            <code>{typeof variable.default === 'string' ? variable.default : JSON.stringify(variable.default)}</code>
-          </>
-        )}
+      <td style={{ verticalAlign: 'top' }}>
+        <div style={{ fontSize: '0.9em', color: '#333' }}>
+
+          {variable.type}
+
+          {variable.default !== undefined && (
+            <div
+              style={{
+                marginTop: '0.6em',
+                padding: '0.75em 1em',
+                backgroundColor: '#f0f4ff',
+                borderLeft: '4px solid #3367d6',
+                borderRadius: '4px',
+                fontFamily: 'monospace',
+                fontSize: '0.9em',
+                maxWidth: '600px',
+                display: 'flex',
+                flexDirection: 'column',
+                overflowX: 'auto', // allows horizontal scroll if too long
+              }}
+            >
+              <span style={{ color: '#3367d6', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                Default:
+              </span>
+              <code
+                style={{
+                  padding: '0.5em',
+                  whiteSpace: 'pre', // prevents breaking inside the value
+                  wordBreak: 'normal', // avoid breaking long strings mid-word
+                }}
+              >
+                {typeof variable.default === 'string'
+                  ? variable.default
+                  : JSON.stringify(variable.default, null, 2)}
+              </code>
+            </div>
+          )}
+        </div>
       </td>
+
     </tr>
   );
 }
@@ -248,11 +310,11 @@ function Deprecated({ children }: { children: React.ReactNode }) {
         color: '#856404',
         padding: '0.2em 0.5em',
         borderRadius: '4px',
-        fontWeight: 'bold',
         display: 'inline-block',
       }}
     >
-      ⚠️ Deprecated: {children}
+      <strong>Deprecated:</strong> {children}
     </span>
   );
 }
+
