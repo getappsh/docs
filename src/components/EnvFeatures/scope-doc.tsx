@@ -132,15 +132,20 @@ function VariableRow({ variable }: { variable: Variable }) {
       <td>
         {variable.description && (
           <div style={{ marginBottom: '0.5em' }}>
-            {variable.description.trim()}
+            {containsHtml(variable.description) ? (
+              <div dangerouslySetInnerHTML={{ __html: variable.description }} />
+            ) : (
+              variable.description.trim()
+            )}
           </div>
         )}
+
 
         {variable.warning && variable.warning.length > 0 && (
           <div style={{ marginBottom: '0.5em' }}>
             {variable.warning.map(w => (
               <div key={w} style={{ color: 'orange' }}>
-                ⚠️ {escapeMDX(w)}
+                ⚠️ {containsHtml(w) ? <span dangerouslySetInnerHTML={{ __html: w }} /> : escapeMDX(w)}
               </div>
             ))}
           </div>
@@ -151,17 +156,28 @@ function VariableRow({ variable }: { variable: Variable }) {
             <strong>Notes:</strong>
             <ul>
               {variable.notes.map((note, index) => (
-                <li key={index}>{escapeMDX(note)}</li>
+                <li key={index}>
+                  {containsHtml(note) ? (
+                    <span dangerouslySetInnerHTML={{ __html: note }} />
+                  ) : (
+                    escapeMDX(note)
+                  )}
+                </li>
               ))}
             </ul>
           </div>
         )}
 
-        {variable.example != null && (
+        {variable.example != null && (containsHtml(variable.example) ? (
+          <div style={{ marginBottom: '0.5em' }}>
+            <strong>Example:</strong>{' '}
+            <span dangerouslySetInnerHTML={{ __html: variable.example }} />
+          </div>
+        ) : (
           <div style={{ marginBottom: '0.5em' }}>
             <strong>Example:</strong> <code>{variable.example}</code>
           </div>
-        )}
+        ))}
 
         {variable.type === 'enum' && Array.isArray(variable.enum) && (
           <div style={{ marginBottom: '0.5em' }}>
