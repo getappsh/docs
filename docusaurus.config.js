@@ -62,7 +62,7 @@ const config = {
     ],
   ],
 
- plugins: [
+  plugins: [
     [
       'docusaurus-plugin-openapi-docs',
       {
@@ -86,6 +86,15 @@ const config = {
             },
           }
         }
+      },
+    ],
+    [
+      // Plugin to generate environment variables documentation
+      require.resolve('./plugins/docusaurus-plugin-env-docs'),
+      {
+        schemaUrl: 'https://minio-api.apps.getapp.sh/getapp-develop-public/env/env-vars.json',
+        id: 'env',
+        outputDir: 'docs/env', // output directory for generated files
       },
     ],
   ],
@@ -116,6 +125,12 @@ const config = {
             sidebarId: 'apiSidebar',
             position: 'left',
             label: 'API',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'evnSidebar',
+            position: 'left',
+            label: 'ENV',
           },
           { to: '/usecase', label: 'Use Cases', position: 'left' },
           { to: '/about', label: 'About the Product', position: 'left' },

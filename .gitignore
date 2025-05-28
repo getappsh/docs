@@ -21,4 +21,6 @@ yarn-error.log*
 
 /docs/agent/
 /docs/server/
+/docs/env
+
 /src/pages/about.md
