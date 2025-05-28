@@ -33,6 +33,11 @@ jobs:
         run: | 
           yarn docusaurus clean-api-docs all
           yarn docusaurus gen-api-docs all
+      
+      - name: Genrate ENV Docs
+        run: | 
+          yarn docusaurus clear-env-docs
+          yarn docusaurus gen-env-docs
         
       - name: Build website
         run: yarn build
