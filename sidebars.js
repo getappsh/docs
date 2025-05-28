@@ -52,7 +52,7 @@ const sidebars = {
         title: 'Environment Variables',
         description: 'Environment variable reference for all microservices',
       },
-      items: require("./docs/env/sidebar.js").env.map((item) => ({
+      items: require("./docs/env/sidebar.js").map((item) => ({
         type: /** @type {'doc'} */ ('doc'),
         id: item.id, 
         label: item.label,

@@ -1,0 +1,17 @@
+{
+  "name": "docusaurus-plugin-env-docs",
+  "version": "1.0.0",
+  "description": "A Docusaurus plugin to generate environment docs from JSON schema",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "docusaurus",
+    "plugin",
+    "environment",
+    "docs"
+  ],
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "type": "commonjs"
+}

@@ -94,6 +94,7 @@ const config = {
       {
         schemaUrl: 'https://minio-api.apps.getapp.sh/getapp-develop-public/env/env-vars.json',
         id: 'env',
+        outputDir: 'docs/env', // output directory for generated files
       },
     ],
   ],

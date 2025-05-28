@@ -2,26 +2,48 @@ const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
 
-const loadSchema = async (schemaUrl) => {
+/**
+ * Loads a JSON schema from a URL.
+ * Also writes the schema to a local file for debugging.
+ * 
+ * @param {string} schemaUrl
+ * @returns {Promise<Object>} Parsed JSON schema
+ */
+async function loadSchema(schemaUrl) {
   if (!schemaUrl) {
     throw new Error('Env Schema URL is required');
   }
 
+  
   console.log(`🌐 Fetching schema from ${schemaUrl}...`);
   const res = await fetch(schemaUrl);
   if (!res.ok) throw new Error(`❌ Failed to fetch env schema from ${schemaUrl}, status: ${res.status}`);
-
+  
   const schema = await res.json();
   console.log(`✅ Successfully fetched schema with title: ${schema.title || 'Untitled Schema'}`);
+ 
+  // const outputDirPath = path.resolve(__dirname, '../data');
 
-  const outputFilePath = path.resolve(__dirname, 'schema-output.json');
-  fs.writeFileSync(outputFilePath, JSON.stringify(schema, null, 2));
-  console.log(`📝 Schema written to ${outputFilePath}`);
+  // if (!fs.existsSync(outputDirPath)) {
+  //   console.log(`📁 Output directory does not exist. Creating: ${outputDirPath}`);
+  //   fs.mkdirSync(outputDirPath, { recursive: true });
+  // }
+
+  // fs.writeFileSync(path.join(outputDirPath, 'schema-output.json'), JSON.stringify(schema, null, 2));
+  // console.log(`📝 Schema written to ${outputDirPath}`);
 
   return schema;
-};
+}
 
-const generateContent = (schema, outputDir) => {
+/**
+ * Generates markdown docs based on schema and writes to output directory.
+ * Returns sidebar entries for Docusaurus.
+ * 
+ * @param {Object} schema
+ * @param {string} outputDir
+ * @returns {Array} sidebar entries
+ */
+function generateContent(schema, outputDir) {
   console.log("📘 Start generating MDX...");
 
   if (!schema) throw new Error('❌ Schema is required');
@@ -124,13 +146,13 @@ ${schemaDescription}
   ];
 
   const sidebarPath = path.join(outputDir, 'sidebar.js');
-  const sidebarContent = `module.exports = {
-    env: ${JSON.stringify(sidebarEntries, null, 2)}
-  };`;
+  const sidebarContent = `module.exports = ${JSON.stringify(sidebarEntries, null, 2)};`;
 
   fs.writeFileSync(sidebarPath, sidebarContent);
   console.log(`📑 Sidebar config written: ${sidebarPath}`);
-};
+
+  return sidebarEntries;
+}
 
 module.exports = {
   loadSchema,
