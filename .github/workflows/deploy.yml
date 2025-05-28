@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
+      SECRET_GITHUB_TOKEN:
         required: true
   push:
     branches:
