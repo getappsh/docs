@@ -18,6 +18,9 @@ COPY . /opt/docusaurus/
 RUN yarn docusaurus clean-api-docs all
 RUN yarn docusaurus gen-api-docs all
 
+RUN yarn docusaurus clear-env-docs
+RUN yarn docusaurus gen-env-docs
+
 ## Build the static site.
 RUN yarn build
 
