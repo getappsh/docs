@@ -24,3 +24,4 @@ yarn-error.log*
 /src/pages/about.md
 docs/env
 env/schema.json
+plugins/docusaurus-plugin-env-docs/schema-output.json

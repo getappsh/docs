@@ -88,6 +88,14 @@ const config = {
         }
       },
     ],
+    [
+      // Plugin to generate environment variables documentation
+      require.resolve('./plugins/docusaurus-plugin-env-docs'),
+      {
+        schemaUrl: 'https://minio-api.apps.getapp.sh/getapp-develop-public/env/env-vars.json',
+        id: 'env',
+      },
+    ],
   ],
   markdown: {
     mermaid: true,
