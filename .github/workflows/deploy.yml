@@ -2,6 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
   push:
     branches:
       - main
@@ -11,9 +14,9 @@ on:
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 permissions:
-  contents: write  # Ensure permissions to write to repository content
-  packages: write  # Ensure permissions to upload release assets
-  
+  contents: write # Ensure permissions to write to repository content
+  packages: write # Ensure permissions to upload release assets
+
 jobs:
   build:
     name: Build Docusaurus
@@ -29,17 +32,17 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-          
+
       - name: Genrate Open-Api Docs
-        run: | 
+        run: |
           yarn docusaurus clean-api-docs all
           yarn docusaurus gen-api-docs all
-      
+
       - name: Genrate ENV Docs
-        run: | 
+        run: |
           yarn docusaurus clear-env-docs
           yarn docusaurus gen-env-docs
-        
+
       - name: Build website
         run: yarn build
 
@@ -47,7 +50,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: build
-          
+
       - name: Get current date and time
         id: get_datetime
         run: echo "RELEASE_TAG=v1-$(date +'%d-%m-%Y')" >> $GITHUB_ENV
@@ -75,7 +78,7 @@ jobs:
           asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          
+
   deploy:
     name: Deploy to GitHub Pages
     needs: build
@@ -89,13 +92,13 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
+
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
+
   build_and_push_image:
     needs: build
     runs-on: ubuntu-latest
@@ -104,8 +107,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensure all tags are fetched
-          
+          fetch-depth: 0 # Ensure all tags are fetched
+
       - name: Get current date and time
         id: get_datetime
         run: echo "RELEASE_TAG=v1-$(date +'%d-%m-%Y')" >> $GITHUB_ENV
@@ -123,4 +126,3 @@ jobs:
           context: .
           tags: harbor.getapp.sh/getapp-dev/docs:${{ env.RELEASE_TAG }}
           push: true
-
