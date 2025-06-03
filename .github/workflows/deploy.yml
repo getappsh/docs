@@ -22,7 +22,7 @@ jobs:
     name: Build Docusaurus
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: getappsh/docs # Explicitly check out the target repo
           token: ${{ secrets.SECRET_GITHUB_TOKEN }}
