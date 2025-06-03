@@ -81,7 +81,7 @@ function generateContent(schema, outputDir) {
 
     const grouped = (scope.variables || []).reduce((acc, v) => {
       if (v.hidden) return acc;
-      const key = v.subTitle || 'Miscellaneous';
+      const key = v.tag || 'Miscellaneous';
       if (!acc[key]) acc[key] = [];
       acc[key].push(v);
       return acc;
@@ -117,9 +117,9 @@ ${description}
         .map(groupTitle => {
           const variables = grouped[groupTitle];
           const varsJson = JSON.stringify(variables, null, 2);
-          const subtitle = `## ${groupTitle}`;
+          const tag = `## ${groupTitle}`;
           const section = `<GroupSection title=${escapeMdxString(groupTitle)} variables={${varsJson}} />`;
-          return `${subtitle}\n\n${section}`;
+          return `${tag}\n\n${section}`;
         })
         .join('\n\n');
     }
