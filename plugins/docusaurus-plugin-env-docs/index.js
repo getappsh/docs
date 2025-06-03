@@ -37,6 +37,18 @@ module.exports = function (context, options) {
         });
 
       cli
+        .command('gen-env-docs-loc')
+        .description('Generates environment docs from a local schema, path must be relative to the project root')
+        .alias('gen-env-docs-local')
+        .option('-p, --schema-path <path>', 'Path to the local schema file',)
+        .action((options) => {
+          const schemaPath = path.resolve(__dirname, options.schemaPath);
+          console.log(options.schemaPath, schemaPath);
+
+          require('./cli/commands/gen-env-docs-loc').action({ url: options.schemaPath, outputDir });
+        });
+
+      cli
         .command('clear-env-docs')
         .description('Clears generated environment docs')
         .action(() => {

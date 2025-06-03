@@ -14,14 +14,14 @@ async function loadSchema(schemaUrl) {
     throw new Error('Env Schema URL is required');
   }
 
-  
+
   console.log(`🌐 Fetching schema from ${schemaUrl}...`);
   const res = await fetch(schemaUrl);
   if (!res.ok) throw new Error(`❌ Failed to fetch env schema from ${schemaUrl}, status: ${res.status}`);
-  
+
   const schema = await res.json();
   console.log(`✅ Successfully fetched schema with title: ${schema.title || 'Untitled Schema'}`);
- 
+
   // const outputDirPath = path.resolve(__dirname, '../data');
 
   // if (!fs.existsSync(outputDirPath)) {
@@ -34,6 +34,25 @@ async function loadSchema(schemaUrl) {
 
   return schema;
 }
+
+/**
+ * Loads a JSON schema from a local path.
+ * 
+ * @param {string} schemaPath
+ * @returns {Promise<Object>} Parsed JSON schema
+ */
+function loadLocalSchema(schemaPath) {
+  if (!schemaPath) {
+    throw new Error('Env Schema Path is required');
+  }
+
+  console.log(`🌐 Loading schema from ${schemaPath}...`);
+  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+  console.log(`✅ Successfully loaded schema with title: ${schema.title || 'Untitled Schema'}`);
+
+  return schema;
+}
+
 
 /**
  * Generates markdown docs based on schema and writes to output directory.
@@ -156,5 +175,6 @@ ${schemaDescription}
 
 module.exports = {
   loadSchema,
+  loadLocalSchema,
   generateContent,
 };
