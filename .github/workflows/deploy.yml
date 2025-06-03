@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   repository_dispatch:
-    types: [deploy-docs]
+    types:
+      - docs:deploy
+      - docs:deploy:from-api
+      - docs:deploy:from-agent
   push:
     branches:
       - main
