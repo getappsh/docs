@@ -56,7 +56,7 @@ jobs:
 
       - name: Get current date and time
         id: get_datetime
-        run: echo "RELEASE_TAG=v1-$(date +'%d-%m-%Y')" >> $GITHUB_ENV
+        run: echo "RELEASE_TAG=v1-$(date +'%Y-%m-%d-%H:%M')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
