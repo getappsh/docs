@@ -87,6 +87,12 @@ function generateContent(schema, outputDir) {
       return acc;
     }, {});
 
+    const getTagDescription = (tag) => {
+      const tagEntry = (scope.tags || []).find(t => t.name === tag);
+      return tagEntry?.description || '';
+    };
+
+
     const imports = `import React from 'react';
 import { GroupSection } from '@site/src/components/EnvFeatures/scope-doc';
 `;
@@ -118,8 +124,9 @@ ${description}
           const variables = grouped[groupTitle];
           const varsJson = JSON.stringify(variables, null, 2);
           const tag = `## ${groupTitle}`;
+          const description = getTagDescription(groupTitle);
           const section = `<GroupSection title=${escapeMdxString(groupTitle)} variables={${varsJson}} />`;
-          return `${tag}\n\n${section}`;
+          return `${tag}\n\n${description}\n${section}`;
         })
         .join('\n\n');
     }
