@@ -24,11 +24,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          repository: getappsh/docs # Explicitly check out the target repo
+          token: ${{ secrets.SECRET_GITHUB_TOKEN }}
           fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          # cache: yarn
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
