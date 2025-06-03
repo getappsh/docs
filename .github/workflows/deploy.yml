@@ -22,7 +22,7 @@ jobs:
     name: Build Docusaurus
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           repository: getappsh/docs # Explicitly check out the target repo
           token: ${{ secrets.SECRET_GITHUB_TOKEN }}
@@ -36,12 +36,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Genrate Open-Api Docs
+      - name: Generate Open-Api Docs
         run: |
           yarn docusaurus clean-api-docs all
           yarn docusaurus gen-api-docs all
 
-      - name: Genrate ENV Docs
+      - name: Generate ENV Docs
         run: |
           yarn docusaurus clear-env-docs
           yarn docusaurus gen-env-docs
