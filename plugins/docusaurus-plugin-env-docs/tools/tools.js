@@ -94,7 +94,7 @@ function generateContent(schema, outputDir) {
 
     // Frontmatter
     const frontmatter = `---
-id: ${scope.id}
+id: ${toFileName(scope.id)}
 title: ${escapeMdxString(scope.title)}
 description: ${escapeMdxString(scope.description || '')}
 sidebar_label: ${escapeMdxString(scope.title)}
@@ -171,7 +171,7 @@ ${groupSections}
     }
 
     const imports = `---
-id: env-index
+id: index
 title: ${schemaTitle}
 description: ${escapeMdxString(schemaDescription)}
 version: ${schema.version ?? 'N/A'}
