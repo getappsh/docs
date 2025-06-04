@@ -146,17 +146,56 @@ ${groupSections}
     const fullPath = path.join(outputDir, filename);
     fs.writeFileSync(fullPath, content);
     console.log(`✅ Written: ${fullPath}`);
-    pages.push({ slug: toFileName(scope.id), title: scope.title });
+    pages.push({ slug: toFileName(scope.id), title: scope.title, id: scope.id });
   }
 
   const schemaTitle = schema.title || 'Environment Variables';
   const schemaDescription = schema.description || '';
-  const indexContent = `---
+
+  function generateIndexContent(servicesMapping, scopesMeta) {
+    // Group services by microservice title
+    const microserviceMap = {};
+
+    for (const [microservice, serviceData] of Object.entries(servicesMapping)) {
+      for (const scopeType of ["requiredScopes", "optionalScopes"]) {
+        for (const scope of serviceData[scopeType] || []) {
+          const serviceName = scopesMeta.find((s) => s.id === scope.id)?.title ?? "Uncategorized";
+          const note = scope.note ?? '';
+          if (!microserviceMap[microservice]) {
+            microserviceMap[microservice] = { requiredScopes: [], optionalScopes: [] };
+          }
+          microserviceMap[microservice][scopeType].push({ serviceName, note });
+        }
+      }
+    }
+
+    const imports = `---
 title: ${schemaTitle}
+version: ${schema.version ?? 'N/A'}
 ---
 
-${schemaDescription}
+import React from 'react';
+import ServiceMapping from '@site/src/components/EnvFeatures/ServiceMapping';
 `;
+
+    // Show version right below the main title in rendered markdown:
+    const description = `\n${schemaDescription}\n\n**Version:** ${schema.version ?? 'N/A'}\n`;
+
+    const body = Object.entries(microserviceMap)
+      .map(([microserviceTitle, services]) => {
+        const mappingJson = JSON.stringify(services, null, 2);
+        return `\n## ${microserviceTitle}\n\n<ServiceMapping map={${mappingJson}} scopesMeta={${JSON.stringify(scopesMeta, null, 2)}} />\n`;
+      })
+      .join("\n");
+
+    return `${imports}${description}${body}`;
+  }
+
+  const indexContent = generateIndexContent(
+    schema.servicesMapping,
+    pages // assuming this is the parsed scopesMeta
+  );
+
 
   const indexPath = path.join(outputDir, 'index.mdx');
   fs.writeFileSync(indexPath, indexContent);
