@@ -92,19 +92,18 @@ function generateContent(schema, outputDir) {
       return tagEntry?.description || '';
     };
 
+    // Frontmatter
+    const frontmatter = `---
+id: ${scope.id}
+title: ${escapeMdxString(scope.title)}
+description: ${escapeMdxString(scope.description || '')}
+sidebar_label: ${escapeMdxString(scope.title)}
+---
+
+`;
 
     const imports = `import React from 'react';
 import { GroupSection } from '@site/src/components/EnvFeatures/scope-doc';
-`;
-
-    const title = escapeMdxString(scope.title).replace(/^"|"$/g, '');
-    const description = scope.description || '';
-
-    const titleSection = `
-
-# ${title}
-
-${description}
 `;
 
     const groupKeys = Object.keys(grouped);
@@ -131,12 +130,14 @@ ${description}
         .join('\n\n');
     }
 
-    return `${imports}
-${titleSection}
+    return `${frontmatter}${imports}
+
+${scope.description || ''}
 
 ${groupSections}
 `;
   }
+
 
   const pages = [];
 
@@ -170,8 +171,13 @@ ${groupSections}
     }
 
     const imports = `---
+id: env-index
 title: ${schemaTitle}
+description: ${escapeMdxString(schemaDescription)}
 version: ${schema.version ?? 'N/A'}
+sidebar_label: Overview
+hide_title: false
+hide_table_of_contents: false
 ---
 
 import React from 'react';
