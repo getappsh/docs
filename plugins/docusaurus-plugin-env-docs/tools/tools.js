@@ -141,12 +141,12 @@ ${groupSections}
   const pages = [];
 
   for (const scope of schema.scopes || []) {
-    const filename = toFileName(scope.title) + '.mdx';
+    const filename = toFileName(scope.id) + '.mdx';
     const content = generateMdx(scope);
     const fullPath = path.join(outputDir, filename);
     fs.writeFileSync(fullPath, content);
     console.log(`✅ Written: ${fullPath}`);
-    pages.push({ slug: toFileName(scope.title), title: scope.title });
+    pages.push({ slug: toFileName(scope.id), title: scope.title });
   }
 
   const schemaTitle = schema.title || 'Environment Variables';
