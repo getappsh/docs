@@ -4,6 +4,8 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
+require('dotenv').config();
+
 import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
@@ -70,7 +72,7 @@ const config = {
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
           server: { // the <id> referenced when running CLI commands
-            specPath: "https://api-getapp.apps.getapp.sh/docs-yaml", // path to OpenAPI spec, URLs supported
+            specPath: "https://api-getapp-dev.apps.getapp.sh/docs-yaml", // path to OpenAPI spec, URLs supported
             outputDir: "docs/server/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
