@@ -4,4 +4,4 @@ Commit: develop
 Date: 2025-05-07T12:56:14Z  
 
 ## Changes
-[Full Changelog]()
+Full Changelog
