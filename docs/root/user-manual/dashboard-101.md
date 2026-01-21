@@ -2,6 +2,7 @@
 id: dashboard-101
 title: Dashboard 101
 sidebar_label: Dashboard 101
+sidebar_position: 3
 ---
 
 # Dashboard
