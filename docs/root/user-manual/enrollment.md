@@ -60,15 +60,11 @@ BASE_URL=http://your-getapp-server.local
   
 ### Windows Example
   
-[p align="center"]
-  [img src="/img/windows_env_file.png" width="600" alt="Windows environment file example"/]
-[/p]
+![Windows_env](/img/windows_env_file.png)
   
 ### Linux Example
 
-[p align="center"]
-  [img src="/img/linux_env_file.png" width="600" alt="Linux environment file example"/]
-[/p]
+![linux_env](/img/linux_env_file.png)
   
 ---
   
