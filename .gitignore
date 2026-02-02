@@ -29,3 +29,4 @@ yarn-error.log*
 docs/._agent
 docs/._env
 docs/._server
+docs/root/user-manual/._diagram.png
