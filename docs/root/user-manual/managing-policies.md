@@ -246,7 +246,7 @@ To modify the rule:
 - Select the field, operator, and value
 
 **Remove Conditions**:
-- Click the **X** or **Remove** button next to a condition
+- Click the **Trash** button next to a condition
 
 **Change Logic**:
 - Switch between AND/OR operators

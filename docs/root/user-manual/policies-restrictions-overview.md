@@ -48,7 +48,7 @@ Policies and restrictions work in tandem to provide comprehensive control over y
 
 1. **Discovery Phase**: When a device checks for available updates, the server evaluates **policies** to determine which releases match the device's characteristics.
 
-2. **Installation Phase**: Before installing, the agent evaluates **restrictions** to verify the device is allowed to install the software.
+2. **Delivery Phase**: Before Delivery, the agent evaluates **restrictions** to verify the device is allowed to install the software.
 
 3. **Combined Effect**: A release must pass BOTH the policy evaluation on the server AND the restriction evaluation on the device to be delivered.
 
@@ -85,11 +85,11 @@ Rules evaluate device and software properties called **fields**. Available field
 
 The rule engine supports various operators for building conditions:
 
-- **Comparison**: `==`, `!=`, `>`, `<`, `>=`, `<=`
+- **Comparison**: `equals`, `not-equals`, `less-than`, `greater-than`, `less-than-or-equals`, `greater-than-or-equals`
 - **Logical**: `AND`, `OR`, `NOT`
-- **String**: `contains`, `startsWith`, `endsWith`, `matches` (regex)
-- **Collection**: `in`, `notIn`
-- **Existence**: `exists`, `notExists`
+- **String**: `contains`, `starts-with`, `ends-with`, `matches` (regex)
+- **Collection**: `in`, `not-in`
+- **Existence**: `exists`, `not-exists`
 
 ## Benefits
 
