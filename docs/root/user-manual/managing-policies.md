@@ -493,7 +493,7 @@ Track policy versions:
 **Solutions**:
 1. Use the test evaluation feature
 2. Check device field values
-3. Verify operator usage (== vs contains, etc.)
+3. Verify operator usage (equals vs contains, etc.)
 4. Review case sensitivity
 5. Check for typos in values
 6. Test with simplified rule first
@@ -502,5 +502,3 @@ Track policy versions:
 
 - Learn about [Managing Restrictions](./managing-restrictions.md)
 - Understand [Rule Fields and Expressions](./rule-fields-expressions.md)
-- Review [Best Practices](./best-practices.md)
-- Read about [Understanding Policies](./understanding-policies.md)

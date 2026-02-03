@@ -180,9 +180,7 @@ To start using policies and restrictions:
 
 Continue reading the detailed guides:
 
-- [Understanding Policies](./understanding-policies.md) - Deep dive into policy functionality
-- [Understanding Restrictions](./understanding-restrictions.md) - Deep dive into restriction functionality
+
 - [Managing Policies](./managing-policies.md) - Step-by-step guide to policy management
 - [Managing Restrictions](./managing-restrictions.md) - Step-by-step guide to restriction management
 - [Rule Fields and Expressions](./rule-fields-expressions.md) - Complete reference for writing rules
-- [Best Practices](./best-practices.md) - Tips and patterns for effective rule usage

@@ -172,14 +172,14 @@ For a simple blocking condition:
 2. Choose a **Field** from the dropdown
    - Common fields: projectName, version, environment, requiresGPU, etc.
 3. Choose an **Operator**
-   - Common operators: equals (==), not equals (!=), contains, less than (<), greater than (>)
+   - Common operators: equals, notequls, contains, lessthan, greaterthan 
 4. Enter the **Value**
    - The value to compare against
 5. See the JSON preview update automatically
 
 **Example**: Block project "UnsafeApp"
 - Field: `projectName`
-- Operator: `==`
+- Operator: `equals`
 - Value: `UnsafeApp`
 
 #### Complex Rule with AND
@@ -196,8 +196,8 @@ To block when multiple conditions are ALL true:
 5. Add more conditions as needed
 
 **Example**: Block "MyApp" versions older than 2.0.0
-- Condition 1: `projectName == "MyApp"`
-- Condition 2: `version < "2.0.0"`
+- Condition 1: `projectName equls "MyApp"`
+- Condition 2: `version lessthan "2.0.0"`
 
 #### Complex Rule with OR
 
@@ -715,5 +715,3 @@ Regularly check agent logs:
 
 - Learn about [Managing Policies](./managing-policies.md)
 - Understand [Rule Fields and Expressions](./rule-fields-expressions.md)
-- Review [Best Practices](./best-practices.md)
-- Read about [Understanding Restrictions](./understanding-restrictions.md)
