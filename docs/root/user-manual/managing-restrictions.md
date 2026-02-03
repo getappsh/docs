@@ -162,7 +162,7 @@ The rule builder provides:
 
 When the rule evaluates to **true**, the installation is **blocked**.
 
-**Example**: If rule is `projectName == "BlockedApp"`, then installations of BlockedApp are prevented.
+**Example**: If rule is `projectName equals "BlockedApp"`, then installations of BlockedApp are prevented.
 
 #### Simple Rule
 
@@ -172,7 +172,7 @@ For a simple blocking condition:
 2. Choose a **Field** from the dropdown
    - Common fields: projectName, version, environment, requiresGPU, etc.
 3. Choose an **Operator**
-   - Common operators: equals, notequls, contains, lessthan, greaterthan 
+   - Common operators: equals, not-equls, contains, less-than, greater-than 
 4. Enter the **Value**
    - The value to compare against
 5. See the JSON preview update automatically
@@ -196,8 +196,8 @@ To block when multiple conditions are ALL true:
 5. Add more conditions as needed
 
 **Example**: Block "MyApp" versions older than 2.0.0
-- Condition 1: `projectName equls "MyApp"`
-- Condition 2: `version lessthan "2.0.0"`
+- Condition 1: `projectName equals "MyApp"`
+- Condition 2: `version less-than "2.0.0"`
 
 #### Complex Rule with OR
 
@@ -213,9 +213,9 @@ To block when ANY of multiple conditions is true:
 5. Add more conditions as needed
 
 **Example**: Block multiple problematic projects
-- Condition 1: `projectName == "BadApp1"`
-- Condition 2: `projectName == "BadApp2"`
-- Condition 3: `projectName == "BadApp3"`
+- Condition 1: `projectName equals "BadApp1"`
+- Condition 2: `projectName equals "BadApp2"`
+- Condition 3: `projectName equals "BadApp3"`
 
 #### Nested Conditions
 
@@ -229,11 +229,11 @@ For advanced blocking logic:
 
 **Example**: Block BadApp1, BadApp2, or ConditionalApp in production
 - Outer: OR
-  - `projectName == "BadApp1"`
-  - `projectName == "BadApp2"`
+  - `projectName equals "BadApp1"`
+  - `projectName equals "BadApp2"`
   - Inner: AND
-    - `projectName == "ConditionalApp"`
-    - `environment == "production"`
+    - `projectName equals "ConditionalApp"`
+    - `environment equals "production"`
 
 ![Step 2 - Visual rule builder with JSON preview showing rule construction](./step_2.1.png)
 

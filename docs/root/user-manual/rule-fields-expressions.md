@@ -13,7 +13,7 @@ field operator value
 
 **Example**:
 ```
-deviceType equals "ServerDevice"
+$.device.type equals "agent"
 ```
 
 ## Available Rule Fields
@@ -129,25 +129,25 @@ When creating or updating rules:
 Simple field:
 ```json
 {
-  "field": "osType",
+  "field": "$.os.name",
   "operator": "equals",
-  "value": "Linux"
+  "value": "windows"
 }
 ```
 
 Numeric field:
 ```json
 {
-  "field": "memoryMB",
+  "field": "$.battery.level",
   "operator": "greater-than-or-equals",
-  "value": 16384
+  "value": 50
 }
 ```
 
 Boolean field:
 ```json
 {
-  "field": "canaryGroup",
+  "field": "$.battery.isCharging",
   "operator": "equals",
   "value": "true"
 }
@@ -179,9 +179,9 @@ Checks if field exactly matches the value.
 
 **Examples**:
 ```json
-{ "field": "deviceType", "operator": "equals", "value": "ServerDevice" }
-{ "field": "osType", "operator": "equals", "value": "Linux" }
-{ "field": "environment", "operator": "equals", "value": "production" }
+{ "field": "$.device.type", "operator": "equals", "value": "agent" }
+{ "field": "$.os.name", "operator": "equals", "value": "windows" }
+{ "field": "$.battery.isCharging", "operator": "equals", "value": "true" }
 ```
 
 **Use Cases**:
@@ -197,8 +197,8 @@ Checks if field does NOT match the value.
 
 **Examples**:
 ```json
-{ "field": "environment", "operator": "not-equals", "value": "development" }
-{ "field": "deviceType", "operator": "not-equals", "value": "TestDevice" }
+{ "field": "$.os.name", "operator": "not-equals", "value": "macos" }
+{ "field": "$.device.type", "operator": "not-equals", "value": "agent_linux" }
 ```
 
 **Use Cases**:
@@ -214,8 +214,8 @@ Checks if field is greater than the value (numeric comparison).
 
 **Examples**:
 ```json
-{ "field": "memoryMB", "operator": "greater-than", "value": 8192 }
-{ "field": "cpuCores", "operator": "greater-than", "value": 4 }
+{ "field": "$.battery.level", "operator": "greater-than", "value": 50 }
+{ "field": "$.location.latitude", "operator": "greater-than", "value": 40.0 }
 ```
 
 **Use Cases**:
@@ -231,8 +231,8 @@ Checks if field is less than the value (numeric comparison).
 
 **Examples**:
 ```json
-{ "field": "diskSpaceGB", "operator": "less-than", "value": 50 }
-{ "field": "memoryMB", "operator": "less-than", "value": 4096 }
+{ "field": "$.battery.level", "operator": "less-than", "value": 20 }
+{ "field": "$.location.longitude", "operator": "less-than", "value": -70.0 }
 ```
 
 **Use Cases**:
@@ -248,8 +248,8 @@ Checks if field is greater than or equal to the value.
 
 **Examples**:
 ```json
-{ "field": "memoryMB", "operator": "greater-than-or-equals", "value": 16384 }
-{ "field": "osVersion", "operator": "greater-than-or-equals", "value": "20.04" }
+{ "field": "$.battery.level", "operator": "greater-than-or-equals", "value": 80 }
+{ "field": "$.os.version", "operator": "greater-than-or-equals", "value": "11.0" }
 ```
 
 **Use Cases**:
@@ -264,8 +264,8 @@ Checks if field is less than or equal to the value.
 
 **Examples**:
 ```json
-{ "field": "cpuCores", "operator": "less-than-or-equals", "value": 8 }
-{ "field": "memoryMB", "operator": "less-than-or-equals", "value": 32768 }
+{ "field": "$.battery.level", "operator": "less-than-or-equals", "value": 30 }
+{ "field": "$.location.latitude", "operator": "less-than-or-equals", "value": 45.0 }
 ```
 
 **Use Cases**:
@@ -284,9 +284,9 @@ Checks if field contains the substring.
 
 **Examples**:
 ```json
-{ "field": "deviceName", "operator": "contains", "value": "prod" }
-{ "field": "version", "operator": "contains", "value": "-beta" }
-{ "field": "osVersion", "operator": "contains", "value": "Ubuntu" }
+{ "field": "$.os.name", "operator": "contains", "value": "win" }
+{ "field": "$.os.version", "operator": "contains", "value": "11" }
+{ "field": "$.device.type", "operator": "contains", "value": "agent" }
 ```
 
 **Use Cases**:
@@ -302,9 +302,9 @@ Checks if field starts with the substring.
 
 **Examples**:
 ```json
-{ "field": "deviceName", "operator": "starts-with", "value": "prod-" }
-{ "field": "projectName", "operator": "starts-with", "value": "Company." }
-{ "field": "version", "operator": "starts-with", "value": "2." }
+{ "field": "$.os.name", "operator": "starts-with", "value": "mac" }
+{ "field": "$.device.type", "operator": "starts-with", "value": "agent" }
+{ "field": "$.os.version", "operator": "starts-with", "value": "10" }
 ```
 
 **Use Cases**:
@@ -320,9 +320,9 @@ Checks if field ends with the substring.
 
 **Examples**:
 ```json
-{ "field": "deviceName", "operator": "ends-with", "value": ".prod" }
-{ "field": "hostname", "operator": "ends-with", "value": ".company.com" }
-{ "field": "version", "operator": "ends-with", "value": "-dev" }
+{ "field": "$.os.name", "operator": "ends-with", "value": "os" }
+{ "field": "$.device.type", "operator": "ends-with", "value": "_linux" }
+{ "field": "$.os.version", "operator": "ends-with", "value": ".0" }
 ```
 
 **Use Cases**:
@@ -338,9 +338,9 @@ Checks if field matches a regular expression pattern.
 
 **Examples**:
 ```json
-{ "field": "version", "operator": "matches", "value": "^[0-9]+\\.[0-9]+\\.[0-9]+$" }
-{ "field": "deviceName", "operator": "matches", "value": "^prod-(server|worker)-[0-9]+$" }
-{ "field": "ipAddress", "operator": "matches", "value": "^192\\.168\\." }
+{ "field": "$.os.version", "operator": "matches", "value": "^[0-9]+\\.[0-9]+$" }
+{ "field": "$.device.type", "operator": "matches", "value": "^agent(_linux)?$" }
+{ "field": "$.os.name", "operator": "matches", "value": "^(windows|macos)$" }
 ```
 
 **Use Cases**:
@@ -362,8 +362,8 @@ Checks if field value is in the provided list.
 
 **Examples**:
 ```json
-{ "field": "region", "operator": "in", "value": ["us-east", "us-west", "us-central"] }
-{ "field": "deviceType", "operator": "in", "value": ["ServerDevice", "WorkstationDevice"] }
+{ "field": "$.os.name", "operator": "in", "value": ["windows", "macos"] }
+{ "field": "$.device.type", "operator": "in", "value": ["agent", "agent_linux"] }
 ```
 
 **Use Cases**:
@@ -379,8 +379,8 @@ Checks if field value is NOT in the provided list.
 
 **Examples**:
 ```json
-{ "field": "environment", "operator": "not-in", "value": ["test", "sandbox"] }
-{ "field": "osType", "operator": "not-in", "value": ["Legacy", "Deprecated"] }
+{ "field": "$.os.name", "operator": "not-in", "value": ["linux", "unix"] }
+{ "field": "$.device.type", "operator": "not-in", "value": ["agent_legacy", "agent_deprecated"] }
 ```
 
 **Use Cases**:
@@ -400,8 +400,8 @@ Checks if the field exists and has a non-null value.
 
 **Examples**:
 ```json
-{ "field": "canaryGroup", "operator": "exists" }
-{ "field": "maintenanceWindow", "operator": "exists" }
+{ "field": "$.battery.level", "operator": "exists" }
+{ "field": "$.location.latitude", "operator": "exists" }
 ```
 
 **Use Cases**:
@@ -417,8 +417,8 @@ Checks if the field does not exist or has a null value.
 
 **Examples**:
 ```json
-{ "field": "deprecationDate", "operator": "not-exists" }
-{ "field": "errorFlag", "operator": "not-exists" }
+{ "field": "$.battery.isCharging", "operator": "not-exists" }
+{ "field": "$.location.longitude", "operator": "not-exists" }
 ```
 
 **Use Cases**:
@@ -448,8 +448,8 @@ All conditions must be true.
 ```json
 {
   "and": [
-    { "field": "deviceType", "operator": "equals", "value": "ServerDevice" },
-    { "field": "environment", "operator": "equals", "value": "production" }
+    { "field": "$.device.type", "operator": "equals", "value": "agent" },
+    { "field": "$.os.name", "operator": "equals", "value": "windows" }
   ]
 }
 ```
@@ -477,8 +477,8 @@ At least one condition must be true.
 ```json
 {
   "or": [
-    { "field": "region", "operator": "equals", "value": "us-east" },
-    { "field": "region", "operator": "equals", "value": "us-west" }
+    { "field": "$.os.name", "operator": "equals", "value": "windows" },
+    { "field": "$.os.name", "operator": "equals", "value": "macos" }
   ]
 }
 ```
@@ -505,7 +505,7 @@ Negates a condition or group of conditions.
 ```json
 {
   "none": [
-    { "field": "environment", "operator": "equals", "value": "development" }
+    { "field": "$.battery.isCharging", "operator": "equals", "value": "false" }
   ]
 }
 ```
@@ -519,32 +519,32 @@ Negates a condition or group of conditions.
 
 ### Simple Rule Example
 
-Match production servers:
+Match Windows devices:
 
 ```json
 {
-  "field": "environment",
+  "field": "$.os.name",
   "operator": "equals",
-  "value": "production"
+  "value": "windows"
 }
 ```
 
 ### AND Rule Example
 
-Match production servers with at least 16GB RAM:
+Match Windows devices with battery level above 50%:
 
 ```json
 {
   "and": [
     {
-      "field": "environment",
+      "field": "$.os.name",
       "operator": "equals",
-      "value": "production"
+      "value": "windows"
     },
     {
-      "field": "memoryMB",
+      "field": "$.battery.level",
       "operator": "greater-than-or-equals",
-      "value": 16384
+      "value": 50
     }
   ]
 }
@@ -552,20 +552,20 @@ Match production servers with at least 16GB RAM:
 
 ### OR Rule Example
 
-Match devices in US East or US West:
+Match devices running Windows or macOS:
 
 ```json
 {
   "or": [
     {
-      "field": "region",
+      "field": "$.os.name",
       "operator": "equals",
-      "value": "us-east"
+      "value": "windows"
     },
     {
-      "field": "region",
+      "field": "$.os.name",
       "operator": "equals",
-      "value": "us-west"
+      "value": "macos"
     }
   ]
 }
@@ -573,27 +573,27 @@ Match devices in US East or US West:
 
 ### Nested Rule Example
 
-Match server devices in production or staging:
+Match agent devices running Windows or macOS:
 
 ```json
 {
   "and": [
     {
-      "field": "deviceType",
+      "field": "$.device.type",
       "operator": "equals",
-      "value": "ServerDevice"
+      "value": "agent"
     },
     {
       "or": [
         {
-          "field": "environment",
+          "field": "$.os.name",
           "operator": "equals",
-          "value": "production"
+          "value": "windows"
         },
         {
-          "field": "environment",
+          "field": "$.os.name",
           "operator": "equals",
-          "value": "staging"
+          "value": "macos"
         }
       ]
     }
@@ -611,37 +611,37 @@ Match devices meeting multiple criteria:
     {
       "or": [
         {
-          "field": "deviceType",
+          "field": "$.device.type",
           "operator": "equals",
-          "value": "ServerDevice"
+          "value": "agent"
         },
         {
-          "field": "deviceType",
+          "field": "$.device.type",
           "operator": "equals",
-          "value": "WorkstationDevice"
+          "value": "agent_linux"
         }
       ]
     },
     {
       "and": [
         {
-          "field": "memoryMB",
+          "field": "$.battery.level",
           "operator": "greater-than-or-equals",
-          "value": 8192
+          "value": 30
         },
         {
-          "field": "diskSpaceGB",
+          "field": "$.os.version",
           "operator": "greater-than-or-equals",
-          "value": 100
+          "value": "10.0"
         }
       ]
     },
     {
       "none": [
         {
-          "field": "environment",
+          "field": "$.battery.isCharging",
           "operator": "equals",
-          "value": "deprecated"
+          "value": "false"
         }
       ]
     }
@@ -650,9 +650,9 @@ Match devices meeting multiple criteria:
 ```
 
 This matches:
-- (ServerDevice OR WorkstationDevice) AND
-- (memoryMB >= 8192 AND diskSpaceGB >= 100) AND
-- (NOT deprecated environment)
+- (agent OR agent_linux) AND
+- (battery level >= 30 AND OS version >= 10.0) AND
+- (battery IS charging)
 
 ## Common Rule Patterns
 
@@ -662,90 +662,93 @@ Target specific device types:
 
 ```json
 {
-  "field": "deviceType",
+  "field": "$.device.type",
   "operator": "in",
-  "value": ["ServerDevice", "WorkstationDevice", "EdgeDevice"]
+  "value": ["agent", "agent_linux"]
 }
 ```
 
-### Pattern 2: Environment-Based
+### Pattern 2: OS and Battery-Based
 
-Different rules for different environments:
+Different rules for different operating systems with battery requirements:
 
 ```json
 {
   "and": [
-    { "field": "environment", "operator": "equals", "value": "production" },
-    { "field": "memoryMB", "operator": "greater-than-or-equals", "value": 32768 }
+    { "field": "$.os.name", "operator": "equals", "value": "windows" },
+    { "field": "$.battery.level", "operator": "greater-than-or-equals", "value": 50 }
   ]
 }
 ```
 
 ### Pattern 3: Version Range
 
-Allow versions within a range:
+Allow OS versions within a range:
 
 ```json
 {
   "and": [
-    { "field": "version", "operator": "greater-than-or-equals", "value": "2.0.0" },
-    { "field": "version", "operator": "less-than", "value": "3.0.0" }
+    { "field": "$.os.version", "operator": "greater-than-or-equals", "value": "10.0" },
+    { "field": "$.os.version", "operator": "less-than", "value": "12.0" }
   ]
 }
 ```
 
 ### Pattern 4: Exclusion List
 
-Block specific projects:
+Block specific device types:
 
 ```json
 {
-  "field": "projectName",
-  "operator": "in",
-  "value": ["BlockedApp1", "BlockedApp2", "BlockedApp3"]
+  "field": "$.device.type",
+  "operator": "not-in",
+  "value": ["agent_legacy", "agent_deprecated", "agent_test"]
 }
 ```
 
-### Pattern 5: Hardware Requirements
+### Pattern 5: Battery Requirements
 
-Require minimum hardware specs:
+Require minimum battery level and charging:
 
 ```json
 {
   "and": [
-    { "field": "memoryMB", "operator": "greater-than-or-equals", "value": 16384 },
-    { "field": "cpuCores", "operator": "greater-than-or-equals", "value": 8 },
-    { "field": "diskSpaceGB", "operator": "greater-than-or-equals", "value": 500 }
+    { "field": "$.battery.level", "operator": "greater-than-or-equals", "value": 50 },
+    { "field": "$.battery.isCharging", "operator": "equals", "value": "true" }
   ]
 }
 ```
 
-### Pattern 6: Regional Restrictions
+### Pattern 6: Location-Based Restrictions
 
-Limit to specific regions:
+Limit devices based on location:
 
 ```json
 {
-  "none": [
+  "and": [
     {
-      "field": "region",
-      "operator": "in",
-      "value": ["restricted-region-1", "restricted-region-2"]
+      "field": "$.location.latitude",
+      "operator": "greater-than",
+      "value": 40.0
+    },
+    {
+      "field": "$.location.longitude",
+      "operator": "less-than",
+      "value": -70.0
     }
   ]
 }
 ```
 
-### Pattern 7: Canary Deployment
+### Pattern 7: Display Without Checks
 
-Target canary group:
+Display components without special conditions:
 
 ```json
 {
-  "and": [
-    { "field": "canaryGroup", "operator": "equals", "value": "true" },
-    { "field": "environment", "operator": "not-equals", "value": "development" }
-  ]
+  "field": "$.device.any",
+  "operator": "equals",
+  "value": "true"
 }
 ```
 
@@ -756,34 +759,34 @@ Different rules for different operating systems:
 ```json
 {
   "and": [
-    { "field": "osType", "operator": "equals", "value": "Linux" },
-    { "field": "osVersion", "operator": "contains", "value": "Ubuntu" }
+    { "field": "$.os.name", "operator": "equals", "value": "windows" },
+    { "field": "$.os.version", "operator": "greater-than-or-equals", "value": "10.0" }
   ]
 }
 ```
 
-### Pattern 9: Legacy Version Blocking
+### Pattern 9: Legacy OS Version Blocking
 
-Block old versions:
+Block old OS versions:
 
 ```json
 {
   "and": [
-    { "field": "projectName", "operator": "equals", "value": "MyApplication" },
-    { "field": "version", "operator": "less-than", "value": "2.0.0" }
+    { "field": "$.os.name", "operator": "equals", "value": "windows" },
+    { "field": "$.os.version", "operator": "less-than", "value": "10.0" }
   ]
 }
 ```
 
-### Pattern 10: Compliance Requirements
+### Pattern 10: Charging Device Requirements
 
-Require certification:
+Require devices to be charging:
 
 ```json
 {
   "and": [
-    { "field": "environment", "operator": "equals", "value": "production" },
-    { "field": "fdaCertified", "operator": "equals", "value": "true" }
+    { "field": "$.battery.isCharging", "operator": "equals", "value": "true" },
+    { "field": "$.battery.level", "operator": "greater-than", "value": 20 }
   ]
 }
 ```
@@ -949,5 +952,3 @@ Test rules manually:
 
 - Practice with [Managing Policies](./managing-policies.md)
 - Practice with [Managing Restrictions](./managing-restrictions.md)
-- Review [Best Practices](./best-practices.md)
-- Understand [Policies](./understanding-policies.md) and [Restrictions](./understanding-restrictions.md)
