@@ -8,7 +8,6 @@ Before managing policies, ensure you have:
 - Access to the GetApp Dashboard
 - Appropriate user permissions (Policy management roles)
 - At least one project with releases
-- Basic understanding of [policy concepts](./understanding-policies.md)
 
 ## Accessing Policy Management
 

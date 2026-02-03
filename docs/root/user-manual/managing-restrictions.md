@@ -8,7 +8,7 @@ Before managing restrictions, ensure you have:
 - Access to the GetApp Dashboard
 - Appropriate user permissions (Restriction management roles)
 - At least one registered device or device type
-- Basic understanding of [restriction concepts](./understanding-restrictions.md)
+
 
 ## Accessing Restriction Management
 
