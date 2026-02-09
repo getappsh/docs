@@ -25,3 +25,8 @@ yarn-error.log*
 
 /src/pages/about.md
 .env
+._node_modules
+docs/._agent
+docs/._env
+docs/._server
+docs/root/user-manual/._diagram.png
