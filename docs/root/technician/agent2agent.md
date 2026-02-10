@@ -2,7 +2,7 @@
 id: agent2agent
 title: Agent to Agent
 sidebar_label: Agent to Agent
-sidebar_position: 5
+sidebar_position: 2
 ---
 
 # Agent-to-Agent Connection

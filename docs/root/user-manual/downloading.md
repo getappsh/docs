@@ -2,7 +2,7 @@
 id: downloading
 title: Download and Deploy
 sidebar_label: Download and Deploy
-sidebar_position: 4
+sidebar_position: 2
 ---
 
 # Downloading and Deploying

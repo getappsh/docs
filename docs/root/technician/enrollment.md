@@ -2,7 +2,7 @@
 id: enrollment  
 title: Enrollment  
 sidebar_label: Enrollment  
-sidebar_position: 2
+sidebar_position: 1
 ---
   
 # Enrollment

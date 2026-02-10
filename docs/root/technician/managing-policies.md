@@ -1,3 +1,10 @@
+---
+id: managing-policies
+title: Policies Overview
+sidebar_label: Managing Policies
+sidebar_position: 3
+---
+
 # Managing Policies
 
 This guide provides step-by-step instructions for creating, viewing, editing, and deleting policies using the GetApp Dashboard.
