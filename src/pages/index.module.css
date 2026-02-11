@@ -1,23 +1,370 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+.hero {
+  padding: 4rem 0 2.5rem;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
+.heroInner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 996px) {
+  .heroInner {
+    grid-template-columns: 1fr;
   }
 }
 
-.buttons {
+.kicker {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-bottom: 0.75rem;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.25rem;
+  }
+}
+
+.accent {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  max-width: 52ch;
+  margin-bottom: 1.5rem;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ctaPrimary {
+  font-weight: 700;
+}
+
+.ctaSecondary {
+  font-weight: 700;
+}
+
+.ctaLink {
+  font-weight: 700;
+}
+
+.heroMeta {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.metaPill {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.mock {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ifm-background-surface-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.mockTop {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-300);
+}
+
+.mockTitle {
+  margin-left: 0.5rem;
+  font-weight: 700;
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+.mockBody {
+  padding: 1rem;
+}
+
+.mockRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--ifm-color-emphasis-200);
+}
+
+.mockLabel {
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.mockValue {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.92rem;
+  opacity: 0.9;
+  text-align: right;
+}
+
+.progress {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.progressTitle {
+  font-weight: 700;
+}
+
+.progressPct {
+  font-family: var(--ifm-font-family-monospace);
+  opacity: 0.8;
+}
+
+.progressBar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-200);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  width: 78%;
+  background: var(--ifm-color-primary);
+  border-radius: 999px;
+}
+
+.progressStats {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.logs {
+  margin-top: 1rem;
+}
+
+.logsTitle {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.logsList {
+  margin: 0;
+  padding-left: 1.1rem;
+  opacity: 0.9;
+}
+
+.sideNote {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.sectionAlt {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+}
+
+.sectionHead {
+  margin-bottom: 1.5rem;
+  max-width: 80ch;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  margin: 0 0 0.6rem;
+}
+
+.sectionSubtitle {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.card {
+  height: 100%;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 14px;
+  padding: 1rem;
+  background: var(--ifm-background-color);
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+
+.cardIcon {
+  font-size: 1.25rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.cardDesc {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 996px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+}
+
+.steps {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.step {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 14px;
+  background: var(--ifm-background-color);
+}
+
+.stepNum {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+}
+
+.stepTitle {
+  font-weight: 800;
+}
+
+.stepDesc {
+  opacity: 0.9;
+}
+
+.callout {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 14px;
+  padding: 1.25rem;
+  background: var(--ifm-background-color);
+}
+
+.calloutTitle {
+  margin-top: 0;
+}
+
+.calloutList {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  opacity: 0.9;
+}
+
+.calloutFooter {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.calloutPill {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.finalCta {
+  padding: 3.5rem 0;
+}
+
+.finalInner {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 16px;
+  padding: 1.6rem;
+  background: var(--ifm-background-surface-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.finalTitle {
+  margin: 0 0 0.5rem;
+}
+
+.finalSubtitle {
+  margin: 0;
+  opacity: 0.9;
+  max-width: 70ch;
 }
