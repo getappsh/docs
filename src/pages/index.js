@@ -84,15 +84,6 @@ export default function Home() {
                 with visibility, retries, and policy-based rollouts.
               </p>
 
-              <div className={styles.ctaRow}>
-                <Link className={clsx('button button--primary button--lg', styles.ctaPrimary)} to="/docs/root/intro">
-                  Read the docs
-                </Link>
-                <Link className={clsx('button button--secondary button--lg', styles.ctaSecondary)} to="/docs/root/flow-diagrams">
-                  How it works
-                </Link>
-              </div>
-
               <div className={styles.heroMeta}>
                 <span className={styles.metaPill}>Air-gapped ready</span>
                 <span className={styles.metaPill}>MinIO / S3</span>
@@ -219,9 +210,6 @@ export default function Home() {
                   <Link className={clsx('button button--primary', styles.ctaPrimary)} to="/docs/root/getting-started">
                     Getting started
                   </Link>
-                  <Link className={clsx('button button--link', styles.ctaLink)} to="/docs/root/flow-diagrams">
-                    Architecture →
-                  </Link>
                 </div>
               </div>
 
@@ -258,9 +246,6 @@ export default function Home() {
               <div className={styles.ctaRow}>
                 <Link className={clsx('button button--primary button--lg', styles.ctaPrimary)} to="/docs/root/getting-started">
                   Start now
-                </Link>
-                <Link className={clsx('button button--secondary button--lg', styles.ctaSecondary)} to="/docs/root/getagpp-tools">
-                  Releases guide
                 </Link>
               </div>
             </div>
