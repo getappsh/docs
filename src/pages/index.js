@@ -95,9 +95,6 @@ export default function Home() {
             <div className={styles.heroRight}>
               <div className={styles.mock}>
                 <div className={styles.mockTop}>
-                  <div className={styles.dot} />
-                  <div className={styles.dot} />
-                  <div className={styles.dot} />
                   <div className={styles.mockTitle}>GetApp Console</div>
                 </div>
 
