@@ -66,7 +66,7 @@ Once installation is complete and the view is refreshed, the application status 
 
 ## Data Location
 
-Application data is stored in different locations depending on the operating system.  
+Application data is stored in different locations depending on the operating system and it contains analytics data, configuration files, logs and all the downloads that the agent made.    
 
 ### Windows
 
