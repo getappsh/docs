@@ -72,7 +72,7 @@ To see all available fields in your system:
 4. All available fields are listed with descriptions
 5. Or navigate to **Settings** → **Rule Fields** (if available)
 
-![Avilable fields image](./avilable_fields.png)
+![Avilable fields image](/img/avilable_fields.png)
 
 #### Adding New Fields
 
