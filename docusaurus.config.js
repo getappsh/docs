@@ -80,7 +80,7 @@ const config = {
             },
           },
           agent: {
-            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/docs-yaml-v2.yaml",
+            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openAPi-V2.json",
             outputDir: "docs/agent",
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
