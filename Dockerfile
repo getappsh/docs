@@ -11,9 +11,10 @@ WORKDIR /opt/docusaurus
 COPY package.json ./
 COPY yarn.lock ./
 
+COPY . /opt/docusaurus/
+
 RUN yarn install
 
-COPY . /opt/docusaurus/
 
 RUN yarn docusaurus clean-api-docs all
 RUN yarn docusaurus gen-api-docs agent
