@@ -1,7 +1,7 @@
 ---
 id: agent2agent
 title: Agent to Agent
-sidebar_label: Agent to Agent
+sidebar_label: Agent to Agent 
 sidebar_position: 2
 ---
 
