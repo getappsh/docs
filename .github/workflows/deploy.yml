@@ -43,7 +43,7 @@ jobs:
       - name: Generate ENV Docs
         run: |
           yarn docusaurus clear-env-docs
-          yarn docusaurus gen-env-docs
+          yarn docusaurus gen-env-docs agnet
 
       - name: Build website
         run: yarn build

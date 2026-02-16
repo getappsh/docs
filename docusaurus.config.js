@@ -80,7 +80,7 @@ const config = {
             },
           },
           agent: {
-            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openapi.json",
+            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/docs-yaml-v2.yaml",
             outputDir: "docs/agent",
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
@@ -94,7 +94,7 @@ const config = {
       // Plugin to generate environment variables documentation
       require.resolve('./plugins/docusaurus-plugin-env-docs'),
       {
-        schemaUrl: 'https://minio-api.apps.getapp.sh/getapp-develop-public/env/env-vars.json',
+        schemaUrl: 'https://minio-api.apps.getapp.sh/getapp-develop-public/env/env-agent.json',
         id: 'env',
         outputDir: 'docs/env', // output directory for generated files
       },
