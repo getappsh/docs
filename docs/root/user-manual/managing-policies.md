@@ -26,7 +26,7 @@ Policies and restrictions are managed together on the same page.
 2. Navigate to **Rules** in the main menu
 3. Both policies and restrictions are displayed in the same list
 
-![Navigation to Rules page showing both policies and restrictions](./rule_and_restricions_page.png)
+![Navigation to Rules page showing both policies and restrictions](/img/rule_and_restricions_page.png)
 
 **Note**: The Rules page displays both policies and restrictions together.
 
@@ -101,7 +101,7 @@ In the first step, configure the basic policy details:
 - **Active**: Policy takes effect immediately upon creation
 - **Inactive**: Policy is created but not enforced (for testing or future use)
 
-![Step 1 - Basic information with name, description, type, and status fields](./step_1.png)
+![Step 1 - Basic information with name, description, type, and status fields](/img/step_1.png)
 
 Click **Next** to proceed to step 2.
 
@@ -123,7 +123,7 @@ In the third and final step, select which releases this policy should apply to.
 **Remove Association**:
 - Click the **DELETE** button next to a release to remove it
 
-![Step 3 - Release association interface for policies](./step_3_policy.png)
+![Step 3 - Release association interface for policies](/img/step_3_policy.png)
 
 ### Review and Save
 
@@ -188,15 +188,15 @@ For advanced logic combining AND and OR:
 
 **Example**: Device type is "ServerDevice" AND (environment is "staging" OR environment is "production")
 
-![Step 2 - Visual rule builder with JSON preview showing rule construction](./step_2.1.png)
+![Step 2 - Visual rule builder with JSON preview showing rule construction](/img/step_2.1.png)
 
-![Step 2 - Visual rule builder with JSON preview showing rule construction](./step_2.2.png)
+![Step 2 - Visual rule builder with JSON preview showing rule construction](/img/step_2.2.png)
 
 Click **Next** to proceed to step 3.
 
 ### Step 3: Associate with Releases
 
-![Step 3 - Release association interface for policies](./step_3_policy.png)
+![Step 3 - Release association interface for policies](/img/step_3_policy.png)
 
 
 1. Review all entered information across all three steps
@@ -341,7 +341,7 @@ Duplicating creates a copy of an existing policy, which is useful for creating s
 2. Click the **Delete** button (trash icon)
 3. A confirmation dialog appears
 
-![Screenshot: Delete button and confirmation](./delete_rule_dialog.png)
+![Screenshot: Delete button and confirmation](/img/delete_rule_dialog.png)
 
 ### Step 2: Confirm Deletion
 

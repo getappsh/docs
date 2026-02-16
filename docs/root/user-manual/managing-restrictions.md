@@ -20,7 +20,7 @@ Restrictions and policies are managed together on the same page.
 2. Navigate to **Rules** in the main menu
 3. Both restrictions and policies are displayed in the same list
 
-![Navigation to Rules page showing both policies and restrictions](./rule_and_restricions_page.png)
+![Navigation to Rules page showing both policies and restrictions](/img/rule_and_restricions_page.png)
 
 **Note**: The Rules page displays both restrictions and policies together. 
 
@@ -97,7 +97,7 @@ In the first step, configure the basic restriction details:
 - **Active**: Restriction takes effect immediately and syncs to devices
 - **Inactive**: Restriction is created but not enforced (for testing or future use)
 
-![Step 1 - Basic information with name, description, type, and status fields](./step_1.png)
+![Step 1 - Basic information with name, description, type, and status fields](/img/step_1.png)
 
 Click **Next** to proceed to step 2.
 
@@ -235,16 +235,16 @@ For advanced blocking logic:
     - `projectName equals "ConditionalApp"`
     - `environment equals "production"`
 
-![Step 2 - Visual rule builder with JSON preview showing rule construction](./step_2.1.png)
+![Step 2 - Visual rule builder with JSON preview showing rule construction](/img/step_2.1.png)
 
-![Step 2 - Visual rule builder with JSON preview showing rule construction](./step_2.2.png)
+![Step 2 - Visual rule builder with JSON preview showing rule construction](/img/step_2.2.png)
 
 Click **Next** to proceed to step 3.
 
 ### Step 3: Define Associations
 
 
-![Step 3 - Association interface showing devices, device types, and OS types options for restrictions](./step_3_restricion.png)
+![Step 3 - Association interface showing devices, device types, and OS types options for restrictions](/img/step_3_restricion.png)
 
 
 In the third and final step, select what this restriction applies to. You can choose one or more association types:
@@ -478,7 +478,7 @@ Duplicating creates a copy of an existing restriction, useful for creating simil
 
 
 
-![Screenshot: Delete button and confirmation](./delete_rule_dialog.png)
+![Screenshot: Delete button and confirmation](/img/delete_rule_dialog.png)
 
 
 ### Step 2: Confirm Deletion

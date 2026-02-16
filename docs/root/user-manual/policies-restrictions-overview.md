@@ -52,7 +52,7 @@ Policies and restrictions work in tandem to provide comprehensive control over y
 
 3. **Combined Effect**: A release must pass BOTH the policy evaluation on the server AND the restriction evaluation on the device to be delivered.
 
-![Diagram showing Policy and Restriction evaluation flow](./diagram.png)
+![Diagram showing Policy and Restriction evaluation flow](/img/diagram.png)
 
 ## Rule Engine Foundation
 
@@ -79,7 +79,7 @@ Rules evaluate device and software properties called **fields**. Available field
 - **Software Context**: `currentVersion`, `installedComponents`
 - **Custom Fields**: Administrator-defined fields specific to your environment
 
-![Navigation to Rules page showing both policies and restrictions](./rule_and_restricions_page.png)
+![Navigation to Rules page showing both policies and restrictions](/img/rule_and_restricions_page.png)
 
 ### Rule Operators
 
@@ -141,7 +141,7 @@ Track which rules are active, what they're targeting, and their evaluation histo
 - Validates device is allowed to install specific software
 - Blocks deliveries that violate restrictions
 
-![Screenshot placeholder: Architecture diagram showing server and agent interaction](./diagram_2.png)
+![Screenshot placeholder: Architecture diagram showing server and agent interaction](/img/diagram_2.png)
 
 
 ## Dashboard Interface
