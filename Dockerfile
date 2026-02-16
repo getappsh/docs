@@ -17,7 +17,7 @@ RUN yarn install
 
 
 RUN yarn docusaurus clean-api-docs all
-RUN yarn docusaurus gen-api-docs agent
+RUN yarn docusaurus gen-api-docs all
 
 RUN yarn docusaurus clear-env-docs
 RUN yarn docusaurus gen-env-docs

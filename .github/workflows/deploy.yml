@@ -38,7 +38,7 @@ jobs:
       - name: Generate Open-Api Docs
         run: |
           yarn docusaurus clean-api-docs all
-          yarn docusaurus gen-api-docs agent
+          yarn docusaurus gen-api-docs all
 
       - name: Generate ENV Docs
         run: |
