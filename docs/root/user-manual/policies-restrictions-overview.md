@@ -1,3 +1,10 @@
+---
+id: policies-restrictions-overview
+title: Policies and Restrictions Overview
+sidebar_label: Policies and Restrictions Overview
+sidebar_position: 4
+---
+
 # Policies and Restrictions Overview
 
 ## Introduction
