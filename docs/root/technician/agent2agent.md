@@ -22,6 +22,4 @@ Here are a few clarifications regarding Agent-to-Agent connectivity:
 - The **Server Agent** (the Agent being connected to) can offer the products and content it already stores locally.  
 - The **Server Agent** does **not** act as a bridge or relay to other servers or Agents.  
 
-<p align="center">
-  <img src="./agent2agnetDirgram.png" width="600" alt="Device status overview"/>
-</p> 
+![Device status overview](/img/agent2agnetDirgram.png) 
