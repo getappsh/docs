@@ -561,6 +561,9 @@ Assign these individual roles:
 4. **Check permission enforcement is enabled**:
    - Verify `ENABLE_PERMISSIONS=true` OR user has `permissions-enabled` role
 
+5.**Veify that user is a member of a project**
+   - If the user tries to perfom an action that is releated to a project, he must be a memebr of this project
+
 ---
 
 ### Issue 5: Changes Not Taking Effect
