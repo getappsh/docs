@@ -92,53 +92,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={styles.heroRight}>
-              <div className={styles.mock}>
-                <div className={styles.mockTop}>
-                  <div className={styles.mockTitle}>GetApp Console</div>
-                </div>
 
-                <div className={styles.mockBody}>
-                  <div className={styles.mockRow}>
-                    <div className={styles.mockLabel}>Release</div>
-                    <div className={styles.mockValue}>v1.7.3 • “stable-rollout”</div>
-                  </div>
-                  <div className={styles.mockRow}>
-                    <div className={styles.mockLabel}>Target</div>
-                    <div className={styles.mockValue}>North / Site-A / Gateways</div>
-                  </div>
-
-                  <div className={styles.progress}>
-                    <div className={styles.progressHeader}>
-                      <div className={styles.progressTitle}>Deployment progress</div>
-                      <div className={styles.progressPct}>78%</div>
-                    </div>
-                    <div className={styles.progressBar}>
-                      <div className={styles.progressFill} />
-                    </div>
-                    <div className={styles.progressStats}>
-                      <span>✅ 39 ok</span>
-                      <span>⏳ 9 installing</span>
-                      <span>⚠️ 2 retry</span>
-                    </div>
-                  </div>
-
-                  <div className={styles.logs}>
-                    <div className={styles.logsTitle}>Latest events</div>
-                    <ul className={styles.logsList}>
-                      <li>Device GW-12 pulled chunk 6/12</li>
-                      <li>Device GW-07 verified signature</li>
-                      <li>Device GW-19 switched to new manifest</li>
-                      <li>Policy “staged-rollout” advanced to 80%</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.sideNote}>
-                Tip: replace this mock later with a real screenshot or a short GIF of the dashboard.
-              </div>
-            </div>
           </div>
         </div>
       </header>
