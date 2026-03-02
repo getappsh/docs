@@ -29,7 +29,6 @@ Dependencies are defined per Release and are resolved, delivered, and installed 
 # 2. Dependency Identity
 
 A dependency is uniquely identified by:
-<Project Name> & <Version>
 Example: GetAppService 1.0.0
 
 
