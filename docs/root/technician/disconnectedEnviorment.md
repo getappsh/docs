@@ -7,22 +7,21 @@ sidebar_position: 3
   
 # GetApp Agent Configuration Guide for Disconnected Environments (Offline / Removable Media)
 
-This document provides a clear setup guide for configuring the **GetApp Agent** in a fully disconnected (air‑gapped) environment for both the Device and the Dream machine. It includes a recommended workflow, sample `.env` configuration, operational notes, and references to official documentation.
+This document provides a clear setup guide for configuring the **GetApp Agent** in a fully disconnected (air‑gapped) environment for both the Device and the USB machine. It includes a recommended workflow, sample `.env` configuration, operational notes, and references to official documentation.
 
 ---
 
 ## 1. Overview
 
-- It is recommended to configure the **Agent** once on the **Device** and once on the **Dream** (via a `.env` file).
-- The executable (`.exe`) should reside in the device’s standard location, while each environment (Device / Dream) should have its own **`.env`** and **`data`** directories.
-- You may begin initial testing using the current approved SD"B version.
+- It is recommended to configure the **Agent** once on the **Device** and once on the **USB** (via a `.env` file).
+- The executable (`.exe`) should reside in the device’s standard location, while each environment (Device / USB) should have its own **`.env`** and **`data`** directories.
 - In a disconnected setup, ensure each system has its own **DATA_PATH** and that databases are not unintentionally shared.
 
 ---
 
-## 2. Running the Dream Agent (applies to both UI and Server)
+## 2. Running the USB Agent (applies to both UI and Server)
 
-Run the service **from the directory containing the Dream configuration files** (including `.env`). This is required so the service reads the correct config.
+Run the service **from the directory containing the USB configuration files** (including `.env`). This is required so the service reads the correct config.
 
 ```powershell
 & '<location of the device exe>/GetApp-service.exe' console
@@ -34,14 +33,14 @@ Run the service **from the directory containing the Dream configuration files** 
 
 ## 3. Configuration (`.env`)
 
-Here are the key configuration items for the Dream environment:
+Here are the key configuration items for the USB environment:
 
 - **DATA_PATH** – where the internal DB/data is stored.
-- **DEVICE_ID** – the identifier of the Dream machine.
+- **DEVICE_ID** – the identifier of the USB machine.
 - **BASE_URL** – which server the agent communicates with.
-- **DDS_MACHINE_TYPE** – defines the machine role (Dream, Agent, IM, Disabled).
+- **DEVICE_TYPE** – defines the machine role (USB, Agent, IM).
 
-### Example `.env` for Dream
+### Example `.env` for USB
 
 ```env
 # Agent Service Configuration
@@ -57,8 +56,8 @@ GATEWAY_PORT=2223
 # DDS Configuration
 # ==============================================================================
 
-# Machine type: Agent | IM | Disabled | Dream
-DDS_MACHINE_TYPE=Dream
+#DEVICE_TYPE – defines the machine role (USB, Agent, IM).
+DEVICE_ID=USB
 
 # ==============================================================================
 # GetApp Server Configuration
@@ -67,34 +66,32 @@ DDS_MACHINE_TYPE=Dream
 BASE_URL="http://localhost:2222"
 
 # Persistent data directory
-DATA_PATH="C:\\ProgramData\\GetAppData"
+DATA_PATH="D:\\GetAppData"
 
-# Unique Dream identifier
-DEVICE_ID="DreamTest"
+# Unique USB identifier
+DEVICE_ID="USB_001"
 ```
 
 #### Common adjustments
 - **BASE_URL** – Replace with the internal server IP/port in your environment.
 - **GATEWAY_PORT** – Change if the port is already in use.
 - **DATA_PATH** – Ensure the path exists and the service has write permissions.
-- **DEVICE_ID** – Choose a unique name (e.g., `Dream-Lab-01`).
+- **DEVICE_ID** – Choose a unique name (e.g., `USB-Lab-01`).
 
 ---
 
 ## 4. Service Startup & Validation
 
-1. Place the `.env` file in the same directory as `GetApp-service.exe`.
+1. Place the `.env` file in the usb directory.
 2. Run the service in console mode (see Section 2).
 3. Validate:
    - If `AGENT_URL` is set, verify it loads in a browser or internal CLI.
    - Check that logs/data are created under `DATA_PATH`.
-4. Begin testing using the approved SD"B build.
-
 ---
 
 ## 5. Reference Documentation
 
-- Dream `.env` example is included above.
+- USB `.env` example is included above.
 - Additional docs are available at **docs.getapp.sh**:
   - **Enrollment Guide**
   - **Agent-to-Agent Guide**
