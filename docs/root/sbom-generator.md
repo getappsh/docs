@@ -118,18 +118,17 @@ The SBOM scan progress and results are surfaced in the **Releases** view of the 
 
 The artifact upload pipeline shows an **SBOM** step with a spinner while the scan is queued or running. The step label is tagged as a security step.
 
-> **📸 Screenshot placeholder — add screenshot of the artifact pipeline showing the SBOM step in "running" state (spinner visible).**
-![alt text](../../static/img/sbom_running.png)
+![Artifact pipeline with SBOM step in running state](/img/sbom_running.png)
 
 If a scan fails, the SBOM step turns red and displays the failure reason. A **Retry** button appears to re-queue the scan.
 
-> **📸 Screenshot placeholder — add screenshot of the artifact pipeline showing the SBOM step in "failed" state with the Retry button.**
-![alt text](../../static/img/sbom_scan_failed.png)
+![Artifact pipeline with SBOM step in failed state and Retry button](/img/sbom_scan_failed.png)
 
 ### When the Report Is Ready
 
 Once the scan completes, a **View Report** button appears next to the artifact. Clicking it opens the SBOM report dialog.
-![alt text](../../static/img/sbom_view_report.png)
+
+![Artifact row showing the View Report button after SBOM scan completes](/img/sbom_view_report.png)
 
 #### Report Dialog
 
@@ -154,7 +153,6 @@ The dialog presents the CycloneDX report in a structured layout:
 - Affected Package
 - Description
  
-> **📸 Screenshot placeholder — add screenshot of the SBOM report dialog with the Components tab open.**
-![alt text ](../../static/img/sbom_report.png)
-> **📸 Screenshot placeholder — add screenshot of the SBOM report dialog with the Vulnerabilities tab open (ideally with some entries visible).**
-![alt text](../../static/img/sbom_report_2.png)
+![SBOM report dialog showing the Components tab](/img/sbom_report.png)
+
+![SBOM report dialog showing the Vulnerabilities tab](/img/sbom_report_2.png)
