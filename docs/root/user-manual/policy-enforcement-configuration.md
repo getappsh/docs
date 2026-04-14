@@ -354,7 +354,7 @@ No action required for existing deployments. The new mode defaults to `offering`
 - [Managing Restrictions](managing-restrictions.md) - Device-level restriction management
 - [Policies & Restrictions Overview](policies-restrictions-overview.md) - Understanding the rule system
 - [Rule Fields & Expressions](rule-fields-expressions.md) - Advanced rule configuration
-- [Agent Policy Configuration (Environment Variables)](/docs/env/agent-policy) - Technical reference
+- [Environment Variables Overview](/docs/env/) - Technical reference
 - [FAQ: Policy Enforcement](/docs/root/FAQ#policy-enforcement) - Common questions
 
 ## Need Help?
