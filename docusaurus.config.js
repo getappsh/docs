@@ -79,11 +79,27 @@ const config = {
               categoryLinkSource: "tag",
             },
           },
-          agent: {
-            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openAPi-V2.json",
+          agentV2: {
+            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openAPI-V2.json",
             outputDir: "docs/agent",
-            sidebarOptions: { // optional, instructs plugin to generate sidebar.js
-              groupPathsBy: "tag", // group sidebar items by operation "tag"
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag"
+            },
+          },
+          agentCore: {
+            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openAPI-Core.json",
+            outputDir: "docs/agent-core",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag"
+            },
+          },
+          agentCdn: {
+            specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openAPI-Cdn.json",
+            outputDir: "docs/agent-cdn",
+            sidebarOptions: {
+              groupPathsBy: "tag",
               categoryLinkSource: "tag"
             },
           }
@@ -124,9 +140,15 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'apiSidebar',
+            sidebarId: 'serverSidebar',
             position: 'left',
-            label: 'API',
+            label: 'Server',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'agentSidebar',
+            position: 'left',
+            label: 'Agent',
           },
           {
             type: 'docSidebar',
@@ -154,8 +176,8 @@ const config = {
                 to: '/docs/root/intro',
               },
               {
-                label: 'API',
-                to: '/docs/category/agent',
+                label: 'Agent API',
+                to: '/docs/agent/getapp-agent-api-v-2',
               },
             ],
           },
