@@ -507,14 +507,9 @@ Before activating a restriction, test it to ensure it works as expected.
 
 ### Test Rule Evaluation
 
-Some Dashboard implementations provide a testing feature:
+GetApp supports live rule evaluation directly from the rule builder. You can test your restriction rule against all registered devices before saving or activating it.
 
-1. Open the restriction details or edit dialog
-2. Click **Test Rule** or **Evaluate** button
-3. Enter sample software properties (projectName, version, etc.)
-4. Click **Evaluate**
-5. See if the rule matches (true = blocked, false = allowed)
-6. Adjust the rule if needed
+See [Evaluating Rules](rule-evaluation.md) for a full walkthrough.
 
 
 ### Test on Non-Production Devices

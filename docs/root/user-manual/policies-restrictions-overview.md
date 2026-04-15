@@ -191,3 +191,4 @@ Continue reading the detailed guides:
 - [Managing Policies](./managing-policies.md) - Step-by-step guide to policy management
 - [Managing Restrictions](./managing-restrictions.md) - Step-by-step guide to restriction management
 - [Rule Fields and Expressions](./rule-fields-expressions.md) - Complete reference for writing rules
+- [Evaluating Rules](./rule-evaluation.md) - Test a rule against your devices before activating it

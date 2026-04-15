@@ -19,7 +19,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/docs/agent/
+/docs/agent*/
 /docs/server/
 /docs/env
 

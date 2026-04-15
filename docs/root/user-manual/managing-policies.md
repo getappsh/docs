@@ -368,14 +368,9 @@ Before activating a policy, test it to ensure it works as expected.
 
 ### Test Rule Evaluation
 
-Some Dashboard implementations provide a testing feature:
+GetApp supports live rule evaluation directly from the rule builder. You can test your policy rule against all registered devices before saving or activating it.
 
-1. Open the policy details or edit dialog
-2. Click **Test Rule** or **Evaluate** button
-3. Enter sample device properties
-4. Click **Evaluate**
-5. See if the rule matches (true/false)
-6. Adjust the rule if needed
+See [Evaluating Rules](rule-evaluation.md) for a full walkthrough.
 
 
 ### Test on Non-Production Devices
