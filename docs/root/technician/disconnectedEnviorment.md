@@ -70,6 +70,10 @@ DATA_PATH="D:\\GetAppData"
 
 # Unique USB identifier
 DEVICE_ID="USB_001"
+
+# Policy and component request behavior
+POLICY_ENFORCEMENT_MODE=deploy
+PLATFORM_TYPE_TOKEN=universal
 ```
 
 #### Common adjustments
@@ -77,6 +81,19 @@ DEVICE_ID="USB_001"
 - **GATEWAY_PORT** – Change if the port is already in use.
 - **DATA_PATH** – Ensure the path exists and the service has write permissions.
 - **DEVICE_ID** – Choose a unique name (e.g., `USB-Lab-01`).
+- **POLICY_ENFORCEMENT_MODE** – Set to `deploy` to list all components while still blocking deployment when policy denies.
+- **PLATFORM_TYPE_TOKEN** – Set to `universal` to include all available components across platform types.
+
+### Policy and platform token settings
+These environment variables are useful when the disconnected USB agent or device is configured to fetch component lists and apply policy-based deployment logic.
+
+```bash
+# When set to deploy, policy enforcement returns all components but prevents deployment if policy denies
+POLICY_ENFORCEMENT_MODE=deploy
+
+# Request all available components across platform types
+PLATFORM_TYPE_TOKEN=universal
+```
 
 ---
 

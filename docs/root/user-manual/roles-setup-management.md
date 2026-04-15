@@ -38,7 +38,7 @@ KEYCLOAK_ADMIN_USER=admin
 KEYCLOAK_ADMIN_PASSWORD=your-admin-password
 ```
 
-###Optional Environment Variables
+### Optional Environment Variables
 
 ```bash
 # Auto-sync roles and groups on startup (default: true)
