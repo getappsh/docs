@@ -1,0 +1,518 @@
+﻿---
+id: agent-settings
+title: Agent Configuration & Settings
+sidebar_label: Configuration & Settings
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Agent Configuration & Settings
+
+---
+
+## 1️⃣ What?
+
+The GetApp Agent uses a **two-layer configuration system**. Every setting lives in exactly one layer and is read from only that layer.
+
+| Config | Where stored | Mutable at runtime? |
+|---|---|---|
+| **Startup Config** | `.env` file / system env vars | ⚠️ Requires agent restart — should not be changed while the agent is running |
+| **Live Config** | `config.yaml` in the data directory | ✅ Live update via API, CLI, or server push |
+
+**Startup Config** is loaded once at startup. It controls the network bindings, file-system paths, TLS settings, and feature flags that define how the process starts. These values should not be changed while the agent is running.
+
+**Live Config** is a YAML file (`config.yaml`) that stores everything that can change while the agent is running — device identity, server URLs, delivery/deploy tuning, policy flags, analytics, and orchestration settings. It is seeded with defaults on first run and can be updated without restarting.
+
+:::caution Direct YAML edit requires a reload
+Editing `config.yaml` on disk does **not** automatically update in-memory state. The agent reads settings at the moment it needs them, but some state (HTTP client pool, discovery interval) is cached and must be hot-reloaded via a server push or an agent restart. A future trigger endpoint for on-demand reload is planned but not yet available.
+:::
+
+### Default file locations
+
+| File | Windows (service) | Linux (service) | Console / dev |
+|---|---|---|---|
+| `.env` | `<InstallDir>\bin\.env` | `/etc/getapp/.env` | `./` (current dir) |
+| `config.yaml` | `%DataPath%\GetAppData\data\device-config.yaml` | `/var/lib/getapp/data/device-config.yaml` | `./GetAppData/data/device-config.yaml` |
+| `device_id` | `%DataPath%\GetAppData\device_id` | `/etc/getapp/device_id` | `./device_id` |
+
+:::tip
+`CONFIG_YAML_PATH` (in the `.env` file) overrides the default `config.yaml` location.
+:::
+
+---
+
+## 2️⃣ Why?
+
+Two separate layers exist because settings have fundamentally different lifecycles:
+
+- **Startup settings** (ports, paths, certificates) are tied to the process bootstrap. You cannot change the bind port or TLS cert while the server is running — those values are baked into the TCP listener and TLS context at startup.
+- **Runtime settings** (which server to connect to, delivery timeouts, feature flags) must be adjustable by operators and by the GetApp management server itself — without SSH access or a service restart on every managed device.
+
+This design also enables the **server-push pattern**: the GetApp server can remotely push a new config group to connected agents, updating delivery behavior, discovery intervals, and rule-engine flags across the entire fleet in one operation.
+
+Storing the Live Config in plain YAML also makes configuration **auditable**: the file is human-readable, can be diffed, and is preserved across agent upgrades.
+
+---
+
+## 3️⃣ Where?
+
+```
+Agent startup
+│
+├── 1. Find .env file
+│      --env <path>  →  GETAPP_ENV_PATH  →  {config_dir}/.env
+│      (prints which source was used to stdout)
+│
+├── 2. Load Startup Config — read env vars into static struct, never changes again
+│
+├── 3. SettingsIO::init_defaults()
+│      Open (or create) config.yaml
+│      For each key: if absent → read env var → use compiled default → write to YAML
+│      Save once
+│
+└── 4. Domain services start — they always read from CONFIG or SettingsIO, never env vars directly
+
+Runtime
+│
+├── PUT /api/v2/agent/configs   ─────────────▶ writes to config.yaml (Live Config)
+├── getapp config set ...       ─────────────▶ calls the API above
+└── Server push (getapp_config) ─────────────▶ apply_server_config_group() → config.yaml
+                                               + hot-reloads network / discovery intervals
+```
+
+**Config directory** (`config_dir`) is resolved at process startup:
+
+| Mode | Windows | Linux |
+|---|---|---|
+| Service | Registry `HKLM\SOFTWARE\Elbit Systems\GetApp\InstallDir` + `\bin` | `/etc/getapp/getapp-release` key `CONFIG_PATH` |
+| Console | Current working directory | Current working directory |
+
+**Data directory** (`data_dir`):
+
+| Mode | Windows | Linux |
+|---|---|---|
+| Service | Registry `DataPath` + `\GetAppData` | `/etc/getapp/getapp-release` key `DATA_PATH` (or `/var/lib/getapp`) |
+| Console | `./GetAppData` | `./GetAppData` |
+
+---
+
+## 4️⃣ Who Cares?
+
+<Tabs>
+  <TabItem value="user" label="👤 User / Operator">
+
+As an operator, there are three aspects of device configuration you control through the Live Config: **Enrollment**, **Metadata**, and **Agent Config**. Each maps to a dedicated API endpoint.
+
+---
+
+### 1. Device Enrollment
+
+**Goal:** Connect this device to the GetApp server fleet so it appears in the management UI and can receive component offerings. The enrollment payload is sent to the server on each discovery cycle. The server uses `deviceType` and `platform` to match offerings to this device.
+
+#### Fields
+
+| API field | YAML path | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `deviceId` | `device.device_id` | `DEVICE_ID` | auto-detected | Unique device identifier. Resolved from file → env var → hardware ID. Should not change after first enrollment. |
+| `deviceType` | `device.device_type_token` | `DEVICE_TYPE_TOKEN` | OS default | Array of type tokens used by the server to match offerings to this device. |
+| `platform` | `device.platform` | `DEVICE_PLATFORM_TYPE_TOKEN` | `""` | Platform type name (e.g. hardware family). Use `"universal"` to receive offerings for all platforms. |
+| `platformId` | `device.platform_id` | `PLATFORM_TYPE_ID` | `""` | Platform serial number or hardware ID. |
+| `urlGetAppServerAvailable` | `network.getapp_server_urls` | `BASE_URL` | `["http://localhost:3000"]` | Ordered list of GetApp server URLs. The agent tries each in sequence. |
+| `urlNetworkAvailability` | `network.availability_url` | `NETWORK_AVAILABILITY_URL` | `""` | Optional URL polled to verify network reachability before connecting. |
+| `orchestrateMe` | `device.orchestrate_me` | `ORCHESTRATE_ME` | `false` | Opt-in to A2A orchestration — request that a master agent manage this device. |
+| `reactiveMode` | `device.reactive_mode` | `REACTIVE_MODE` | `false` | Subscribe to the master's SSE command channel. Requires `orchestrateMe: true`. |
+
+**Response-only fields** (returned by the API, not writable):
+
+| Field | Description |
+|---|---|
+| `orchestratedBy` | ID of the master agent currently managing this device. Written during the A2A handshake. |
+| `orchestratorId` | CDN node ID of the orchestrator. Written during the A2A handshake. |
+| `deliverySource` | Current delivery mode: `cache` (download locally) or `remote` (pass-through metadata only). |
+
+#### Enrollment flow
+
+1. **Set server URL** — point the agent at your GetApp server.
+2. **Set device identity** — assign type tokens and platform so the server can match offerings.
+3. **Agent connects** — on the next discovery cycle, the agent sends its enrollment payload.
+4. **Server registers the device** — it appears in the management UI with its ID, type, platform, and metadata.
+5. *(Optional)* **Enable orchestration** — set `orchestrateMe: true` if this device should be managed by a master agent.
+
+#### API
+
+```bash
+# Set server URL and device identity in one call
+curl -X PUT http://localhost:2220/api/v2/device/enrollment \
+  -H "Content-Type: application/json" \
+  -d '{
+    "urlGetAppServerAvailable": ["https://getapp.example.com"],
+    "deviceType": ["edge-server", "zone-a"],
+    "platform": "ruggedized-v2",
+    "platformId": "SN-00142"
+  }'
+
+# Read current enrollment
+curl http://localhost:2220/api/v2/device/enrollment
+
+# Enable A2A orchestration
+curl -X PUT http://localhost:2220/api/v2/device/enrollment \
+  -H "Content-Type: application/json" \
+  -d '{"orchestrateMe": true, "reactiveMode": true}'
+```
+
+#### CLI
+
+```bash
+# Set server URL and platform
+getapp device set-enrollment \
+  --server-urls "https://getapp.example.com" \
+  --platform ruggedized-v2 \
+  --platform-id SN-00142 \
+  --device-type "edge-server,zone-a"
+
+# View current enrollment
+getapp device get
+```
+
+---
+
+### 2. Device Metadata
+
+**Goal:** Describe this device to operators in the management UI and expose attributes to the rule engine for policy targeting.
+
+Metadata has two kinds of fields: fields you set manually, and fields the agent computes automatically at runtime.
+
+#### User-settable fields
+
+| API field | YAML path | Description |
+|---|---|---|
+| `name` | `device.meta_data.name` | Human-readable name shown in the management UI (e.g. `"field-unit-7"`). |
+| `location` | — | Geographic coordinates `{"latitude": 32.08, "longitude": 34.78}`. Not persisted to YAML; held in memory. |
+| `<any custom key>` | `device.meta_data.misc.*` | Any key not matching a known field is stored as a custom attribute in `misc`. Available to the rule engine for policy evaluation. Delete a key by sending `null`. |
+
+#### Agent-computed fields (🔒 read-only)
+
+Evaluated by the agent at runtime — cannot be written via the API:
+
+| API field | Description |
+|---|---|
+| `macAddress` | Network MAC address |
+| `ipAddress` | Current IP address |
+| `os` | Operating system name |
+| `osRelease` | OS version string |
+| `storageAvailable` | Available disk space in bytes, updated periodically |
+| `battery` | Battery status `{level, charging}` |
+| `bandwidth` | Latest bandwidth measurement (download/upload kbps, connection type) |
+| `urlGetAppServerActive` | Currently active GetApp server URL |
+
+#### API
+
+```bash
+# Set name, location, and custom attributes
+curl -X PUT http://localhost:2220/api/v2/device/metadata \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "field-unit-7",
+    "location": {"latitude": 32.0853, "longitude": 34.7818},
+    "fleet": "field-ops",
+    "site": "alpha"
+  }'
+
+# Delete a custom field (set to null)
+curl -X PUT http://localhost:2220/api/v2/device/metadata \
+  -H "Content-Type: application/json" \
+  -d '{"site": null}'
+
+# Read current metadata
+curl http://localhost:2220/api/v2/device/metadata
+```
+
+---
+
+### 3. Agent Config
+
+**Goal:** Tune agent behavior for delivery, deployment, connectivity, and analytics.
+
+#### Fields
+
+| API field | Default | Type | Description |
+|---|---|---|---|
+| `tcpTimeout` | `5` | seconds | TCP connection timeout |
+| `deliveryAutoTrigger` | `false` | bool | Auto-start download when a component is offered |
+| `deliveryStorageBufferBytes` | `0` | bytes | Extra free-space reserve required before allowing a delivery |
+| `maxParallelDeliveries` | `1` | int | Maximum concurrent downloads |
+| `deliveryTimeoutMins` | `30` | minutes | Per-delivery hard timeout |
+| `downloadRetryCount` | `2` | int | Retry attempts on failure (exponential backoff: `delay × 2^attempt`) |
+| `deliveryRetryDelaySecs` | `5` | seconds | Base delay between retries |
+| `deployAutoOnPull` | `false` | bool | Auto-deploy after a successful download |
+| `deployTimeoutSec` | `60` | seconds | Seconds to wait for the deploy process to complete |
+| `logsRunDispatchJob` | `true` | bool | Enable background job that ships logs to the server |
+| `matomoUseBuffer` | `true` | bool | Buffer analytics events locally before batching |
+| `matomoServerUrl` | `""` | URL | Matomo analytics server base URL |
+| `matomoSiteId` | `""` | string | Site ID in Matomo |
+| `matomoDimensionId` | `""` | string | Custom dimension ID for agent tracking |
+| `matomoMaxRetentionHours` | `720` | hours | Max retention of buffered events (30 days default) |
+| `matomoMaxBufferSizeMb` | `20` | MB | Max buffer file size before forced dispatch |
+| `orchSysinfoCheckMins` | `5` | minutes | How often the slave pushes sysinfo to the master (A2A) |
+| `networkConnectionRefreshEnabled` | `false` | bool | Periodically force-reconnect to recover stale connections |
+| `networkConnectionRefreshIntervalSecs` | `60` | seconds | Interval between connection refresh attempts |
+| `discoveryPeriodicIntervalMin` | `60` | minutes | How often the agent polls for new component offerings |
+| `queryStatusIntervalSec` | `2` | seconds | Polling interval for status background tasks |
+
+#### API
+
+```bash
+# Read current config
+curl http://localhost:2220/api/v2/agent/configs
+
+# Update fields (partial update — unspecified fields unchanged)
+curl -X PUT http://localhost:2220/api/v2/agent/configs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deployAutoOnPull": true,
+    "deployTimeoutSec": 300,
+    "maxParallelDeliveries": 3
+  }'
+
+# Delete a field (resets to default)
+curl -X DELETE http://localhost:2220/api/v2/agent/configs/matomoServerUrl
+```
+
+#### CLI
+
+```bash
+# Read all current config
+getapp config get
+
+# Set fields (only passed flags are modified)
+getapp config set \
+  --deploy-auto-on-pull true \
+  --deploy-timeout 300 \
+  --tcp-timeout 10 \
+  --comp-dir /mnt/fast-drive/comps \
+  --matomo-server-url https://matomo.example.com \
+  --matomo-site-id 42
+```
+
+  </TabItem>
+  <TabItem value="admin" label="🔧 Admin / System Integrator">
+
+### Startup Config (`.env` file)
+
+Loaded once at startup. Should not be changed while the agent is running — **restart the service** to apply changes.
+
+#### .env file discovery order
+
+1. `--env <path>` CLI argument (can point to a file or a directory containing `.env`)
+2. `GETAPP_ENV_PATH` environment variable
+3. `{config_dir}/.env` (default system path)
+
+#### Environment variables
+
+| Variable | Default | Type | Description |
+|---|---|---|---|
+| `AGENT_IP` | `0.0.0.0` | string | Bind address for the HTTP server |
+| `GATEWAY_PORT` | `2220` | uint16 | Public-facing HTTP port |
+| `GETAPP_UI_URL` | `http://localhost:3002` | URL | URL of the Agent UI (used in CORS / redirect) |
+| `AUTH_TYPE` | `Secret` | enum | Authentication mode: `Secret`, `Cert`, or `None` |
+| `CA_CERT_PATH` | `""` | path | CA certificate for mutual TLS |
+| `AGENT_CERT_KEY_PATH` | `""` | path | Agent certificate key for mutual TLS |
+| `SWAGGER_ACTIVE` | `true` | bool | Expose Swagger UI at `/swagger-ui/` |
+| `DATA_PATH` | registry / `/var/lib/getapp` | path | Root data directory override |
+| `CONFIG_YAML_PATH` | `{data_dir}/data/device-config.yaml` | path | Override path to `config.yaml` |
+| `COMP_ASSETS_DIR_PATH` | `{data_dir}/data/comps` | path | Downloaded component storage |
+
+#### System-only values (from registry / release file)
+
+These are **not settable via `.env`**. They are read from the system install records.
+
+| Source key (Windows registry) | Source key (Linux `/etc/getapp/getapp-release`) | Description |
+|---|---|---|
+| `InstallDir` | `CONFIG_PATH` | Config directory (config files, cosign.pub, log4rs.yml) |
+| `DataPath` | `DATA_PATH` | Data directory base path |
+| `InstallVersion` | `INSTALL_VERSION` | Installed agent version string |
+| `Name` | `NAME` | Installed agent display name |
+
+#### Device ID resolution order
+
+The agent resolves its device ID using this chain (first non-empty value wins):
+
+1. `device_id` file in the data directory (Windows) or config directory (Linux)
+2. `DEVICE_ID` environment variable
+3. Hardware machine ID (via `machine-uid` crate)
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Live Config Reference (`config.yaml`)
+
+All keys below live in `config.yaml`. They are seeded once on first run (priority: existing YAML value → env var → compiled default). After seeding, **env vars have no effect** — changes must be made via API, CLI, or direct YAML edit (followed by a restart for cached zones).
+
+:::info "Env Var" column
+The env var listed is used **once** during first run (or when the key is missing from YAML). It is not re-read on subsequent starts if the key already exists in the file.
+:::
+
+---
+
+### Device Enrollment Keys
+
+API: `PUT /api/v2/device/enrollment`
+
+These keys define how the device identifies itself to the GetApp server and which server it connects to.
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `device.device_id` | `deviceId` | `DEVICE_ID` (+ file + hardware) | auto-detected | Unique device identifier. Resolved: file → env var → hardware ID. |
+| `device.device_type_token` | `deviceType` | `DEVICE_TYPE_TOKEN` | OS default | Array of type tokens for offering matching. |
+| `device.platform` | `platform` | `DEVICE_PLATFORM_TYPE_TOKEN` | `""` | Platform type name. Use `"universal"` to receive all-platform offerings. |
+| `device.platform_id` | `platformId` | `PLATFORM_TYPE_ID` | `""` | Platform serial number or hardware ID. |
+| `network.getapp_server_urls` | `urlGetAppServerAvailable` | `BASE_URL` | `["http://localhost:3000"]` | Ordered server URL list; agent tries each in sequence. |
+| `network.availability_url` | `urlNetworkAvailability` | `NETWORK_AVAILABILITY_URL` | `""` | URL polled to verify network reachability before connecting. |
+| `device.orchestrate_me` | `orchestrateMe` | `ORCHESTRATE_ME` | `false` | Request A2A orchestration by a master agent. |
+| `device.reactive_mode` | `reactiveMode` | `REACTIVE_MODE` | `false` | Subscribe to the master's SSE command channel. |
+| `device.orchestrated_by` | `orchestratedBy` | — | — | 🔒 Written by A2A handshake. ID of the managing master. |
+| `orch.orchestrator_id` | `orchestratorId` | — | — | 🔒 Written by A2A handshake. CDN node ID of the orchestrator. |
+
+---
+
+### Device Metadata Keys
+
+API: `PUT /api/v2/device/metadata`
+
+Metadata describes the device to operators and the rule engine. Fields marked 🔒 are computed by the agent at runtime and cannot be set via the API.
+
+| YAML path | API field | Writable | Description |
+|---|---|---|---|
+| `device.meta_data.name` | `name` | ✅ | Human-readable name shown in the management UI. |
+| — | `location` | ✅ | Geographic coordinates `{latitude, longitude}`. Not persisted to YAML; held in memory. |
+| `device.meta_data.misc.*` | `<any custom key>` | ✅ | Any unrecognised key is stored as a custom attribute in `misc`. Send `null` to delete a key. Available to the rule engine for policy evaluation. |
+| — | `macAddress` | 🔒 | MAC address — resolved at runtime. |
+| — | `ipAddress` | 🔒 | Current IP address — resolved at runtime. |
+| — | `os` | 🔒 | Operating system name — resolved at runtime. |
+| — | `osRelease` | 🔒 | OS version string — resolved at runtime. |
+| — | `storageAvailable` | 🔒 | Available disk space (bytes) — updated periodically. |
+| — | `battery` | 🔒 | Battery level and charging status — resolved at runtime. |
+| — | `bandwidth` | 🔒 | Latest bandwidth measurement (download/upload, connection type) — updated periodically. |
+| — | `urlGetAppServerActive` | 🔒 | Currently active GetApp server URL — set by the connection manager. |
+
+---
+
+### Agent Config Keys
+
+API: `PUT /api/v2/agent/configs` — CLI: `getapp config set`
+
+<details>
+<summary><strong>🌐 network — Connectivity tuning</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `network.net_tcp_stream_timeout_sec` | `tcpTimeout` | `TCP_STREAM_TIMEOUT` | `5` | TCP connection timeout (seconds) |
+| `network.connection_refresh_enabled` | `networkConnectionRefreshEnabled` | `NETWORK_CONNECTION_REFRESH_ENABLED` | `false` | Periodically force-reconnect to recover from stale connections |
+| `network.connection_refresh_interval_secs` | `networkConnectionRefreshIntervalSecs` | `NETWORK_CONNECTION_REFRESH_INTERVAL_SECS` | `60` | Interval between forced reconnections (seconds) |
+
+</details>
+
+<details>
+<summary><strong>📥 delivery — Download behavior</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `delivery.delivery_auto_trigger` | `deliveryAutoTrigger` | — | `false` | Automatically start download when a component is offered |
+| `delivery.delivery_storage_buffer_bytes` | `deliveryStorageBufferBytes` | `STORAGE_DELIVERY_BUFFER_BYTES` | `0` | Extra free-space reserve (bytes) required beyond the component size before a delivery starts |
+| `delivery.use_only_artifacts_size_for_storage_calculation` | — | — | `false` | Use raw artifact `size` instead of `totalSize` for the disk-space check |
+| `delivery.max_parallel_deliveries` | `maxParallelDeliveries` | `MAX_PARALLEL_DELIVERIES` | `1` | Maximum number of concurrent downloads |
+| `delivery.delivery_timeout_mins` | `deliveryTimeoutMins` | `DELIVERY_TIMEOUT_MINS` | `30` | Per-delivery hard timeout (minutes) |
+| `delivery.delivery_retry_count` | `downloadRetryCount` | `DELIVERY_RETRY_COUNT` / `DOWNLOAD_RETRY_COUNT` | `2` | Retry attempts on download failure |
+| `delivery.delivery_retry_delay_secs` | `deliveryRetryDelaySecs` | `DELIVERY_RETRY_DELAY_SECS` | `5` | Base delay between retries (seconds). Grows exponentially: `delay × 2^attempt`. |
+| `delivery.delivery_source` | — | `DELIVERY_SOURCE` | `cache` | Delivery mode: `cache` (download locally) or `remote` (pass remote metadata only) |
+
+</details>
+
+<details>
+<summary><strong>🚀 deploy — Deployment behavior</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `deploy.deploy_auto_on_pull` | `deployAutoOnPull` | `AUTO_DEPLOY_ON_PULL` | `false` | Automatically trigger deploy after a successful download |
+| `deploy.deploy_timeout_sec` | `deployTimeoutSec` | `DEPLOYMENT_WAIT_TIMEOUT` | `60` | Seconds the agent waits for the deploy process to complete |
+
+</details>
+
+<details>
+<summary><strong>📡 discovery — Component polling</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `discovery.periodic_interval_min` | `discoveryPeriodicIntervalMin` | `DISCOVERY_PERIODIC_INTERVAL` | `60` | How often (minutes) the agent polls the server for new component offerings |
+| `discovery.component_last_run` | — | — | — | RFC3339 timestamp of the last successful discovery run (managed internally) |
+
+</details>
+
+<details>
+<summary><strong>⚖️ rules — Policy engine</strong></summary>
+
+| YAML path | Env var (seed) | Default | Description |
+|---|---|---|---|
+| `rules.device_any` | `RULES_DEVICE_ANY` | `true` | When `true`, the device is eligible for all offerings regardless of attribute filters |
+| `rules.allow_no_policies` | `ALLOW_NO_POLICIES` | `true` | When `true`, components with no configured policies are still offered |
+| `rules.enforce` | `ENFORCE_POLICIES` | `true` | Global enforcement switch — set `false` to bypass all policy checks |
+| `rules.enforcement_mode` | `POLICY_ENFORCEMENT_MODE` | `offering` | Lifecycle stage where policies are checked: `offering`, `delivery`, or `deploy` |
+
+</details>
+
+<details>
+<summary><strong>📶 bandwidth — Bandwidth monitoring</strong></summary>
+
+| YAML path | Env var (seed) | Default | Description |
+|---|---|---|---|
+| `bandwidth.measurement_interval_sec` | `BANDWIDTH_MEASUREMENT_INTERVAL_SEC` | `60` | Interval between bandwidth measurements (seconds) |
+| `bandwidth.tier_high_kbps` | `BANDWIDTH_TIER_HIGH_KBPS` | `5000` | Threshold for "high" bandwidth classification (kbps) |
+| `bandwidth.tier_medium_kbps` | `BANDWIDTH_TIER_MEDIUM_KBPS` | `1000` | Threshold for "medium" bandwidth classification (kbps) |
+| `bandwidth.measurement_timeout_sec` | `BANDWIDTH_MEASUREMENT_TIMEOUT_SEC` | `5` | Timeout for a single bandwidth probe (seconds) |
+
+</details>
+
+<details>
+<summary><strong>📊 matomo — Analytics</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `matomo.matomo_use_buffer` | `matomoUseBuffer` | `USE_MATOMO_BUFFER` | `true` | Buffer events locally before batching to Matomo |
+| `matomo.matomo_server_url` | `matomoServerUrl` | `MATOMO_URL` | `""` | Matomo server base URL |
+| `matomo.matomo_site_id` | `matomoSiteId` | `MATOMO_SITE_ID` | `""` | Site ID in Matomo |
+| `matomo.matomo_dimension_id` | `matomoDimensionId` | `MATOMO_DIMENSION_ID` | `""` | Custom dimension ID for agent-specific tracking |
+| `matomo.matomo_max_retention_hours` | `matomoMaxRetentionHours` | `MATOMO_MAX_RETENTION_HOURS` | `720` (30 days) | Max hours buffered events are retained before forced dispatch |
+| `matomo.matomo_max_buffer_size_mb` | `matomoMaxBufferSizeMb` | `MATOMO_MAX_BUFFER_SIZE_MB` | `20` | Max buffer file size (MB) before forced dispatch |
+
+</details>
+
+<details>
+<summary><strong>📋 logs — Log dispatch</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `logs.logs_run_dispatch_job` | `logsRunDispatchJob` | — | `true` | Enable the background job that ships log files to the server |
+
+</details>
+
+<details>
+<summary><strong>🔗 orch — Orchestration timing (A2A slave side)</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `reactive.sysinfo_push_interval_mins` | `orchSysinfoCheckMins` | `SYSINFO_PUSH_INTERVAL_MINS` | `5` | How often (minutes) the slave pushes system-info updates to the master |
+
+</details>
+
+<details>
+<summary><strong>⚙️ general — Misc intervals</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `general.query_status_interval_sec` | `queryStatusIntervalSec` | `QUERY_STATUS_INTERVAL` | `2` | Polling interval for status background tasks (seconds) |
+
+</details>

@@ -115,3 +115,9 @@ Common issues during installation.
 ## Next Step
   
 Proceed to the Enrollment page to continue setup.
+
+---
+
+## Further Reading
+
+- **[Configuration & Settings](./technician/agent-settings)** — Full reference for all agent settings: Layer 1 (`.env`), Layer 2 (`config.yaml`), CLI and API examples, init mechanism, and troubleshooting.
