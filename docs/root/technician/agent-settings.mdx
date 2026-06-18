@@ -406,6 +406,15 @@ Metadata describes the device to operators and the rule engine. Fields marked �
 API: `PUT /api/v2/agent/configs` — CLI: `getapp config set`
 
 <details>
+<summary><strong>🛠️ device — Agent behavior</strong></summary>
+
+| YAML path | API field | Env var (seed) | Default | Description |
+|---|---|---|---|---|
+| `device.local_config_priority` | — | `LOCAL_CONFIG_PRIORITY` | `false` | When `true`, existing local `config.yaml` values are preserved when the server pushes config — only keys absent locally are written |
+
+</details>
+
+<details>
 <summary><strong>🌐 network — Connectivity tuning</strong></summary>
 
 | YAML path | API field | Env var (seed) | Default | Description |
