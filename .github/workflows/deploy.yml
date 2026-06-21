@@ -126,5 +126,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          tags: harbor.getapp.sh/getapp-dev/docs:${{ env.RELEASE_TAG }}
+          tags: |
+            harbor.getapp.sh/getapp-dev/docs:${{ env.RELEASE_TAG }}
+            harbor.getapp.sh/getapp/docs:${{ env.RELEASE_TAG }}
+
           push: true
