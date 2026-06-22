@@ -184,6 +184,39 @@ The Dashboard provides a view of the final assembled configuration for each devi
 
 ![Screenshot: Device configuration view in Dashboard](/img/placeholder_device_config_view.png)
 
+### Table View — Multi-Device Config Editing
+
+The Dashboard provides a **Table View** that lets you view and edit configuration across multiple devices at once. Switch to it from the **Devices** list by changing the view mode to **Config**.
+
+The table displays a matrix of **devices (rows) × config keys (columns)**, grouped under their config group headers. Click any editable cell to modify its value inline — ConfigMap-inherited groups are read-only. Modified cells are highlighted, and clicking **Save** applies all pending changes across all affected devices at once.
+
+![Screenshot: Config table view with multi-device editing](/img/placeholder_config_table_view.png)
+
+
+## Server API Reference
+
+### Config Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/v1/get_config/:id/config/revisions` | List all revisions |
+| `GET` | `/api/v1/get_config/:id/config/revisions/:revisionId` | Get specific revision |
+| `POST` | `/api/v1/get_config/:id/config/revisions/draft` | Create new draft |
+| `DELETE` | `/api/v1/get_config/:id/config/revisions/draft` | Delete current draft |
+| `POST` | `/api/v1/get_config/:id/config/revisions/apply` | Apply draft (DRAFT → ACTIVE) |
+| `PUT` | `/api/v1/get_config/:id/config/groups` | Create/update group in draft |
+| `DELETE` | `/api/v1/get_config/:id/config/groups` | Delete group from draft |
+| `GET` | `/api/v1/get_config/:id/config/device-config/:deviceId/version/:semver` | Get assembled device config |
+
+### ConfigMap Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/v1/get_config/:id/config-map/associations` | List associations |
+| `POST` | `/api/v1/get_config/:id/config-map/associations` | Add associations |
+| `DELETE` | `/api/v1/get_config/:id/config-map/associations/:associationId` | Remove association |
+| `GET` | `/api/v1/get_config/:id/config/config-maps` | List ConfigMaps for a project |
+
 ### Agent-Side Configuration
 
 On the device, the agent exposes configuration to local applications through its local API:
@@ -370,29 +403,112 @@ Configuration is cached locally on the device. If the device loses connectivity:
 - Local overrides continue to function
 - The agent will sync the latest version once connectivity is restored
 
-## Server API Reference
+## CDN Configuration Distribution
 
-### Config Endpoints
+A **CDN agent** (also called a master node) can act as a local configuration server for managed devices (slave nodes). This enables configuration distribution in environments where managed devices don't have direct connectivity to the GetApp server.
+
+### How CDN Config Distribution Works
+
+```mermaid
+sequenceDiagram
+    participant UI as Server Dashboard
+    participant API as Server API
+    participant Offering as Offering Service
+    participant CDN as CDN Agent (Master)
+    participant Slave as Managed Device (Slave)
+
+    Note over UI: Admin clicks "Distribute"
+    UI->>API: Push config offering
+    API->>Offering: Store offering assignment
+
+    Note over CDN: Periodic discovery
+    CDN->>API: Discovery request
+    API-->>CDN: configDeviceIds[] + latestConfigSemVer
+
+    Note over CDN: Sync managed device configs
+    loop For each managed device
+        CDN->>API: GET /api/v2/device/{deviceId}/config
+        API-->>CDN: Device config payload
+        CDN->>CDN: Cache to local storage
+    end
+
+    Note over Slave: Slave requests config from CDN
+    Slave->>CDN: GET /api/v2/device/{slaveId}/config
+    CDN-->>Slave: Cached config (with overrides applied)
+```
+
+### Distributing Config to CDN Agents
+
+From the Server Dashboard, you can push a device's configuration to CDN agents so they can serve it to managed devices:
+
+1. Navigate to the **Devices** list
+2. Select the target device(s) or device group
+3. Click **Distribute**
+4. Select the config project(s) to distribute
+5. Confirm the action
+
+![Screenshot: Distribute config button in device control bar](/img/placeholder_cdn_distribute_config.png)
+
+This creates an **offering assignment** in the server, which the CDN agent picks up during its next discovery cycle.
+
+### CDN Agent Config Sync Process
+
+During discovery, the CDN agent receives two pieces of config-related information from the server:
+
+1. **`latestConfigSemVer`** — the version of the CDN agent's own config
+2. **`configDeviceIds`** — a list of config catalog IDs for all devices whose configs should be cached locally
+
+The CDN agent then:
+
+1. **Syncs its own config** — downloads and applies its self-config (including `getapp_config` if present)
+2. **Syncs managed device configs** — for each device ID in the combined list (server-provided IDs + locally known managed devices), downloads the config from the server and caches it locally as `devices-config/{device_id}.json`
+
+### Serving Config to Managed Devices
+
+Managed devices (slaves) connect to the CDN agent and request their configuration through the same endpoint used for direct server communication:
+
+```
+GET /api/v2/device/{deviceId}/config
+```
+
+The CDN agent serves the locally cached config with any applicable overrides applied. This means managed devices don't need to differentiate between connecting to a CDN agent or the server — the API is the same.
+
+### CDN Agent API Endpoints
+
+The CDN agent exposes the following endpoints for managing CDN-specific configuration:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/v1/get_config/:id/config/revisions` | List all revisions |
-| `GET` | `/api/v1/get_config/:id/config/revisions/:revisionId` | Get specific revision |
-| `POST` | `/api/v1/get_config/:id/config/revisions/draft` | Create new draft |
-| `DELETE` | `/api/v1/get_config/:id/config/revisions/draft` | Delete current draft |
-| `POST` | `/api/v1/get_config/:id/config/revisions/apply` | Apply draft (DRAFT → ACTIVE) |
-| `PUT` | `/api/v1/get_config/:id/config/groups` | Create/update group in draft |
-| `DELETE` | `/api/v1/get_config/:id/config/groups` | Delete group from draft |
-| `GET` | `/api/v1/get_config/:id/config/device-config/:deviceId/version/:semver` | Get assembled device config |
+| `GET` | `/api/cdn/config` | Get CDN settings (TTL, platform management) |
+| `PUT` | `/api/cdn/config` | Update CDN settings |
+| `POST` | `/api/cdn/config/devices/sync` | Trigger bulk config sync for specific device IDs |
+| `GET` | `/api/cdn/device` | Get device data for CDN-connected devices |
+| `GET` | `/api/cdn/device/offering` | Get per-device offering with metadata |
+| `POST` | `/api/cdn/devices/action` | Dispatch actions to managed devices (Push, Discovery, etc.) |
+| `GET` | `/api/cdn/events/managed/{device_id}` | SSE stream for managed device commands |
 
-### ConfigMap Endpoints
+### Managed Device Connectivity
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/v1/get_config/:id/config-map/associations` | List associations |
-| `POST` | `/api/v1/get_config/:id/config-map/associations` | Add associations |
-| `DELETE` | `/api/v1/get_config/:id/config-map/associations/:associationId` | Remove association |
-| `GET` | `/api/v1/get_config/:id/config/config-maps` | List ConfigMaps for a project |
+Managed devices maintain a connection to the CDN agent via **Server-Sent Events (SSE)**:
+
+```
+GET /api/cdn/events/managed/{device_id}
+```
+
+The CDN agent tracks which managed devices are currently connected. This connectivity status is used to determine which devices are online and can receive pushed actions (e.g., triggering a discovery or delivery).
+
+### CDN Settings
+
+CDN-specific settings are stored separately in `cdn-config.yaml` on the CDN agent. Key settings include:
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `inactive_device_hours` | 24 | Hours before a device is considered inactive |
+| `device_delete_after_days` | 30 | Days before an inactive device record is removed |
+| `platform_management` | — | Platform-specific management configuration |
+| `cdn_node_id` | — | Unique identifier for this CDN node |
+
+
 
 ## Best Practices
 
