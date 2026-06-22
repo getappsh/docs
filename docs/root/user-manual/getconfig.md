@@ -200,18 +200,153 @@ On the device, the agent exposes configuration to local applications through its
 
 ### Local Overrides
 
-Agents can override individual configuration values locally without affecting the server-side configuration:
+Agents can override individual configuration values locally without affecting the server-side configuration. Overrides are managed via the agent's local API:
 
-1. Open the Agent UI on the device
-2. Navigate to **Configuration**
-3. Select a group and key
-4. Set an override value
-
-![Screenshot: Agent UI local overrides management](/img/placeholder_agent_config_overrides.png)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/v2/config/overrides` | View all local overrides |
+| `GET` | `/api/v2/config/overrides/{group}` | View overrides for a specific group |
+| `PUT` | `/api/v2/config/overrides/{group}/{key}` | Set a local override |
+| `DELETE` | `/api/v2/config/overrides/{group}/{key}` | Remove a local override |
 
 :::info
 Local overrides persist across config syncs. They take precedence over server-distributed values until explicitly removed.
 :::
+
+## The `getapp_config` Reserved Group
+
+The `getapp_config` group is a **reserved configuration group** that directly controls the behavior of the GetApp agent itself. Unlike regular groups that are simply exposed via the local API, values in `getapp_config` are **automatically merged into the agent's own `config.yaml`** on every sync.
+
+This provides a powerful mechanism for remotely managing agent settings across your device fleet from the Dashboard, without needing to manually update each device.
+
+### How It Works
+
+1. The server always includes `getapp_config` as a default group in every config project
+2. When the agent syncs its configuration, it extracts the `getapp_config` group
+3. Each key-value pair is **validated** against expected types
+4. Valid values are **deep-merged** into the agent's `config.yaml`
+5. Affected subsystems are **hot-reloaded** — no agent restart required
+
+### Merge Behavior
+
+- **Deep recursive merge** — nested settings are merged at the leaf level
+- **Only provided keys are affected** — keys absent from `getapp_config` are left untouched in the local config
+- **Type safety** — known keys are type-checked; mismatched types are rejected and logged as errors
+- **Unknown keys** are accepted and passed through without type validation
+
+### `local_config_priority` Flag
+
+The agent has a special `device.local_config_priority` setting (default: `false`) that controls merge precedence:
+
+| `local_config_priority` | Behavior |
+|--------------------------|----------|
+| `false` (default) | **Server wins** — `getapp_config` values overwrite local values |
+| `true` | **Local wins** — only keys *absent* locally are written from the server |
+
+:::caution
+The `device.local_config_priority` flag itself is **protected** — it cannot be overwritten remotely via `getapp_config`. It can only be changed directly on the device.
+:::
+
+### Available Settings
+
+The following agent settings can be controlled remotely via the `getapp_config` group:
+
+#### Device Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `device.device_id` | String | Device identifier |
+| `device.device_type_token` | Array | Device type tags |
+| `device.platform` | String | Platform type |
+| `device.platform_id` | String | Platform identifier |
+| `device.meta_data.name` | String | Device display name |
+| `device.meta_data.misc` | String | Misc metadata |
+
+#### Network Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `network.getapp_server_urls` | Array | Server URLs |
+| `network.availability_url` | String | Network availability check URL |
+| `network.net_tcp_stream_timeout_sec` | Number | TCP stream timeout (seconds) |
+
+#### Discovery Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `discovery.periodic_interval_min` | Number | Discovery interval (minutes) |
+| `discovery.stale_after_mins` | Number | Discovery staleness threshold (minutes) |
+| `discovery.component_last_run` | String | Last component discovery timestamp |
+
+#### Delivery Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `delivery.delivery_auto_trigger` | Bool | Auto-trigger delivery after discovery |
+| `delivery.delivery_storage_buffer_bytes` | Number | Storage buffer size (bytes) |
+| `delivery.use_only_artifacts_size_for_storage_calculation` | Bool | Artifact size calculation mode |
+| `delivery.max_parallel_deliveries` | Number | Maximum parallel downloads |
+| `delivery.delivery_timeout_mins` | Number | Delivery timeout (minutes) |
+| `delivery.delivery_retry_count` | Number | Number of delivery retries |
+
+#### Deploy Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `deploy.deploy_auto_on_pull` | Bool | Auto-deploy after pull |
+| `deploy.deploy_timeout_sec` | Number | Deploy timeout (seconds) |
+
+#### Release Health Check Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `releases.health_check_timeout_secs` | Number | Health check timeout (seconds) |
+| `releases.health_check_interval_mins` | Number | Health check interval (minutes) |
+
+#### General & Logging Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `general.query_status_interval_sec` | Number | Status polling interval (seconds) |
+| `logs.logs_run_dispatch_job` | Bool | Enable log dispatch job |
+
+#### Analytics (Matomo) Settings
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `matomo.matomo_use_buffer` | Bool | Buffer analytics events |
+| `matomo.matomo_server_url` | String | Matomo server URL |
+| `matomo.matomo_site_id` | Number | Matomo site ID |
+| `matomo.matomo_dimension_id` | Number | Matomo dimension ID |
+| `matomo.matomo_max_retention_hours` | Number | Matomo retention period (hours) |
+| `matomo.matomo_max_buffer_size_mb` | Number | Matomo buffer size (MB) |
+
+### Hot-Reload Behavior
+
+After merging `getapp_config` values, the agent hot-reloads affected subsystems:
+
+- **Network/Delivery changes** — refresh the HTTP client pool immediately
+- **Discovery changes** — reset the discovery scheduler interval
+- **Other settings** — picked up automatically on the next loop iteration
+
+### Example
+
+A `getapp_config` group with the following YAML content:
+
+```yaml
+discovery:
+  periodic_interval_min: 10
+delivery:
+  max_parallel_deliveries: 3
+  delivery_auto_trigger: true
+network:
+  net_tcp_stream_timeout_sec: 30
+```
+
+This would configure all devices receiving this config to:
+- Run discovery every 10 minutes
+- Allow up to 3 parallel deliveries with auto-trigger enabled
+- Set TCP stream timeout to 30 seconds
 
 ## Configuration Sync
 
@@ -220,7 +355,7 @@ Local overrides persist across config syncs. They take precedence over server-di
 1. During **discovery**, the agent compares its local config version with the server-advertised version
 2. If a newer version is available, the agent downloads the updated configuration
 3. The new config is cached locally and made available through the local API
-4. If a `getapp_config` group exists, its values are merged into the agent's own settings
+4. If a `getapp_config` group exists, its values are [merged into the agent's settings](#the-getapp_config-reserved-group)
 
 ### Sync Triggers
 
