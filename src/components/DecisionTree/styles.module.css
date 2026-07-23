@@ -1,0 +1,239 @@
+.card {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem 1rem;
+  margin: 1.25rem 0;
+  background: var(--ifm-background-surface-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.treeTitle {
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.langToggle {
+  display: inline-flex;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.langButton {
+  border: 0;
+  background: transparent;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.langActive {
+  background: var(--ifm-color-primary);
+  color: #fff;
+}
+
+/* Breadcrumb of chosen answers */
+.breadcrumb {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.crumb {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.crumbQ {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crumbA {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  white-space: nowrap;
+}
+
+.node {
+  margin-bottom: 0.5rem;
+}
+
+.kind {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-500);
+  margin-bottom: 0.35rem;
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+}
+
+.note {
+  font-size: 0.88rem;
+  color: var(--ifm-color-emphasis-700);
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 8px;
+  padding: 0.4rem 0.65rem;
+  margin-bottom: 0.6rem;
+}
+
+.steps {
+  margin: 0 0 0.8rem;
+  padding-inline-start: 1.4rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.answer {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+  border-radius: 9px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.05s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.answer:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.answer:active {
+  transform: translateY(1px);
+}
+
+.answerYes {
+  border-color: #2e8b57;
+}
+.answerYes:hover {
+  background: rgba(46, 139, 87, 0.12);
+}
+
+.answerNo {
+  border-color: #c0392b;
+}
+.answerNo:hover {
+  background: rgba(192, 57, 43, 0.12);
+}
+
+/* Outcome cards */
+.outcome {
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  border: 1px solid transparent;
+  border-inline-start-width: 5px;
+}
+
+.outcomeLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
+.outcomeIcon {
+  font-size: 1.1rem;
+}
+
+.outcomeText {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.resolved {
+  background: rgba(46, 139, 87, 0.1);
+  border-color: #2e8b57;
+}
+.escalate {
+  background: rgba(192, 57, 43, 0.1);
+  border-color: #c0392b;
+}
+.warning {
+  background: rgba(230, 162, 60, 0.12);
+  border-color: #e6a23c;
+}
+.info {
+  background: rgba(52, 120, 200, 0.1);
+  border-color: #3478c8;
+}
+
+.retry {
+  margin-top: 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  background: var(--ifm-background-color);
+  border-radius: 8px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.retry:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.footer {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.ctrl {
+  border: 0;
+  background: transparent;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+}
+
+.ctrl:hover:not(:disabled) {
+  color: var(--ifm-color-primary);
+}
+
+.ctrl:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

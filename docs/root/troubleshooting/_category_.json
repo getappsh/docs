@@ -1,0 +1,9 @@
+{
+  "label": "Troubleshooting",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Troubleshooting",
+    "description": "Tiered support playbooks for GetApp. Interactive decision trees for field agents (Tier 1) and Desk / Server support (Tier 2)."
+  }
+}
