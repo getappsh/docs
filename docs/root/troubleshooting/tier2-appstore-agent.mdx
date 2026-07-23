@@ -1,0 +1,136 @@
+---
+id: getapp-tier2-appstore
+title: GetApp – Tier 2 AppStore Agent
+sidebar_label: Tier 2 – AppStore Agent
+sidebar_position: 2
+tags: [tier2, getapp, store, release, download, cellular, edge-devices, proxy, minio]
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Tier 2 – AppStore Agent
+
+:::info When to use
+This guide is for Tier 2 / Desk, after Tier 1 has exhausted the field steps.
+Work through the decision trees against the **Server Dashboard**, the
+**Catalog**, and the **Edge Devices** views.
+
+> 💡 The decision trees below default to English; use the toggle in each tree
+> for עברית.
+:::
+
+## The Server Dashboard
+
+Most Tier 2 checks happen from the Server Dashboard. Open the project to reach
+its **Overview**, **Versions**, and **Artifacts**.
+
+<p align="center">
+  <img src="/img/server-project-overview.png" width="720" alt="Server Dashboard — project overview with team members and tokens" />
+</p>
+
+The **Versions** tab lists the version history, each with its release status.
+
+<p align="center">
+  <img src="/img/server-version-history.png" width="720" alt="Server Dashboard — project version history" />
+</p>
+
+---
+
+## 1. Cellular: Cannot See Release
+
+**When:** The device does not display the desired release after all Tier 1 steps.
+
+Start in **Edge Devices**: search the device by name and expand its versions by
+OS to confirm what the device is actually offered.
+
+<p align="center">
+  <img src="/img/server-edge-devices.png" width="720" alt="Server Dashboard — Edge Devices table" />
+</p>
+
+<p align="center">
+  <img src="/img/server-edge-devices-versions.png" width="720" alt="Edge Devices — versions offered to the selected device" />
+</p>
+
+If the version is missing, the fix usually lives in the **Catalog** — either the
+project's version status is not `Release`, the rule is not linked, or the
+DeviceType (`Catalog → DeviceTypes`) does not include the component / version.
+
+<Tabs>
+<TabItem value="projects" label="Catalog → Projects" default>
+
+<p align="center">
+  <img src="/img/server-catalog-projects.png" width="720" alt="Catalog — projects list with current versions" />
+</p>
+
+</TabItem>
+<TabItem value="devicetypes" label="Catalog → DeviceTypes">
+
+<p align="center">
+  <img src="/img/server-catalog-devicetypes.png" width="720" alt="Catalog — DeviceTypes with assigned projects" />
+</p>
+
+</TabItem>
+<TabItem value="assign" label="Assign a version">
+
+Use the version dropdown on a DeviceType's project to set the default version
+offered, then **Save**.
+
+<p align="center">
+  <img src="/img/server-devicetype-set-default.png" width="720" alt="Catalog — setting a DeviceType's default project version" />
+</p>
+
+</TabItem>
+</Tabs>
+
+Now follow the decision tree:
+
+<DecisionTree id="t2-cellular-visibility" />
+
+---
+
+## 2. Cellular: Download Failed
+
+**When:** Download failed and was not resolved after a Tier 1 retry.
+
+First, reproduce the download straight from the Dashboard: open the version's
+**Artifacts** section and click the download icon (↓) next to the artifact.
+
+<p align="center">
+  <img src="/img/server-version-artifacts.png" width="720" alt="Server Dashboard — version artifacts with the download control" />
+</p>
+
+<DecisionTree id="t2-cellular-download" />
+
+### Final Action — No Disk Space
+
+The decision tree points here when there is **no free disk space**.
+
+:::danger Destructive action
+This action destroys data — ensure you have a backup before proceeding.
+:::
+
+```bash
+# 1. Delete the MinIO volume
+docker volume rm <minio_volume_name>
+
+# 2. Run a reset
+docker-compose restart   # or the relevant command for your environment
+
+# 3. Retry the download
+```
+
+---
+
+## Legend
+
+| Symbol | Meaning |
+|--------|---------|
+| ✅ | Yes / Resolved / Success |
+| ❌ | No / Failure |
+| ⚠️ | Warning / Action required |
+| 🔴 | Escalation required (developer support) |
+
+---
+
+Next → see **[Tier 2 – Server](./getapp-tier2-server)**.
