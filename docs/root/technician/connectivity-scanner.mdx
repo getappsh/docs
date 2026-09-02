@@ -1,0 +1,229 @@
+---
+id: connectivity-scanner
+title: Connectivity Detection & Monitoring
+sidebar_label: Connectivity Scanner
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Connectivity Detection & Monitoring
+
+---
+
+## For Users {#user-guide}
+
+The GetApp Agent automatically detects when your device gains or loses network connectivity. You do not need to manually trigger syncs or tell the agent to "go online."
+
+#### What happens automatically
+
+- When your device connects to a network (Ethernet cable, WiFi, VPN), the agent detects it within seconds and begins syncing software updates, offerings, and configurations with the server.
+- When connectivity is lost, the agent pauses all network operations gracefully and waits for the next opportunity.
+- If your device moves through areas with brief connectivity windows (e.g., a vehicle passing a base station), the agent is optimized to detect these windows as fast as possible — typically under 1 second — and immediately starts working.
+- All of this happens in the background. The UI connection indicator updates automatically.
+
+#### Connection status indicators
+
+| Indicator | Meaning |
+|---|---|
+| 🟢 Connected | Agent can reach the server and is actively syncing |
+| 🟡 Internet only | Internet is available but the GetApp server is unreachable |
+| 🔴 Disconnected | No network connectivity detected |
+
+:::tip
+If the agent seems stuck in "Disconnected" state even though you have network, check that the server URL is correctly configured. The agent distinguishes between "network exists" and "server is reachable."
+:::
+
+---
+
+## For Technicians {#technician-guide}
+
+---
+
+### Overview & Detection Flow
+
+The Connectivity Scanner is a background service that continuously monitors the device's network state and notifies the rest of the agent when connectivity changes. It uses an adaptive, event-driven approach optimized for environments with intermittent connectivity.
+
+#### Two operating modes
+
+| Mode | When active | Check interval | What it checks |
+|---|---|---|---|
+| **Scanning** | Device is disconnected | 5 seconds (configurable) | Does a default gateway exist? (routing table check) |
+| **Monitoring** | Device is connected | 60 seconds (configurable) | Is the server still reachable? (full HTTP check) |
+
+**Detection flow:**
+
+```
+OS network-change event fires (instant, zero CPU cost)
+          │
+          ▼
+   Gateway exists in routing table?
+          │
+     NO ──┘     YES
+     │            │
+   Wait for       ▼
+   next event   Full connectivity check
+                  ├── Server reachable? → Connected! Start syncing
+                  └── Internet only?    → Keep scanning
+```
+
+On supported platforms (Windows and Linux), the agent listens for **operating system network-change events** — hardware interrupts that fire when a cable is plugged in, WiFi associates, or an IP address is assigned. This provides near-instant detection (under 100 milliseconds) with zero CPU cost while waiting.
+
+On platforms without OS event support, the agent falls back to a timer-based poll every 5 seconds using a lightweight gateway probe.
+
+#### What triggers an OS event
+
+| Event | Example |
+|---|---|
+| Network adapter enabled/disabled | Ethernet cable plugged in, WiFi turned on/off |
+| IP address assigned/removed | DHCP lease obtained, static IP configured |
+| Route added/removed | Default gateway appears in routing table |
+| VPN tunnel established/torn down | VPN client connects/disconnects |
+
+---
+
+### Why Adaptive Scanning Matters
+
+#### Maximizing brief connectivity windows
+
+Mobile and tactical devices often pass through areas with only seconds of connectivity. A fixed-interval poll (e.g., every 60 seconds) would waste most of that window just discovering the network exists. The adaptive scanner solves this by checking aggressively when disconnected and relaxing when connected.
+
+#### Two-speed behavior
+
+- **When disconnected** — the agent probes every 5 seconds using a cheap check (routing table read, no network I/O). With OS events, detection is instant.
+- **When connected** — the agent relaxes to a 60-second verification interval, because active HTTP requests (deliveries, status updates) naturally surface failures.
+- **The transition is automatic** — as soon as the server becomes unreachable, the agent switches back to fast scanning mode.
+
+#### Why gateway detection comes first
+
+Checking "can I reach the GetApp server?" is expensive — it requires an HTTP request that can hang for several seconds if the network is down. Checking "does a default gateway exist in my routing table?" is free — it reads OS data structures in microseconds. The gateway check acts as a fast gate: if there's no gateway, there's no point trying the server.
+
+---
+
+### Architecture & Integration Points
+
+#### System diagram
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Connectivity Scanner                                    │
+│  (src/common/client/connectivity/)                       │
+│                                                          │
+│  Inputs:                                                 │
+│    ├── OS network events (Windows / Linux)               │
+│    ├── Timer fallback (5s / 60s)                         │
+│    └── Settings: connection_refresh_enabled,             │
+│        connection_refresh_interval_secs,                 │
+│        scan_interval_secs, scan_gateway_timeout_ms       │
+│                                                          │
+│  Outputs:                                                │
+│    └── ServerPool::set_network_status()                  │
+│        ├── watch channel → OnlineActor, Delivery,        │
+│        │                   Orchestration, Schedule,       │
+│        │                   Bandwidth                     │
+│        ├── SSE broadcast → UI                            │
+│        └── Matomo event  → Analytics                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### Direct dependencies
+
+| Dependency | Purpose |
+|---|---|
+| `ServerPool` / `HttpClient` | Performs the full connectivity check (server + internet) |
+| `SettingsIO` | Reads scan intervals, timeouts, enabled flag |
+| `netdev` crate | Reads OS routing table to discover gateway IPs |
+| `windows` crate (Windows) | Registers `NotifyIpInterfaceChange` callback |
+| `rtnetlink` crate (Linux) | Subscribes to kernel Netlink events |
+
+#### Downstream consumers
+
+All consumers react automatically via the `watch` channel:
+
+| Consumer | Reaction to connectivity change |
+|---|---|
+| `OnlineActor` | Unblocks parked `wait_for_online()` tasks |
+| Delivery Manager | Starts/resumes software downloads |
+| Orchestration Manager | Reconnects to parent agent (A2A) |
+| Schedule Manager | Resumes scheduled tasks |
+| Bandwidth Service | Begins bandwidth measurements |
+| SSE Broadcaster | Pushes `NetworkConnectionState` event to UI |
+| `run_with_disconnect_cancel()` | Cancels in-flight requests on disconnect |
+
+#### Relationship to `connection_refresh`
+
+The connectivity scanner replaces the older `connection_refresh` service. At server boot only `connectivity::start()` runs — it is the sole detection mechanism. The `connection_refresh` module still exists in the codebase but is no longer started. The scanner reuses the same two settings for its master toggle and its connected-mode monitoring interval: `network.connection_refresh_enabled` and `network.connection_refresh_interval_secs`.
+
+---
+
+### Configuration, Tuning & Troubleshooting
+
+#### Deployment scenarios
+
+| Scenario | Benefit |
+|---|---|
+| Vehicle passing through a base station coverage zone | Sub-second detection, maximum sync window utilization |
+| Field device with intermittent WiFi | Automatic reconnect without manual intervention |
+| Device switching between Ethernet and WiFi | OS event triggers immediate re-evaluation of connectivity |
+| Air-gapped device briefly connected for updates | Fast detection ensures the short window is fully used |
+
+#### Settings reference
+
+<Tabs>
+<TabItem value="env" label=".env file">
+
+```env
+# Master toggle — turns the scanner on/off
+NETWORK_CONNECTION_REFRESH_ENABLED=true
+
+# Monitoring interval when connected (seconds)
+NETWORK_CONNECTION_REFRESH_INTERVAL_SECS=60
+
+# Scanning interval when disconnected (seconds) — lower = faster detection
+NETWORK_SCAN_INTERVAL_SECS=5
+
+# Gateway TCP probe timeout (milliseconds) — used in timer fallback path
+NETWORK_SCAN_GATEWAY_TIMEOUT_MS=500
+```
+
+</TabItem>
+<TabItem value="yaml" label="config.yaml">
+
+```yaml
+network:
+  connection_refresh_enabled: true
+  connection_refresh_interval_secs: 60
+  scan_interval_secs: 5
+  scan_gateway_timeout_ms: 500
+```
+
+</TabItem>
+</Tabs>
+
+#### Tuning recommendations
+
+| Setting | When to change | Recommendation |
+|---|---|---|
+| `scan_interval_secs` | Device moves through very brief windows (&lt;10s) | Lower to 2-3s. Cost is negligible. |
+| `scan_interval_secs` | Device is stationary with stable connectivity | Raise to 10-15s to reduce log noise |
+| `connection_refresh_interval_secs` | Server health checks are too frequent | This is a safety-net timeout, not the primary detection mechanism. OS events handle fast detection. Safe to raise to 300s (5 min) or higher. Default 60s is conservative. |
+| `scan_gateway_timeout_ms` | Gateway is slow to respond (satellite link) | Raise to 1000-2000ms |
+| `connection_refresh_enabled` | Testing without connectivity scanning | Set to `false`. Scanner sleeps, no probes run |
+
+:::info Runtime toggle
+All settings can be changed at runtime via `config.yaml` or a server push. The scanner re-reads settings on every loop iteration — no restart required.
+:::
+
+#### Edge cases and troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Agent does not detect connectivity | `connection_refresh_enabled` is `false` (default) | Set to `true` in `.env` or `config.yaml` |
+| Detection is slow (>10 seconds) | OS events failed to initialize | Check logs for `connectivity_scanner: failed to init`. Falls back to timer polling |
+| Agent detects LAN but not server | Server URL is wrong, or server is down | Check `network.getapp_server_urls` in config. Verify server is reachable manually |
+| Gateway probe gives false positives | Static IP with stale gateway route | The full server check catches this. No action needed |
+| Multiple interfaces, wrong one detected | Not applicable — scanner checks all interfaces | All gateways from all interfaces are probed |
+| Logs show constant "netlink event received" | Normal on Linux — DHCP renewals, IPv6 neighbor discovery | These are `trace!` level, only visible if log level is set to trace |
