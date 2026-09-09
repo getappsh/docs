@@ -1,6 +1,6 @@
 # Roles Reference and Scenarios
 
-**Last Updated:** February 18, 2026
+**Last Updated:** September 9, 2026
 
 [← Back to Overview](./roles-and-permissions.md)
 
@@ -21,14 +21,16 @@ This document provides a complete reference of all available roles and real-worl
 8. [User Management Roles](#user-management-roles)
 9. [Analytics & Monitoring Roles](#analytics--monitoring-roles)
 10. [Configuration Roles](#configuration-roles)
-11. [Special Roles](#special-roles)
+11. [SBOM Roles](#sbom-roles)
+12. [Config Revision & Config Map Roles](#config-revision--config-map-roles)
+13. [Special Roles](#special-roles)
 
 **Part 2: Common Scenarios**
-12. [User Onboarding Scenarios](#user-onboarding-scenarios)
-13. [Custom Role Scenarios](#custom-role-scenarios)
-14. [Testing Scenarios](#testing-scenarios)
-15. [Emergency Access Scenarios](#emergency-access-scenarios)
-16. [Troubleshooting](#troubleshooting)
+14. [User Onboarding Scenarios](#user-onboarding-scenarios)
+15. [Custom Role Scenarios](#custom-role-scenarios)
+16. [Testing Scenarios](#testing-scenarios)
+17. [Emergency Access Scenarios](#emergency-access-scenarios)
+18. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -40,8 +42,11 @@ Composite roles bundle multiple individual roles together for easier management.
 
 | Role | Description | Included Roles |
 |------|-------------|----------------|
-| `contributor` | Can contribute to projects - create releases, upload artifacts, manage projects, and define policies | 24 roles |
-| `system-administrator` | Can deploy applications, manage devices, configure the system, and manage all policies and restrictions | 31 roles |
+| `user` | End user - can access the appstore and add a device | 1 role |
+| `viewer` | Read-only **platform** monitoring: dashboard, activities, logs, metrics, and configuration | 8 roles |
+| `tech` | Everything `viewer` can see **plus** the **catalog** (offerings/appstore, releases, artifacts, SBOM scans) — still read-only | 14 roles |
+| `contributor` | Can contribute to projects - create releases, upload artifacts, manage projects, and define policies | 34 roles |
+| `system-administrator` | Can deploy applications, manage devices, configure the system, and manage all policies and restrictions | 44 roles |
 
 **See Overview** for detailed breakdown of what each composite role includes.
 
@@ -76,7 +81,7 @@ Control access to release-related operations.
 | `create-release` | Create new releases | Developers, release managers |
 | `view-release` | View release details | All team members, stakeholders |
 | `update-release` | Modify existing releases | Release managers, developers |
-| `edit-imported-release` | Edit imported releases that are in released status | Release managers, administrators |
+| `edit-released-release` | Edit imported releases that are in released status | Release managers, administrators |
 | `delete-release` | Delete releases for a project | Release managers, administrators |
 | `push-release` | Push/deploy releases to devices | DevOps engineers, administrators |
 | `publish-release` | Publish releases (make them available) | Release managers, QA leads |
@@ -147,17 +152,15 @@ Control access to discovery services, device offerings, and device management.
 | `create-offering` | Create new device offerings | System administrators |
 | `update-offering` | Update existing offerings | System administrators |
 | `delete-offering` | Delete offerings | System administrators |
-| `view-device` | View device information | All team members |
-| `manage-devices` | Create, update, and delete devices | System administrators |
 | `link-project-device-type` | Link projects to device types | System administrators |
 
 ### Common Combinations
 
-**Discovery Viewer**: `view-discovery`, `view-offering`, `view-device`
+**Discovery Viewer**: `view-discovery`, `view-offering`
 
 **Offering Manager**: `view-offering`, `create-offering`, `update-offering`, `delete-offering`
 
-**Device Administrator**: `view-device`, `manage-devices`, `link-project-device-type`
+**Device Administrator**: `view-discovery`, `manage-discovery`, `link-project-device-type`
 
 ---
 
@@ -245,6 +248,40 @@ Control access to system configuration.
 | `view-config` | View system configuration settings | Contributors, administrators |
 
 **Security Note**: `manage-config` should be restricted to trusted administrators only, as it can affect system behavior.
+
+---
+
+## SBOM Roles
+
+Control access to Software Bill of Materials (SBOM) scanning.
+
+| Role | Description | Typical Use |
+|------|-------------|-------------|
+| `create-sbom-scan` | Request a new SBOM scan for a docker image, binary file, or directory | Developers, security engineers |
+| `view-sbom-scan` | View SBOM scan status, results, and download reports | Contributors, administrators |
+| `delete-sbom-scan` | Delete an SBOM scan (cancels it if still queued) | System administrators |
+| `retry-sbom-scan` | Retry a failed or completed SBOM scan | Developers, administrators |
+
+---
+
+## Config Revision & Config Map Roles
+
+Control access to configuration revisions (device config snapshots) and ConfigMap project associations.
+
+### Config Revisions
+
+| Role | Description | Typical Use |
+|------|-------------|-------------|
+| `view-config-revision` | View config revisions and device config snapshots | Contributors, administrators |
+| `manage-config-revision` | Manage config revisions (create draft, apply, delete draft) | System administrators |
+| `manage-config-group` | Manage config groups and entries within a draft revision | System administrators |
+
+### Config Maps
+
+| Role | Description | Typical Use |
+|------|-------------|-------------|
+| `view-config-map` | View ConfigMap projects and their device-type associations | Contributors, administrators |
+| `manage-config-map` | Manage ConfigMap associations (add or remove device-type / device-id links) | System administrators |
 
 ---
 

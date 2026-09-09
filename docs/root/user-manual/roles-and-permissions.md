@@ -1,6 +1,6 @@
 # User Roles and Permissions - Overview
 
-**Last Updated:** February 18, 2026
+**Last Updated:** September 9, 2026
 
 Welcome to the GetApp Roles and Permissions documentation. This guide will help you understand and manage user access control in the GetApp system.
 
@@ -124,17 +124,52 @@ The GetApp system has two ways to control permission checking:
 
 ## Pre-configured Composite Roles
 
-The system comes with two main composite roles that cover most use cases:
+The system comes with five composite roles that cover most use cases, ordered from least to most privileged:
 
-### 1. Contributor
+### 1. User
+
+**Who it's for**: End users of the appstore
+
+**What they can do**:
+- ✅ Access the appstore and add a device
+- ❌ **Cannot** access the platform dashboard or management features
+
+**Use case**: Give this role to end users who only need to install applications on their devices.
+
+### 2. Viewer
+
+**Who it's for**: Stakeholders who need read-only visibility
+
+**What they can do**:
+- ✅ View the platforms dashboard and device operations
+- ✅ View activities, logs, and metrics
+- ✅ View configuration, config revisions, and config maps (read-only)
+- ❌ **Cannot** create, update, or delete anything
+
+**Use case**: Give this role to people who need to monitor the platform without making changes.
+
+### 3. Tech
+
+**Who it's for**: Technicians who need catalog access on top of viewer visibility
+
+**What they can do**:
+- ✅ Everything a viewer can do
+- ✅ View the catalog / appstore, releases, and artifacts
+- ✅ View SBOM scan results
+- ❌ **Cannot** create, update, or delete anything
+
+**Use case**: Give this role to technicians who need to browse the catalog and inspect releases and artifacts.
+
+### 4. Contributor
 
 **Who it's for**: Team members who work on projects—developers, product managers, QA engineers
 
 **What they can do**:
 - ✅ Manage projects (create, view, update, delete, list)
 - ✅ Manage releases (create, view, update, publish, list)
-- ✅ Manage artifacts (upload, download, view, list)
+- ✅ Manage artifacts (upload, download, view, delete, list)
 - ✅ Manage policies (release-associated rules)
+- ✅ Manage SBOM scans (create, view, retry)
 - ✅ View discovery services, offerings, users
 - ✅ View analytics, logs, metrics, and configuration
 - ❌ **Cannot** deploy to devices or manage system settings
@@ -143,7 +178,7 @@ The system comes with two main composite roles that cover most use cases:
 
 **Use case**: Give this role to anyone who needs to contribute to projects but doesn't need deployment or administrative access.
 
-### 2. System Administrator
+### 5. System Administrator
 
 **Who it's for**: DevOps engineers, IT staff, system administrators
 
@@ -154,24 +189,28 @@ The system comes with two main composite roles that cover most use cases:
 - ✅ Link projects to device types
 - ✅ Manage offerings (create, update, delete)
 - ✅ Manage users
-- ✅ Manage system configuration
+- ✅ Manage system configuration, config revisions, and config maps
 - ✅ Manage restrictions (device-associated rules)
+- ✅ Manage SBOM scans (create, view, delete, retry)
 - ✅ Full access to analytics, logs, and metrics
 
 **Use case**: Give this role to people who need to deploy applications, manage the infrastructure, and configure the system.
 
 ### Key Differences
 
-| Capability | Contributor | System Administrator |
-|-----------|-------------|---------------------|
-| Create/manage projects | ✅ | ✅ |
-| Upload/manage artifacts | ✅ | ✅ |
-| Publish releases | ✅ | ✅ |
-| Manage policies | ✅ | ✅ |
-| **Deploy to devices** | ❌ | ✅ |
-| **Manage restrictions** | ❌ | ✅ |
-| **Manage users** | ❌ | ✅ |
-| **Manage system config** | ❌ | ✅ |
+| Capability | User | Viewer | Tech | Contributor | System Administrator |
+|-----------|------|--------|------|-------------|---------------------|
+| Access appstore / add device | ✅ | ❌ | ❌ | ❌ | ❌ |
+| View dashboard, logs, metrics | ❌ | ✅ | ✅ | ✅ | ✅ |
+| View catalog, releases, artifacts | ❌ | ❌ | ✅ | ✅ | ✅ |
+| Create/manage projects | ❌ | ❌ | ❌ | ✅ | ✅ |
+| Upload/manage artifacts | ❌ | ❌ | ❌ | ✅ | ✅ |
+| Publish releases | ❌ | ❌ | ❌ | ✅ | ✅ |
+| Manage policies | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Deploy to devices** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Manage restrictions** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Manage users** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Manage system config** | ❌ | ❌ | ❌ | ❌ | ✅ |
 
 ---
 
@@ -222,6 +261,21 @@ All users must have appropriate roles to access features.
 
 The system automatically creates these groups:
 
+#### Users Group
+- **Automatic Role**: `user` composite role
+- **Members Get**: Appstore access and the ability to add a device
+- **Who should be here**: End users of the appstore
+
+#### Viewers Group
+- **Automatic Role**: `viewer` composite role
+- **Members Get**: Read-only access to the platforms dashboard, activities, logs, and metrics
+- **Who should be here**: Stakeholders who need visibility without making changes
+
+#### Techs Group
+- **Automatic Role**: `tech` composite role
+- **Members Get**: Viewer access plus the application catalog, releases, and artifacts
+- **Who should be here**: Technicians who need catalog access
+
 #### Contributors Group
 - **Automatic Role**: `contributor` composite role
 - **Members Get**: All contributor permissions automatically
@@ -258,8 +312,8 @@ The system automatically creates these groups:
 
 1. **System Startup**: GetApp API connects to Keycloak
 2. **Role Creation**: System creates any missing roles
-3. **Composite Role Setup**: Configures `contributor` and `system-administrator` roles
-4. **Group Creation**: Creates Contributors and System Administrators groups
+3. **Composite Role Setup**: Configures the `user`, `viewer`, `tech`, `contributor`, and `system-administrator` roles
+4. **Group Creation**: Creates the Users, Viewers, Techs, Contributors, and System Administrators groups
 5. **Synchronization**: Updates any changes from code
 
 ### You'll See Log Messages Like
@@ -268,7 +322,7 @@ The system automatically creates these groups:
 🚀 Starting OIDC Role Synchronization
 ✅ Created: create-project
 ✅ Created: view-release
-✅ Synced composite role: 'contributor' (24 child roles)
+✅ Synced composite role: 'contributor' (34 child roles)
 ✅ Synced group: 'Contributors'
 🎉 Synchronization Complete!
 ```
@@ -287,7 +341,7 @@ Here's a quick overview of the types of roles available:
 `create-project`, `view-project`, `update-project`, `delete-project`, `list-projects`
 
 ### 🚀 Release Management
-`create-release`, `view-release`, `update-release`, `edit-imported-release`, `delete-release`, `publish-release`, `push-release`, `list-releases`
+`create-release`, `view-release`, `update-release`, `edit-released-release`, `delete-release`, `publish-release`, `push-release`, `list-releases`
 
 ### 📦 Artifact Management
 `upload-artifact`, `download-artifact`, `view-artifact`, `delete-artifact`, `list-artifacts`
@@ -296,7 +350,7 @@ Here's a quick overview of the types of roles available:
 `deploy-dev`, `deploy-staging`, `deploy-production`
 
 ### 🔍 Discovery & Devices
-`view-discovery`, `manage-discovery`, `view-offering`, `create-offering`, `update-offering`, `delete-offering`, `manage-devices`, `link-project-device-type`
+`view-discovery`, `manage-discovery`, `view-offering`, `create-offering`, `update-offering`, `delete-offering`, `link-project-device-type`
 
 ### 📋 Policies & Restrictions
 **Policies** (Release rules - managed by contributors):
@@ -313,6 +367,12 @@ Here's a quick overview of the types of roles available:
 
 ### ⚙️ Configuration
 `view-config`, `manage-config`
+
+### 🧾 SBOM
+`create-sbom-scan`, `view-sbom-scan`, `delete-sbom-scan`, `retry-sbom-scan`
+
+### 🗂️ Config Revision & Config Map
+`view-config-revision`, `manage-config-revision`, `manage-config-group`, `view-config-map`, `manage-config-map`
 
 ---
 
