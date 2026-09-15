@@ -154,7 +154,7 @@ The system comes with five composite roles that cover most use cases, ordered fr
 
 **What they can do**:
 - ✅ Everything a viewer can do
-- ✅ View the catalog / appstore, releases, and artifacts
+- ✅ View the catalog, releases, and artifacts
 - ✅ View SBOM scan results
 - ❌ **Cannot** create, update, or delete anything
 
@@ -200,7 +200,7 @@ The system comes with five composite roles that cover most use cases, ordered fr
 
 | Capability | User | Viewer | Tech | Contributor | System Administrator |
 |-----------|------|--------|------|-------------|---------------------|
-| Access appstore / add device | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Access appstore / add device | ✅ | ✅ | ✅ | ✅ | ✅ |
 | View dashboard, logs, metrics | ❌ | ✅ | ✅ | ✅ | ✅ |
 | View catalog, releases, artifacts | ❌ | ❌ | ✅ | ✅ | ✅ |
 | Create/manage projects | ❌ | ❌ | ❌ | ✅ | ✅ |
