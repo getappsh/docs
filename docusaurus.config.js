@@ -158,6 +158,7 @@ const config = {
           },
           { to: '/usecase', label: 'Use Cases', position: 'left' },
           { to: '/about', label: 'About the Product', position: 'left' },
+          { to: '/changelog', label: 'Changelog', position: 'left' },
           {
             href: 'https://github.com/getappsh/docs',
             label: 'GitHub',
