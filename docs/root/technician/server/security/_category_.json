@@ -1,0 +1,5 @@
+{
+  "label": "Security",
+  "position": 3,
+  "link": { "type": "generated-index", "description": "Artifact integrity — SBOM scanning and Cosign signing." }
+}

@@ -7,117 +7,149 @@ sidebar_position: 1
 
 # Getting Started
 
-Welcome to the **GetApp Agents Installation Guide**.  
-This document walks you through installing and setting up the GetApp **Agent** and **Agent UI** components.  
-  
-- Install **Agent** when you need a background service that communicates with the GetApp server and manages applications on the device.  
-- Install **Agent UI** when you want an interactive dashboard to view status and control actions from the device.  
-- Install **both** when you need full functionality: background communication plus a local user interface.  
-  
----
-  
-## Introduction
+Install the GetApp **Agent** and **Agent UI** on a device, and confirm it shows up connected
+on the server.
 
-This guide is intended for first-time users installing the GetApp Agent and connecting it to backend servers.  
-  
+- **Agent** — the background service. Talks to the GetApp server, manages installs. Install
+  this on every device.
+- **Agent UI** — an optional local dashboard on top of the Agent, for a human at the device to
+  see status and trigger actions. Install it if you want that.
+
+**Permissions:** installing either package needs admin (Windows) or sudo (Linux) rights.
+
+## Download
+
+For now, download both installers from the **Catalog → Applications** tab in the Admin
+dashboard — see [Catalog Overview](./user-docs/admin/catalog/catalog-overview). *(Direct download
+links will be added here later.)*
+
 ---
-  
-## Prerequisites
-  
-To install either package, you need permissions to execute installation files (.msi or .rpm).  
-Administrative or sudo privileges may be required.  
-If you encounter permission issues, contact your IT department for assistance.  
-  
----
-  
-## Downloading
+
+## Windows — MSI
 
 ### Agent
 
-To download the **Agent**, visit the  
-[GetApp Agent Releases](https://github.com/getappsh/agent/releases)  
-and download the appropriate package for your platform:  
-  
-- **Windows:** `.msi` installer  
-- **Red Hat–based Linux:** `.rpm` package  
-  
-### Agent UI
-  
-To download the **Agent UI**, visit the  
-[GetApp Agent UI Releases](https://github.com/getappsh/agent-ui/releases)  
-and download the appropriate package for your platform:  
-  
-- **Windows:** `.msi` installer  
-- **Red Hat–based Linux:** `.rpm` package  
-  
----
-  
-## Installation
+1. Run the Agent `.msi`. The wizard is: **Welcome → Install Directory → Ready to Install**.
+2. On **Ready to Install**, click **Advanced Settings...** to open the settings dialog. It has
+   exactly two fields:
 
-The installation process depends on your operating system.  
-  
-### Windows
-  
-1. Locate the downloaded .msi files (Agent and/or Agent UI).  
-2. Double-click the file and follow the on-screen installation steps.  
-3. Complete the setup using the default options unless instructed otherwise.  
-  
-### Red Hat–based Linux Distributions
-  
-#### Desktop Installation
-  
-1. Locate the downloaded .rpm files.  
-2. Double-click the file and proceed with the installation dialog.  
-  
-#### Command Line Installation
-  
-Run the following command from the directory containing your RPM file.  
+   | Field | Property | What it is |
+   |---|---|---|
+   | **Remote server URL** | `GETAPP_BASE_URL` | The GetApp server this agent reports to — the same `BASE_URL` your environment uses, e.g. `https://api-getapp-dev.apps.getapp.sh` |
+   | **Exposed agent port** | `GETAPP_GATEWAY_PORT` | Default `2220` |
 
-```bash
-sudo yum install ./<package-filename>.rpm -y
+   Click **OK**, then **Install**.
+
+:::note That's genuinely all the graphical wizard exposes
+There's no field in the dialog for a device name, device type, or disabling TLS — just those
+two. To set anything else at install time, use a silent install (below) or edit `.env` after
+installing and restart the agent service.
+:::
+
+### Recommended extras (silent install only)
+
+Pass these via `GETAPP_EXTRA_VARS` (semicolon-separated `KEY=VALUE`) on a silent (`/qn`)
+install:
+
+| Key | Recommended because |
+|---|---|
+| `DEVICE_ID` | Without it, the agent generates a random ID — set your own so you can actually recognize this device later in the Platform Table |
+| `DEVICE_TYPE_TOKEN` | Categorizes the device (default is just `agent`) — set it to something meaningful, e.g. `field-tablet` |
+| `SECURE_TLS=false` | Disables TLS verification — for self-signed certs or a local test server only |
+
+```powershell
+msiexec /i GetAppAgent-Services-x.y.z-x86_64.msi /qn `
+    GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh `
+    GETAPP_EXTRA_VARS="DEVICE_ID=field-tablet-07;DEVICE_TYPE_TOKEN=field-tablet;SECURE_TLS=false"
 ```
 
-Replace `<package-filename>` with the actual file name.  
-  
----
-  
-## Quick Start
+Full property and env-var reference: [Package Bundles](./technician/agent/deployment/package-bundles),
+[Environment Variables (.env)](/docs/agent-envs/env-file).
 
-Once installation completes successfully.  
-  
-- The **Agent Swagger UI** is available at:  
-  ```text
-  http://localhost:2220/swagger-ui/#
-  ```
+### Agent UI
 
-- The **Agent Dashboard** is available at:  
-  ```text
-  http://localhost:2230
-  ```
-  
----
-  
-## Troubleshooting
+Run the Agent UI `.msi` — Welcome → Install Directory → Install. No settings to configure; it
+talks to the Agent installed on the same device.
 
-Common issues during installation.  
-  
-- *Insufficient privileges — The installer may fail without admin/sudo rights.*  
-- Network connectivity issues — Firewall or proxy settings might block communication.  
-- Misconfiguration — Incorrect setup values may prevent proper operation.  
-  
-### Solutions
-  
-- Privileges or network issues: Contact your IT department for assistance.  
-- Misconfiguration: See the Enrollment documentation for guidance.  
-  
 ---
-  
+
+## Linux — RPM
+
+### 1. Download
+
+Download the `.rpm` from **Catalog → Applications** (same as above — direct links coming
+later).
+
+### 2. Install — Agent
+
+```bash
+# Default — host and port only
+sudo env GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh \
+    GETAPP_GATEWAY_PORT=2220 \
+    dnf install -y ./GetAppAgent-Services-x.y.z.rpm
+```
+
+Recommended, with the same extras as the MSI (on Linux these are individual `GETAPP_KEY=value`
+vars, prefix stripped into `.env`):
+
+```bash
+sudo env GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh \
+    GETAPP_GATEWAY_PORT=2220 \
+    GETAPP_DEVICE_ID=field-tablet-07 \
+    GETAPP_DEVICE_TYPE_TOKEN=field-tablet \
+    GETAPP_SECURE_TLS=false \
+    dnf install -y ./GetAppAgent-Services-x.y.z.rpm
+```
+
+### Agent UI
+
+```bash
+sudo dnf install -y ./GetAppAgent-UI-x.y.z.rpm
+```
+
+Just installs — no host or config needed; it talks to the local Agent's API.
+
+---
+
+## Verify it's connected
+
+- **Agent local API (Swagger):** `http://localhost:2220/swagger-ui/#` (your `GATEWAY_PORT`)
+- **Agent UI dashboard:** `http://localhost:2230`
+- **On the server:** **Admin → Platforms** — find the device by the `DEVICE_ID` you set, and
+  confirm its status dot is green (online). See [Platform Table](./user-docs/admin/manage-platform/platform-table)
+  and [Platform Information](./user-docs/admin/manage-platform/platform-information) for what
+  the connection details actually show.
+
+---
+
+## Upgrading the Agent
+
+Once installed, the Agent is upgraded like any other release through GetApp — not by
+re-running the installer by hand. Three ways a new version reaches a device:
+
+- **Automatically** — with `AUTO_DEPLOY_ON_PULL` (the agent default), a new version deploys
+  itself as soon as the agent pulls it, no action needed.
+- **From the Store** — a user installs the update themselves from their own **Workspace**'s
+  Download widget. See [Workspace](./user-docs/space/workspace).
+- **From the Dashboard** — an admin pushes a specific version to one or more platforms via
+  [Multiple Software Delivery](./user-docs/admin/catalog/multiple-software-delivery).
+
+---
+
 ## Next Step
-  
-Proceed to the Enrollment page to continue setup.
+
+Proceed to [Enrollment](./technician/agent/configurations/enrollment) for what happens after install, and how
+re-enrollment/troubleshooting works if the device doesn't show up connected.
 
 ---
 
 ## Further Reading
 
-- **[Configuration & Settings](./technician/agent-settings)** — Full reference for all agent settings: Layer 1 (`.env`), Layer 2 (`config.yaml`), CLI and API examples, init mechanism, and troubleshooting.
+- **[Enrollment](./technician/agent/configurations/enrollment)** — what install-time identity actually does on the server.
+- **[Configuration & Settings](./technician/agent/configurations/agent-settings)** — full reference for all agent settings: Layer 1 (`.env`), Layer 2 (`config.yaml`), CLI and API examples, init mechanism, and troubleshooting.
+- **[CLI](./technician/agent/interfaces/cli)** — manage device updates and software delivery from the command line.
+- **[Package Bundles](./technician/agent/deployment/package-bundles)** — building packages from source, silent/unattended installs, and MSI/RPM/DEB properties.
+- **[Disconnected Environments](./technician/agent/deployment/disconnectedEnvioremnt)** — using the agent in air-gapped or offline networks.
+- **[Roles and Permissions](./technician/server/auth-permission/roles-and-permissions)** — who can do what, and how to set it up.
+
+Still stuck? See [Troubleshooting](./troubleshooting/getapp-tier1-troubleshooting).

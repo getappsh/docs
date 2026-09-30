@@ -1,0 +1,9 @@
+{
+  "label": "V2",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Deploy V2",
+    "description": "Manifest-driven install: tasks, actions, and orchestrated dependents"
+  }
+}

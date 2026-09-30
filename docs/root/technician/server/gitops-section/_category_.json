@@ -1,0 +1,5 @@
+{
+  "label": "GitOps",
+  "position": 2,
+  "link": { "type": "generated-index", "description": "Git-driven project and dashboard configuration." }
+}

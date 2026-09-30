@@ -1,0 +1,9 @@
+{
+  "label": "Catalog",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Catalog",
+    "description": "Publishing, delivering, and configuring what runs on your platforms"
+  }
+}

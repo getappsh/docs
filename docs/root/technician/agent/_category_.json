@@ -1,0 +1,8 @@
+{
+  "label": "Agent",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Installing, configuring, and operating the GetApp Agent on a device."
+  }
+}

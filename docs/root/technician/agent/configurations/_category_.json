@@ -1,0 +1,5 @@
+{
+  "label": "Configurations",
+  "position": 1,
+  "link": { "type": "generated-index", "description": "Install-time identity and ongoing configuration — local and server-pushed." }
+}
