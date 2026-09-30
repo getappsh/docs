@@ -1,0 +1,9 @@
+{
+  "label": "User Docs",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "title": "User Docs",
+    "description": "How to use the GetApp Server Dashboard — Admin, Developer, and Space"
+  }
+}
