@@ -14,7 +14,7 @@ then a matching environment variable, then a compiled-in default, so the file al
 with every key present and visible.
 
 :::note Editing config.yaml
-Read and write these values with the [`getapp` CLI](/docs/agent-cli/config)
+Read and write these values with the [`getapp` CLI](/docs/root/technician/agent/interfaces/cli)
 (`getapp config get`, `getapp config set ...`), or push them from the Server Dashboard.
 A subset is also exposed as CLI flags directly (`--delivery-auto-trigger`,
 `--deploy-timeout`, `--tcp-timeout`, ...). By default, server-pushed values win on conflict
@@ -159,4 +159,4 @@ for the full behavior of each enforcement mode.
 ## See also
 
 - [Environment Variables (.env)](./env-file) — install-time configuration, requires a restart
-- [CLI Reference](/docs/agent-cli/config) — `getapp config get` / `getapp config set`
+- [CLI Reference](/docs/root/technician/agent/interfaces/cli) — `getapp config get` / `getapp config set`

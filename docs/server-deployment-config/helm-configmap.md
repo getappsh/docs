@@ -183,4 +183,3 @@ Each var only present when its service is `.enabled`.
 ## See also
 
 - [Helm Deployment & ArgoCD](/docs/root/technician/server/deployment/helm-deployment) — how to actually deploy with these values
-- [Server API](/docs/server-api-intro/v2) — what these microservices expose
