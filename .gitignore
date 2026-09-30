@@ -19,8 +19,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/docs/agent*/
+/docs/agent/
+/docs/agent-core/
+/docs/agent-cdn/
+/docs/agent-platform/
 /docs/server/
+/docs/server-full/
+/docs/server-device/
 /docs/env
 
 /src/pages/about.md

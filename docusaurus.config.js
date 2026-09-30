@@ -12,7 +12,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config = {
   title: 'GetApp Developer Site',
   tagline: 'Managed Digital Assets',
-  favicon: 'img/graynowords.png',
+  favicon: 'img/logo.svg',
 
   // Set the production url of your site here
   url: 'https://docs.getapp.sh',
@@ -71,11 +71,33 @@ const config = {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
-          server: { // the <id> referenced when running CLI commands
-            specPath: "https://api-getapp-dev.apps.getapp.sh/docs-yaml", // path to OpenAPI spec, URLs supported
+          // NOTE: this id is named "server" (kept for CLI-command compat) but currently produces
+          // the FULL/uncurated doc, wired under sidebars.js's "Full" section — see the comment
+          // there. api-getapp-dev.apps.getapp.sh hasn't been redeployed with PR #156
+          // "remanaged-swagger-apis" (apps/api/src/swagger/setup-swagger.ts) yet, so "/docs-json"
+          // still serves the old undifferentiated (v1+v2, no curation) document rather than the
+          // curated V2 one. Once it has, swap this specPath for the real curated-V2 route and add:
+          //   serverFull: {
+          //     specPath: "https://api-getapp-dev.apps.getapp.sh/docs/full-json",
+          //     outputDir: "docs/server-full/",
+          //     sidebarOptions: { groupPathsBy: "tag", categoryLinkSource: "tag" },
+          //   },
+          // (and add "/docs/server-full/" to .gitignore — already reserved there), then update
+          // sidebars.js so "V2" and "Full" each point at their own real generated output.
+          server: {
+            specPath: "https://api-getapp-dev.apps.getapp.sh/docs-json",
             outputDir: "docs/server/", // output directory for generated files
             sidebarOptions: { // optional, instructs plugin to generate sidebar.js
               groupPathsBy: "tag", // group sidebar items by operation "tag"
+              categoryLinkSource: "tag",
+            },
+          },
+          serverDevice: {
+            // Device-facing subset only ("/docs/device") — the surface agents/devices talk to.
+            specPath: "https://api-getapp-dev.apps.getapp.sh/docs/device-json",
+            outputDir: "docs/server-device/",
+            sidebarOptions: {
+              groupPathsBy: "tag",
               categoryLinkSource: "tag",
             },
           },
@@ -102,6 +124,19 @@ const config = {
               groupPathsBy: "tag",
               categoryLinkSource: "tag"
             },
+          },
+          agentPlatform: {
+            // Not yet published alongside V2/Core/CDN in CI (see agent's
+            // .github/workflows/*-build*.yml), so this is a local snapshot
+            // fetched from a running agent's /api-docs/platform/openapi.json
+            // instead of a minio URL. Re-run `yarn docusaurus gen-api-docs
+            // agentPlatform` against a fresh snapshot to pick up spec changes.
+            specPath: "openapi-specs/agent-platform.json",
+            outputDir: "docs/agent-platform",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag"
+            },
           }
         }
       },
@@ -119,6 +154,14 @@ const config = {
   markdown: {
     mermaid: true,
   },
+  headTags: [
+    // Runtime config (Dashboard URL, etc). In Docker this file is regenerated
+    // from container env vars at startup; see docker/entrypoint.sh.
+    {
+      tagName: 'script',
+      attributes: { src: '/config.js' },
+    },
+  ],
   themes: ["docusaurus-theme-openapi-docs", "@docusaurus/theme-mermaid"], // export theme components
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -128,8 +171,8 @@ const config = {
       navbar: {
         title: 'GetApp',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/graynowords.png',
+          alt: 'GetApp',
+          src: 'img/logo.svg',
         },
         items: [
           {
@@ -150,18 +193,11 @@ const config = {
             position: 'left',
             label: 'Agent',
           },
-          {
-            type: 'docSidebar',
-            sidebarId: 'evnSidebar',
-            position: 'left',
-            label: 'ENV',
-          },
-          { to: '/usecase', label: 'Use Cases', position: 'left' },
-          { to: '/about', label: 'About the Product', position: 'left' },
           { to: '/changelog', label: 'Changelog', position: 'left' },
           {
-            href: 'https://github.com/getappsh/docs',
-            label: 'GitHub',
+            // Reads DASHBOARD_URL from the runtime config; see src/pages/goto/dashboard.js.
+            to: '/goto/dashboard',
+            label: 'Dashboard',
             position: 'right',
           },
         ],
@@ -173,29 +209,47 @@ const config = {
             title: 'Docs',
             items: [
               {
+                label: 'Getting Started',
+                to: '/docs/root/getting-started',
+              },
+              {
                 label: 'Docs',
                 to: '/docs/root/intro',
               },
               {
-                label: 'Agent API',
-                to: '/docs/agent/getapp-agent-api-v-2',
+                label: 'Changelog',
+                to: '/changelog',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Server',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Server API',
+                to: '/docs/server/get-app',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Environment Variables',
+                to: '/docs/env',
               },
               {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                // Reads SERVER_API_URL from the runtime config; see src/pages/goto/swagger.js.
+                label: 'Swagger',
+                to: '/goto/swagger',
+              },
+            ],
+          },
+          {
+            title: 'Agent',
+            items: [
+              {
+                label: 'Agent API',
+                to: '/docs/agent/getapp-agent-api-v-2',
+              },
+              {
+                label: 'Environment Variables',
+                to: '/docs/env',
               },
             ],
           },
@@ -203,12 +257,8 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/getappsh/docs',
+                label: 'Dashboard',
+                to: '/goto/dashboard',
               },
             ],
           },
