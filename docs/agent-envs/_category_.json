@@ -1,0 +1,9 @@
+{
+  "label": "Envs",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "title": "Agent Configuration",
+    "description": "Everything you can configure on a GetApp Agent install — install-time environment variables and the runtime-editable config.yaml"
+  }
+}

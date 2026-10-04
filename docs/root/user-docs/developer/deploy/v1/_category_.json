@@ -1,0 +1,9 @@
+{
+  "label": "V1",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Deploy V1",
+    "description": "The original, single-artifact install path"
+  }
+}

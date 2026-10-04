@@ -1,0 +1,9 @@
+{
+  "label": "Groups",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Groups",
+    "description": "Organize platforms into a hierarchy for filtering, targeting, and reporting"
+  }
+}

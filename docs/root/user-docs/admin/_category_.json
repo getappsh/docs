@@ -1,0 +1,9 @@
+{
+  "label": "Admin",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Admin",
+    "description": "platforms, rules, types, groups, and activity"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "label": "Deploy",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "title": "Deploy",
+    "description": "How a release actually gets installed on a device, V1 and V2"
+  }
+}

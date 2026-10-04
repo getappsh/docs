@@ -1,0 +1,9 @@
+{
+  "label": "CLI",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "GetApp Agent CLI",
+    "description": "Command-line interface for managing device updates and software delivery through the GetApp agent service"
+  }
+}

@@ -8,39 +8,39 @@ import styles from './index.module.css';
 
 const FEATURES = [
   {
-    title: 'Ship to edge reliably',
+    title: 'One catalog, every artifact type',
     description:
-      'Deploy apps, configs, maps, and certificates to distributed devices — even behind slow links or offline proxies.',
+      'Binaries, YAML manifests, images, and container charts all go through the same catalog — no bespoke pipeline per artifact type.',
     icon: '📦',
   },
   {
-    title: 'Releases, not ad-hoc scripts',
+    title: 'Discovery, then approval',
     description:
-      'Define releases with metadata, versioning, and rollout strategy. Know exactly what is installed, where, and why.',
-    icon: '🚀',
-  },
-  {
-    title: 'Device groups & policies',
-    description:
-      'Target fleets by site, role, or environment. Apply policies, staged rollouts, and safe defaults across groups.',
+      'The platform orchestrator enumerates matching devices, and operators approve the offering before anything ships.',
     icon: '🧭',
   },
   {
-    title: 'Observability built-in',
+    title: 'Reliable on any network',
     description:
-      'Track install progress, failures, retries, and health signals. Reduce time-to-fix with clear, actionable status.',
+      'Delivery is built for unreliable and disconnected links, not just the happy path — resumable, retried, and verified.',
+    icon: '🚀',
+  },
+  {
+    title: 'Deploy, then keep watching',
+    description:
+      'Monitor is its own lifecycle: telemetry, health, and alerting continue independently once Deploy finishes.',
     icon: '📈',
   },
   {
-    title: 'Works with your stack',
+    title: 'Built for heterogeneous fleets',
     description:
-      'S3/MinIO, OCI registries, signed artifacts, Kubernetes, air-gapped flows. Integrate without rewriting everything.',
+      'Devices don’t need to be identical or always online — GetApp is designed for mixed, often air-gapped environments.',
     icon: '🧩',
   },
   {
     title: 'Security by design',
     description:
-      'Support signing, integrity checks, access boundaries, and controlled distribution for sensitive environments.',
+      'Signing, integrity checks, and controlled distribution for sensitive, restricted environments.',
     icon: '🛡️',
   },
 ];
@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <Layout
       title={siteConfig.title}
-      description="GetApp is an artifact & release delivery platform for distributed and air-gapped environments."
+      description="GetApp is a lifecycle and management platform for digital assets across heterogeneous, often air-gapped device fleets."
     >
       <header className={styles.hero}>
         <div className="container">
@@ -76,23 +76,44 @@ export default function Home() {
               <div className={styles.kicker}>GetApp</div>
 
               <h1 className={styles.heroTitle}>
-                Deploy artifacts to <span className={styles.accent}>distributed devices</span> — safely.
+                Lifecycle and management for every <span className={styles.accent}>digital asset</span> on every
+                platform.
               </h1>
 
               <p className={styles.heroSubtitle}>
-                A release & delivery platform for edge fleets: apps, configs, maps, certificates and data —
-                with visibility, retries, and policy-based rollouts.
+                GetApp catalogs releases — binaries, YAML manifests, images, and container charts — discovers and
+                targets devices, delivers artifacts reliably over any network (even unreliable or disconnected
+                ones), deploys them, and monitors the result with runtime health and actions.
+              </p>
+
+              <p className={styles.heroSubtitle}>
+                Built for environments where devices are heterogeneous and often air-gapped, so resilience,
+                offline delivery, and controlled rollout matter more than raw speed.
               </p>
 
               <div className={styles.heroMeta}>
+                <span className={styles.metaPill}>Six-stage pipeline</span>
+                <span className={styles.metaPill}>Reliable on any network</span>
                 <span className={styles.metaPill}>Air-gapped ready</span>
-                <span className={styles.metaPill}>MinIO / S3</span>
-                <span className={styles.metaPill}>OCI registry</span>
-                <span className={styles.metaPill}>Signed artifacts</span>
+                <span className={styles.metaPill}>Runtime monitoring</span>
               </div>
             </div>
 
-
+            <div className={styles.heroRight}>
+              <div className={styles.mock}>
+                <div className={styles.mockTop}>
+                  <span className={clsx(styles.dot, styles.dotRed)} />
+                  <span className={clsx(styles.dot, styles.dotYellow)} />
+                  <span className={clsx(styles.dot, styles.dotGreen)} />
+                  <span className={styles.mockTitle}>dashboard.getapp.sh</span>
+                </div>
+                <img
+                  src="/img/dashboard-login.png"
+                  alt="GetApp Platform sign-in screen"
+                  className={styles.mockImage}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -103,7 +124,8 @@ export default function Home() {
             <div className={styles.sectionHead}>
               <h2 className={styles.sectionTitle}>What GetApp gives you</h2>
               <p className={styles.sectionSubtitle}>
-                Build a predictable release process for fleets, with the reliability you usually only get in cloud-native environments.
+                Every release moves through the same six stages — predictable even when devices are offline,
+                mixed, or unreliable.
               </p>
             </div>
 
@@ -119,19 +141,19 @@ export default function Home() {
           <div className="container">
             <div className={styles.twoCol}>
               <div>
-                <h2 className={styles.sectionTitle}>A simple mental model</h2>
+                <h2 className={styles.sectionTitle}>The six-stage pipeline</h2>
                 <p className={styles.sectionSubtitle}>
-                  <b>Projects</b> contain <b>Releases</b>. Releases include artifacts + metadata. Devices subscribe via <b>Groups</b> and pull
-                  chunks safely with retries.
+                  Every release moves through the same lifecycle, from <b>Catalog</b> to <b>Monitor</b> — with
+                  approval and delivery guarantees built in along the way.
                 </p>
 
                 <div className={styles.steps}>
                   <div className={styles.step}>
                     <div className={styles.stepNum}>1</div>
                     <div>
-                      <div className={styles.stepTitle}>Publish</div>
+                      <div className={styles.stepTitle}>Catalog</div>
                       <div className={styles.stepDesc}>
-                        Upload artifacts (S3/MinIO/OCI), attach release metadata and manifest.
+                        Author uploads binaries, YAML manifests, images, and container charts.
                       </div>
                     </div>
                   </div>
@@ -139,9 +161,9 @@ export default function Home() {
                   <div className={styles.step}>
                     <div className={styles.stepNum}>2</div>
                     <div>
-                      <div className={styles.stepTitle}>Target</div>
+                      <div className={styles.stepTitle}>Discovery</div>
                       <div className={styles.stepDesc}>
-                        Select device groups, rollout policy, and safety constraints.
+                        Queries the platform orchestrator to enumerate matching devices.
                       </div>
                     </div>
                   </div>
@@ -149,9 +171,40 @@ export default function Home() {
                   <div className={styles.step}>
                     <div className={styles.stepNum}>3</div>
                     <div>
-                      <div className={styles.stepTitle}>Observe</div>
+                      <div className={styles.stepTitle}>Offering</div>
                       <div className={styles.stepDesc}>
-                        Track progress, failures, retries, and compliance from one place.
+                        Presents matches to operators for approval.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.step}>
+                    <div className={styles.stepNum}>4</div>
+                    <div>
+                      <div className={styles.stepTitle}>Delivery</div>
+                      <div className={styles.stepDesc}>
+                        Ships release resources to the platform orchestrator; Deploy waits until all resources arrive.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.step}>
+                    <div className={styles.stepNum}>5</div>
+                    <div>
+                      <div className={styles.stepTitle}>Deploy</div>
+                      <div className={styles.stepDesc}>
+                        Installs on devices — this is where Orchestrator V2 lives.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.step}>
+                    <div className={styles.stepNum}>6</div>
+                    <div>
+                      <div className={styles.stepTitle}>Monitor</div>
+                      <div className={styles.stepDesc}>
+                        Post-deploy telemetry, health, and alerting — an independent lifecycle that starts once
+                        Deploy finishes.
                       </div>
                     </div>
                   </div>

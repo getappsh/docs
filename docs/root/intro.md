@@ -16,7 +16,6 @@ Let's discover **GetApp**.
 ### What's in the site
     Everything you need to work with GetApp [Documentation](http://localhost:3000/docs/category/documentation).
     All things support at [Support](http://localhost:3000/support).
-    Technical info about the platform at the [About](http://localhost:3000/about) page.
 
 
 
