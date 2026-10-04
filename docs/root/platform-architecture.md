@@ -7,31 +7,22 @@ sidebar_position: 2
 
 # Platform Architecture — How GetApp Works
 
-This page explains how the GetApp platform is built and how the parts work together.
-It is written for anyone who wants a clear picture of the system: administrators, developers,
-and technicians. You do not need to read the code to understand it.
+This page gives a clear picture of how the GetApp platform is built and how its parts
+work together. It starts with the big picture, then shows how to use it.
 
-The page has two tracks:
+- **Who this is for:** administrators, developers, and technicians.
+- **What you'll learn:** the two sides of the platform, what each part does, how a release
+  travels to a device, and the steps to run it yourself.
 
-- **Part A — The big picture**: what the platform is and how a release travels from a
-  developer to an end device.
-- **Part B — How to use it**: the day-to-day steps you follow to install the agent, connect it,
-  publish software, and watch it deploy.
-
-It starts simple and adds detail as you go.
-
-:::info In one sentence
-GetApp is an **"app store" for your whole network**. A central **server** decides *what* software each
-device may receive, and a small **agent** on each device does the actual downloading and installing.
+:::note At a glance
+**8 server services** · **1 device agent** · **3 communication paths**
 :::
-
----
-
-# Part A — The big picture
 
 ## The two sides of GetApp
 
-The platform has two main sides that talk to each other:
+GetApp is an **"app store" for your whole network**. A central **server** decides *what* software each
+device may receive, and a small **agent** on each device does the actual downloading and installing.
+The two sides talk to each other:
 
 | Side | What it is | Where it runs | Built with |
 |---|---|---|---|
@@ -58,9 +49,10 @@ flowchart LR
     A3 <-->|HTTPS| GW
 ```
 
-The **server** never installs software by itself. It only keeps the truth about *what should happen*.
-The **agent** is the one that acts on each device. This split lets one server manage many thousands
-of devices, even across slow or separated networks.
+*Diagram: every device runs its own agent and connects to the central server over HTTPS.*
+
+This split — **decide centrally, act locally** — lets one server manage many thousands of
+devices, even across slow or separated networks.
 
 ---
 
@@ -102,6 +94,8 @@ flowchart TB
     UP & OF & DI & DL & DP & PM & GM --- DB
     GW --- IDP
 ```
+
+*Diagram: the API Gateway is the only public entry point; services exchange messages over Kafka and share a PostgreSQL database and object storage.*
 
 ### What each service does
 
@@ -152,6 +146,8 @@ flowchart TB
     DM <-->|HTTPS| Server[GetApp Server]
 ```
 
+*Diagram: inside one device, the Device Manager runs four core jobs and records their state in a local SQLite database.*
+
 | Agent job | What it does |
 |---|---|
 | **Discovery** | Looks at the device (hardware, operating system, installed software) and **reports** it to the server. |
@@ -183,9 +179,11 @@ flowchart LR
     A1 <-->|3. Direct agent-to-agent| A2[Agent]
 ```
 
+*Diagram: the three communication paths — agent-to-server, service-to-service, and agent-to-agent.*
+
 1. **Agent ↔ Server** — over the internet using **HTTPS** (normal secure web requests). The agent
-   also receives **live updates** so it reacts quickly when something changes, without asking again
-   and again.
+   also receives **live updates** — sent over **Server-Sent Events (SSE)** — so it reacts quickly
+   when something changes, without asking again and again.
 2. **Service ↔ Service (inside the server)** — over the **Kafka** message bus. This is private to the
    server.
 3. **Agent ↔ Agent** — some agents can talk **directly to each other**. This is used for separated or
@@ -208,18 +206,20 @@ sequenceDiagram
     participant DL as Delivery
     participant DP as Deploy
 
-    Dev->>UP: 1. Upload a new release
+    Dev->>UP: 1. Upload — send a new release
     UP->>UP: Store files, run security scan
-    UP-->>OF: 2. "New release is ready"
-    OF->>OF: 3. Decide which device types get it
+    UP-->>OF: 2. Announce — "new release is ready"
+    OF->>OF: 3. Decide — which device types get it
     OF-->>DI: Update device offerings
-    AG->>DI: 4. Report myself + ask "what's for me?"
+    AG->>DI: 4. Discover — report device, ask "what's for me?"
     DI-->>AG: Here is your offering
-    AG->>DL: 5. Download the release files
+    AG->>DL: 5. Deliver — download the release files
     DL-->>AG: Files (cached nearby)
-    AG->>AG: 6. Install on the device
-    AG->>DP: 7. Report result (success / fail)
+    AG->>AG: 6. Deploy — install on the device
+    AG->>DP: 7. Report — result (success / fail)
 ```
+
+*Diagram: a release travels Upload → Announce → Decide → Discover → Deliver → Deploy → Report.*
 
 Step by step:
 
@@ -257,6 +257,8 @@ flowchart TD
     F --> E
 ```
 
+*Diagram: an unknown device type waits as "pending" until an administrator approves it.*
+
 - A brand-new device type is **not** trusted automatically. It waits as **pending** until an
   administrator approves it. This stops unknown devices from silently joining.
 - Once approved, the device appears in the register and starts receiving offerings.
@@ -278,14 +280,16 @@ flowchart TD
     M <-->|direct agent-to-agent| C3[Child agent]
 ```
 
+*Diagram: one master agent talks to the server and relays to nearby child agents.*
+
 - The **master** agent stays in contact with the server and passes information to the children.
 - The **children** can keep working even when the server is not reachable.
-- For more detail, see [Agent-to-agent](technician/agent2agent.md) and
-  [Disconnected environment](technician/disconnectedEnviorment.md).
+- For more detail, see [Agent-to-agent](technician/agent/fleet-connectivity/a2a-parent-management.md) and
+  [Disconnected environment](technician/agent/deployment/disconnectedEnviorment.md).
 
 ---
 
-# Part B — How to use it
+# How to use it
 
 This part gives the practical, ordered steps. Each step links to a full guide.
 
@@ -305,20 +309,20 @@ BASE_URL=http://your-getapp-server.local
 ```
 
 Full details, including file locations for Windows and Linux, are in
-[Enrollment](technician/enrollment.md).
+[Enrollment](technician/agent/configurations/enrollment.md).
 
 After this, the agent starts its **discovery** job and reports the device to the server.
 
 ## 3. Approve the device (administrator)
 
 If the device type is new, approve it so it can receive software. This happens in the web UI, backed
-by the **Discovery** service. See [Roles and permissions](user-manual/roles-and-permissions.md) for
+by the **Discovery** service. See [Roles and permissions](technician/server/auth-permission/roles-and-permissions.md) for
 who is allowed to do this.
 
 ## 4. Publish software
 
 A developer or CI pipeline uploads a release. You can also connect releases to Git — see
-[GitOps releases](gitops-releases.md). The **Offering** rules then decide which devices may receive
+[GitOps releases](technician/server/gitops-section/gitops-releases.md). The **Offering** rules then decide which devices may receive
 it. To target specific devices, use the **push** option.
 
 ## 5. Watch the delivery and installation
@@ -327,7 +331,7 @@ Once a release is offered:
 
 - The agent **downloads** it through **Delivery** (fast, cached, and resumable).
 - The agent **installs** it. Simple releases use the classic install path; richer releases can carry
-  their own step-by-step recipe — see [Deploy V2 (install.yaml)](deploy-v2.md).
+  their own step-by-step recipe — see [Deploy V2 (install.yaml)](user-docs/developer/deploy/v2/overview.md).
 - The **Deploy** dashboard shows the result, the logs, and any **alerts**.
 
 ## 6. Troubleshoot if needed
@@ -340,28 +344,9 @@ If something fails, start with the troubleshooting guides:
 
 ---
 
-## Quick glossary
-
-| Term | Meaning |
-|---|---|
-| **Agent** | The small program on each device that downloads and installs software. |
-| **Server** | The central group of microservices that manage the catalog and devices. |
-| **Microservice** | One small server program with a single job. |
-| **Message bus (Kafka)** | The internal "post office" the server services use to talk. |
-| **Release** | A specific version of a piece of software, ready to install. |
-| **Offering** | The decision about which release is available to which device type. |
-| **Discovery** | Reporting and registering devices with the server. |
-| **Delivery** | Downloading and caching release files close to devices. |
-| **Deploy** | Installing a release on a device and reporting the result. |
-| **Push / Pull** | Push = the server sends software to chosen devices. Pull = the device asks for and takes software. |
-| **SBOM** | "Software Bill of Materials" — a list of everything inside a package, used for security. |
-| **Orchestration** | One master agent managing nearby child agents, often for offline networks. |
-
----
-
 ## See also
 
 - [Intro](intro.md) — what GetApp is, in short.
 - [Getting Started](getting-started.md) — install and first run.
-- [Deploy V2 (install.yaml)](deploy-v2.md) — how a release can describe its own installation.
-- [Terminology](Terminology.md) — the full list of platform terms.
+- [Deploy V2 (install.yaml)](user-docs/developer/deploy/v2/overview.md) — how a release can describe its own installation.
+- [Terminology](Terminology.md) — the full list of platform terms (glossary of all platform terms).
