@@ -177,7 +177,6 @@ The system comes with five composite roles that cover most use cases, ordered fr
 - ✅ Manage artifacts (upload, download, view, delete, list)
 - ✅ Manage policies (release-associated rules)
 - ✅ Manage SBOM scans (create, view, retry)
-- ✅ View discovery services, offerings, users
 - ✅ View analytics, logs, metrics, and configuration
 - ❌ **Cannot** deploy to devices or manage system settings
 - ❌ **Cannot** manage restrictions (device-associated rules)
@@ -192,10 +191,10 @@ The system comes with five composite roles that cover most use cases, ordered fr
 **What they can do**:
 - ✅ Everything contributors can do
 - ✅ Deploy applications to devices
-- ✅ Manage discovery services and devices
+- ✅ Manage devices
+- ✅ Manage users
 - ✅ Link projects to device types
 - ✅ Manage offerings (create, update, delete)
-- ✅ Manage users
 - ✅ Manage system configuration, config revisions, and config maps
 - ✅ Manage restrictions (device-associated rules)
 - ✅ Manage SBOM scans (create, view, delete, retry)
