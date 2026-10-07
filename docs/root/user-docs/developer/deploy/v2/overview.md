@@ -77,6 +77,8 @@ guardrails — without changing the agent.
   when they fail their check, so a failed group does not leave a half-applied install behind.
 - **Install *and* uninstall** — dedicated removal methods (MSI / RPM / DEB uninstall, script,
   or API).
+- **Fleet rollout** — a `FleetDeploy` task rolls a release out across the managed fleet,
+  selecting target devices by rule and tracking every device in one live status tree.
 - **Controllable task ordering** — tasks run in the order written.
 - **Dependent-deployment control** — a task can install *and drive* another release's full
   deployment, waiting for it to finish before continuing.
@@ -109,7 +111,7 @@ See [Orchestrator](./deploy-v2-orchestrator#roadmap) for detail.
 |---|---|
 | Manifest file | `install.yaml` (in the release's artifacts dir) |
 | Manifest `Type` | `Deploy/V2` |
-| Task types | `Execute/v2`, `Verification/v2`, `Revert/v2`, `Group/v2`, `Deploy/v2` |
+| Task types | `Execute/v2`, `Verification/v2`, `Revert/v2`, `Group/v2`, `Deploy/v2`, `FleetDeploy/v2` |
 | Deploy methods | Install: `MSI`, `RPM`, `DEB`, `Script`, `API` · Uninstall: `MSI_Uninstall`, `RPM_Uninstall`, `DEB_Uninstall` · Verify: `API`, `Script`, `SSE` |
 | Placeholder sources | `Device`, `Env`, `Config`, `Release` (metadata via `Release.metadata.*`) |
 | Default launch timeout | `60` s (or `Release.metadata.timeoutLaunch`) |

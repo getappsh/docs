@@ -16,6 +16,7 @@ A [task's](./deploy-v2-tasks) `Type` is the action it performs.
 | `Revert/v2` | **Undo a step** — nested cleanup that runs when the step it covers fails. See [Reverting a step](#reverting-a-step-undo). |
 | `Group/v2` | **Bind child tasks** — a container that runs no installer of its own; it groups several tasks (and their verification/revert) as one unit. See [Orchestrator](./deploy-v2-orchestrator). |
 | `Deploy/v2` | **Sub-deploy a dependent release** — delegates a full nested Deploy V2 of another release, the orchestrator. See [Orchestrator](./deploy-v2-orchestrator). |
+| `FleetDeploy/v2` | **Roll a release out across the managed fleet** — resolves a rule across this agent + its managed devices and deploys the release to every match (self locally, remotes over the A2A mesh). See [Fleet deploy](./deploy-v2-orchestrator#fleet-deploy-across-managed-devices). |
 | `Config/v2`, `Map/v2` | Reserved — fail as "unsupported" if used today. |
 | `Up/v2`, `Down/v2`, `Restart/v2` | Reserved — planned service/stack lifecycle actions (bring up, tear down, restart a running deploy) for capabilities like `DockerCompose`. Not runnable today. |
 
@@ -119,6 +120,13 @@ instead of re-installing: **pass** → the task is `Done` and the deploy continu
 the install did not take, so the task (and deploy) fail, firing any revert. A non-reboot
 deploy interrupted by a restart is **not** auto-resumed — it's marked `Error` and must be
 re-triggered.
+
+## Retrying a task
+
+Grace-time retry applies to any task that runs a handler — installs (`Execute`), removals
+(`Revert` / `*_Uninstall`), and verifications alike. A task that sets `GraceTimeSec` (optionally
+capped by `RetryCount`, spaced by `RetryBackoffSec`) is retried within that window until it
+passes or the window elapses, then it fails. A task with none of these runs exactly once.
 
 ## See also
 

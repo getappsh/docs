@@ -37,13 +37,15 @@ Tasks:                        # required — ordered, non-empty list of tasks
 
 | Field | Required | Description |
 |---|---|---|
-| `ReleaseId` | ✅ | The release this manifest installs. **Must equal** the catalog id of the release being deployed (guards against a stale/mismatched `install.yaml`). |
+| `ReleaseId` | ✅ | The release this manifest installs. **Must equal** the catalog id of the release being deployed (guards against a stale/mismatched `install.yaml`). The all-caps `ReleaseID` spelling is also accepted. |
 | `Type` | ✅ | The manifest kind. Must be the literal `Deploy/V2`. |
 | `MinAgentVersion` | ❌ | A semver string. If the running agent is older, the deploy fails before any task runs. Omit to skip. |
 | `Tasks` | ✅ | The ordered list of tasks. Must contain at least one. |
 
 :::note Field-name casing
-Manifest keys are **PascalCase** (`ReleaseId`, `Type`, `Tasks`). Placeholder **sources**
+Manifest keys are **PascalCase** (`ReleaseId`, `Type`, `Tasks`). The release identifier also
+accepts the all-caps `ReleaseID` spelling — both `ReleaseId` and `ReleaseID` are valid, at the
+manifest level and on a `Deploy/v2` / `FleetDeploy/v2` task. Placeholder **sources**
 (`Device`, `Env`, `Config`, `Release`) are matched case-insensitively, but write manifest keys
 as shown.
 :::
@@ -73,7 +75,10 @@ Task types and what they do live on [Action](./deploy-v2-action). Deploy methods
 
 A **dependency** task looks different — it has `Type: Deploy/v2` and a `ReleaseId`, carrying
 no `ExeFile`/`DeployType` (see [Orchestrator](./deploy-v2-orchestrator)). A **group** task has
-`Type: Group/v2` and a `Tasks` list, carrying no `DeployType`/`ExeFile` of its own.
+`Type: Group/v2` and a `Tasks` list, carrying no `DeployType`/`ExeFile` of its own. A **fleet
+rollout** task has `Type: FleetDeploy/v2`, a `ReleaseId`, and a required `Rule` (plus optional
+`Scope` and `CompletionPolicy`) — it deploys that release across the managed fleet, carrying no
+`ExeFile`/`DeployType` (see [Fleet deploy](./deploy-v2-orchestrator#fleet-deploy-across-managed-devices)).
 
 :::note "Command" is reserved, not runnable today
 `Command` is a planned deploy method — a raw command line, alongside `API`, without a
@@ -104,7 +109,7 @@ future way to source a component beyond uploading a file — see
 | `DeployType` | Execute, Verification, Revert | The method that runs the task (table above). Must be compatible with `Type`. |
 | `ExeFile` | Execute, Revert (file/uninstall methods) | The delivered artifact to run — an installer, a script, or an uninstaller/package. |
 | `Target` | Execute/Verification/Revert (API/SSE/uninstall) | A non-file handle: an endpoint URL (API/SSE) or a removal handle — product code / package name (uninstall). May contain `{placeholders}`. |
-| `ReleaseId` | Deploy | The dependent release a `Deploy/v2` task sub-deploys. Required, and must **differ** from the manifest `ReleaseId`. |
+| `ReleaseId` | Deploy, FleetDeploy | The release a `Deploy/v2` sub-deploys on this device or a `FleetDeploy/v2` rolls across the fleet. Required, and must **differ** from the manifest `ReleaseId`. The all-caps `ReleaseID` spelling is also accepted. |
 | `Tasks` | all | A nested list of child tasks this task binds and awaits (see [Orchestrator](./deploy-v2-orchestrator)). |
 | `Rule` | all | A rule-engine condition evaluated on the device right before the task runs. YAML object or inline JSON string. |
 | `Arguments` | Execute, Revert | A single CLI argument string for the process. May contain `{placeholders}`. |
@@ -121,6 +126,8 @@ future way to source a component beyond uploading a file — see
 | `RetryBackoffSec` | retryable tasks | Delay between retries. |
 | `LaunchTimeoutSec` | Execute | Time to *launch* before failing. Literal or `{placeholder}`. Default `60`; falls back to `Release.metadata.timeoutLaunch`. |
 | `ExecutionTimeoutMin` | Execute + any parent/group | Time to *complete* before it's killed. Literal or `{placeholder}`. Default `15`; falls back to `Release.metadata.timeoutInstallation`. On a parent it bounds the **whole subtree**. |
+| `Scope` | FleetDeploy | Which slice of the managed fleet to target — `Platform` (default), `Reactive`, or `All`. |
+| `CompletionPolicy` | FleetDeploy | How success/failure propagates across matched devices — `AllConnected` (default), `Partial`, or `AllReachable`. |
 
 **Reserved fields** (parsed but ignored today):
 
@@ -162,6 +169,8 @@ flowchart LR
 - **`Revert`** — needs a removal `DeployType` (`*_Uninstall`/`Script`/`API`) and its handle
 - **`Deploy`** — needs a `ReleaseId` that names the dependent release and is not the
   manifest's own
+- **`FleetDeploy`** — needs a `ReleaseId` (not the manifest's own) and a `Rule` that selects the
+  target fleet; `Scope` and `CompletionPolicy` are optional
 - **`Group`** — must bind a non-empty `Tasks` list
 - `DeployType` must be compatible with `Type` (table above)
 - A `Rule`, if present, must contain at least one condition (`and`/`or`/`none`)
@@ -234,9 +243,33 @@ sibling list**, so each `Tasks` list sums to 100:
 - If no task in a list sets a weight, that list's progress is distributed evenly
 - If weights are set but don't sum to 100, they're scaled proportionally (the last task
   absorbs rounding)
-- **Nesting** — a parent with children carries no weight of its own; its progress is the
-  roll-up of its children. A leaf's real share of the whole bar is its weight × the weight of
-  each ancestor. Because every list sums to 100, the leaves across the tree still sum to 100
+
+A leaf's real share of the whole bar is its weight × the weight of each ancestor on the way up.
+
+### How a parent splits its share
+
+How a parent divides its share between **its own step** and its children depends on the parent's
+type:
+
+- A **`Group/v2`** runs no step of its own — it is a pure container, so its children take its
+  **entire** share.
+- An **actionable parent** (an `Execute` that also binds children) runs its own install *and*
+  its children, so it reserves **one slot for itself**: with `N` children the parent's own step
+  takes `1/(N+1)` of the node's share and the children split the remaining `N/(N+1)`.
+
+So an `Execute` with one nested `Verification` splits that node 50/50 — the install is half,
+the check is half.
+
+### What counts as progress
+
+Progress is the sum, across the tree, of each leaf's share × how far that leaf has got:
+
+- A leaf that reached a **terminal-complete** state (`Done` or `Skipped`) counts in full.
+- A leaf still **running a sub-deploy** — a `Deploy/v2` dependency or a `FleetDeploy/v2` rollout
+  — counts **partially**, folding in its children's live progress rather than jumping from 0 to
+  100. For a fleet, each target device contributes an even split of its delivery and deploy
+  phases, and the task's progress is the mean across the devices it is acting on.
+- Any other leaf counts as 0 until it completes.
 
 ```yaml
 Tasks:
@@ -250,8 +283,7 @@ Tasks:
     Weight: 20                 # 20%
 ```
 
-Progress is the combined share of every leaf that reached a terminal-complete state — `Done`
-or `Skipped`. Weights are cosmetic (progress reporting only) — they don't affect ordering or
+Weights are cosmetic (progress reporting only) — they don't affect ordering or
 success.
 
 ## See also
