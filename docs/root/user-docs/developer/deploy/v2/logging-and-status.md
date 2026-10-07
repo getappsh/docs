@@ -74,6 +74,27 @@ human `message`:
 
 Because the `code` is stable, a UI reacts to it directly instead of parsing message text.
 
+## Fleet and nested status
+
+A deploy is a **tree** — this release's tasks, any nested dependency sub-deploys, and any
+[fleet rollout](./deploy-v2-orchestrator#fleet-deploy-across-managed-devices) to child agents.
+The top deploy's status document folds the **whole tree** into one view:
+
+- Every sub-deploy's finished (terminal) lines are merged onto the task that spawned them,
+  **attributed to their source** — a local nested dependency shows as `deploy <release> — …`,
+  a remote child as `remote deploy <release> <device> — …`.
+- Progress bubbles up **live**: a running sub-deploy contributes its partial progress to the
+  parent's share instead of jumping from nothing straight to done.
+- It is **recursive at any depth** — a child that is itself an orchestrator folds its own
+  grandchildren in before reporting up, so the top view reflects the entire tree.
+
+Remote children report their delivery and deploy status back to the orchestrator as they run,
+over the A2A core surface (`/api/core`); the orchestrator re-broadcasts each as its own SSE
+event carrying the reporting **`device_id`**, so a UI can attribute every update to its device.
+The orchestrator always re-reads the authoritative status from its own database, so a missed
+message can never leave the view stale. Merged lines are **append-once** — a child's terminal
+line appears exactly once no matter how many updates arrive.
+
 ## See also
 
 - [How It Works](./deploy-v2-how-it-works)

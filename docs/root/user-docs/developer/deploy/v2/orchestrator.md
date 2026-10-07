@@ -106,16 +106,100 @@ flowchart TD
 The whole tree logs into **one shared deploy-log file**, including which parent pulled in each
 dependency.
 
+## Fleet deploy across managed devices
+
+A `Deploy/v2` task sub-deploys a release on **this** device. A **`FleetDeploy/v2`** task goes
+wider: it rolls a release out across the **managed fleet** — this agent plus the child agents it
+orchestrates over the A2A mesh — selecting targets by rule.
+
+```yaml
+ReleaseId: ID.MainApp@2.0.0
+Type: Deploy/V2
+Tasks:
+  - Type: FleetDeploy/v2
+    ReleaseId: ID.EdgeApp@3.1.0       # the release to deliver + deploy on the fleet
+    Scope: Platform                   # which slice of the fleet to consider
+    Rule:                             # the gate — only matching devices are targeted
+      and:
+        - { field: device.deviceType, operator: equals, value: "edge-sensor" }
+```
+
+**The rule is a gate.** The release is deployed to every device the rule passes — this agent and
+any matched child. Devices the rule rejects are not targets. A rule that matches **no** device
+fails the task (there is nothing to roll out).
+
+**`Scope`** chooses which devices are candidates:
+
+| `Scope` | Candidates |
+|---|---|
+| `Platform` (default) | Devices enrolled into the platform (orchestrated). |
+| `Reactive` | Reactive-mode devices only. |
+| `All` | Both. |
+
+**`CompletionPolicy`** decides how success and failure propagate across the matched devices:
+
+| `CompletionPolicy` | Unreachable match | One device fails |
+|---|---|---|
+| `AllConnected` (default) | tolerated — reported *deferred* | aborts the rest; the task fails |
+| `Partial` | tolerated — reported *deferred* | others continue; the task succeeds if **any** device did |
+| `AllReachable` | **fails the task up front** | aborts the rest; the task fails |
+
+### How a rollout runs
+
+```mermaid
+flowchart LR
+    R[Resolve the fleet<br/>rule gate] --> Ro[Route<br/>self + remotes]
+    Ro --> D[Deliver + deploy<br/>per device, concurrently]
+    D --> A[Aggregate<br/>completion policy]
+```
+
+1. **Resolve** — the agent refreshes device metadata, then evaluates the rule against itself and
+   every in-scope managed device, yielding the matched set.
+2. **Route** — if this agent matched, it runs the release as a local nested deploy (exactly like a
+   `Deploy/v2` dependency); each matched child is driven remotely. Self and children run
+   concurrently.
+3. **Deliver + deploy per device** — each child is taken through its lifecycle: make the release
+   discoverable → refresh its state → deliver (download) → deploy (install), awaiting each stage.
+   Already-satisfied devices and stages are skipped, so a re-run is safe and resumable.
+4. **Aggregate** — per-device outcomes roll up under the completion policy into the task result,
+   and each device contributes a progress number split evenly between its delivery and deploy
+   phases.
+
+A child agent is **unaware** it is driven by a peer — it receives the same commands and reports
+the same status as if talking to the server. Each child's progress and full deploy status fold
+back into *this* deploy's status tree **live** — see
+[Logging & Status](./deploy-v2-logging-and-status#fleet-and-nested-status).
+
+### Which devices are acted on
+
+Before resolving the rule, the agent asks each in-scope device to refresh its metadata, then
+evaluates the rule against the freshest data. Every candidate lands in one of these buckets, and
+the reason is recorded in the deploy status so an operator can see *why* a device was or wasn't
+acted on:
+
+| Outcome | Meaning |
+|---|---|
+| **Targeted** | The rule passed; the device is driven through delivery + deploy. |
+| **Excluded** | The device has never reported metadata, so the rule can't be evaluated ("no stored device data"). |
+| **Rejected** | The rule was evaluated and did not match ("rule did not match"). |
+| **Deferred** | The rule matched, but the device was not driven to completion — unreachable under a tolerant policy, or stopped when the run aborted after another device failed. |
+
+**Reachability** means the child currently holds an active managed connection to this agent. A
+device that matches the rule but is offline is *deferred* under `AllConnected`/`Partial`; under
+`AllReachable` an unreachable match **fails the task up front**, before any device is driven. A
+device that goes offline **mid-rollout** is bounded by the same delivery and execution timeouts a
+local deploy uses — reconnect within the window and the rollout resumes, otherwise that device
+fails.
+
 ## Roadmap
 
-Today's dependency mechanism — a task delegating a nested Deploy V2 for another release — is
-the foundation for a broader orchestrator that will:
+Today's dependency and fleet-deploy mechanisms are the foundation for a broader orchestrator
+that will:
 
 - **coordinate a set of releases** as one managed unit, in a planned order
-- **orchestrate across a fleet** — a master agent dispatching deploy plans to child agents
-  (over the same A2A mesh used elsewhere) and tracking each child's task-level progress via
-  SSE
 - **express richer ordering** — grouping and conditional branches at the plan level
+- **generalize beyond deploy** — the same rule-gated, fleet-wide engine applied to delivery
+  (distributing artifacts across the fleet) and monitoring (recurring health checks)
 
 Because tasks, nesting, dependencies, per-task rules, weights, and live SSE progress already
 exist at the manifest level, the orchestrator builds **on top of** the same primitives — a

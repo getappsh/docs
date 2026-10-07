@@ -67,6 +67,12 @@ stateDiagram-v2
 | `Cancelled` | Skipped because the deploy was cancelled before it started. |
 | `Skipped` | A **terminal, successful** state: a `Revert` task whose cleanup was not needed (its target succeeded and verified). It counts as complete for progress and status. |
 
+:::note Fleet rollouts add per-device outcomes
+A [`FleetDeploy`](./deploy-v2-orchestrator#which-devices-are-acted-on) task also classifies each
+**target device** — *targeted*, *excluded*, *rejected*, or *deferred* — on top of the task's own
+status above.
+:::
+
 :::warning Installs are all-or-nothing
 An install step never silently "skips ahead". A rule mismatch, error, or timeout **fails** the
 task and the deploy — it does not move on. If a step should only apply to some devices,
