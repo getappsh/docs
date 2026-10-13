@@ -49,7 +49,7 @@ thing**: one row in the dashboard, one shared software catalog, one status view.
 
 :::tip Platform vs. platform *type*
 A **platform** is the physical asset itself. A **platform type** is the *category* it belongs to
-( for example: 'tank' is a platform type, when specific tank ('tank-2c') is a platform). See [Platform — Overview](../../user-docs/admin/manage-platform/overview.md).
+( for example: 'tank' is a platform type, when specific tank ('tank-2c') is a platform). See [Platform — Overview](../../../user-docs/admin/manage-platform/overview.md).
 :::
 
 ---
@@ -83,8 +83,8 @@ flowchart TB
 *Diagram: every device in the platform shares one platform ID; the master provides the platform's name and type.*
 
 The platform ID is part of the agent's **enrollment** — see
-[Platform Configure](configurations/platform-configure) for the exact fields
-(`platform_id`, `platform`) and [Enrollment](configurations/enrollment) for how to set them.
+[Platform Configure](../configurations/platform-configure) for the exact fields
+(`platform_id`, `platform`) and [Enrollment](../configurations/enrollment) for how to set them.
 
 ---
 
@@ -138,7 +138,7 @@ device **joins the platform** and whether it needs the master's approval:
 
 
 Full details and setup steps are in
-[A2A Parent Management](fleet-connectivity/a2a-parent-management).
+[A2A Parent Management](../fleet-connectivity/a2a-parent-management).
 :::
 
 ---
@@ -208,7 +208,7 @@ sequenceDiagram
 
 The operator can push an offering, start or stop a download, trigger an install, or ask a device to
 refresh its information — all from the master's interface. See
-[A2A Parent Management](fleet-connectivity/a2a-parent-management#operator-workflow) for the full list
+[A2A Parent Management](../fleet-connectivity/a2a-parent-management#operator-workflow) for the full list
 of actions.
 
 ---
@@ -222,7 +222,7 @@ A platform is built to keep working even when the central server is **not reacha
 - When the server comes back, the master syncs the platform's status again.
 
 For separated or air-gapped sites, see
-[Disconnected environment](deployment/disconnectedEnviorment.md).
+[Disconnected environment](../deployment/disconnectedEnviorment.md).
 
 ---
 
@@ -233,13 +233,13 @@ The practical, ordered steps. Each step links to a full guide.
 ## 1. Install the agent on every device
 
 Install the GetApp Agent on each device that will be part of the platform. See
-[Getting Started](../../getting-started.md) for installation steps.
+[Getting Started](../../../getting-started.md) for installation steps.
 
 ## 2. Give them a shared platform identity
 
 Set the same **platform ID** on every device that belongs to the asset, so the server and the master
-know they are one platform. See [Platform Configure](configurations/platform-configure) for the
-fields and [Enrollment](configurations/enrollment) for how to set them.
+know they are one platform. See [Platform Configure](../configurations/platform-configure) for the
+fields and [Enrollment](../configurations/enrollment) for how to set them.
 
 ## 3. Choose the master and point the children at it
 
@@ -251,7 +251,7 @@ a device that is itself orchestrated cannot manage others. On each **child**, se
 
 When a child boots, it asks to join and the master confirms it. The child then adopts the platform
 identity and appears in the fleet view. Setup details are in
-[A2A Parent Management](fleet-connectivity/a2a-parent-management#setting-up-parent-management).
+[A2A Parent Management](../fleet-connectivity/a2a-parent-management#setting-up-parent-management).
 
 ## 5. Manage the platform from one place
 
@@ -262,8 +262,8 @@ fleet or to a chosen subset. Watch per-device progress in one view.
 
 ## See also
 
-- [A2A Parent Management](fleet-connectivity/a2a-parent-management) — set up and operate a managed fleet.
-- [Connect a Platform to a Group](fleet-connectivity/connect-platform-to-group) — organize platforms into groups.
-- [Platform Configure](configurations/platform-configure) — the platform's identity fields.
-- [Platform — Overview (Admin)](../../user-docs/admin/manage-platform/overview.md) — how the platform looks on the server side.
-- [Terminology](../../Terminology.md) — the full list of platform terms.
+- [A2A Parent Management](../fleet-connectivity/a2a-parent-management) — set up and operate a managed fleet.
+- [Connect a Platform to a Group](../fleet-connectivity/connect-platform-to-group) — organize platforms into groups.
+- [Platform Configure](../configurations/platform-configure) — the platform's identity fields.
+- [Platform — Overview (Admin)](../../../user-docs/admin/manage-platform/overview.md) — how the platform looks on the server side.
+- [Terminology](../../../Terminology.md) — the full list of platform terms.

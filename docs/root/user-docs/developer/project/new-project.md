@@ -16,35 +16,82 @@ without it don't see this entry at all)
 
 **Develop → My Projects → New project**.
 
-## What you fill in
+## A guided wizard
+
+New Project is a wizard with a step rail down the left. Only **General** is required —
+**Members**, **Docs**, and **GitOps** are optional, and you can fill them in any order or skip
+them entirely. **Create Project** is available from any step, and you can revisit everything
+later from the project's [Settings](./project-detail#settings).
+
+![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field "payments-service" with the auto-assigned Project ID below it, Application/Infrastructure category chips with Application selected, and a Tagline field](/img/manual/project/new-project-form.png)
+
+| Step | Required? | What it's for |
+|---|---|---|
+| **General** | Yes | The name, category, and tagline |
+| **Members** | Optional | Give people access up front |
+| **Docs** | Optional | Write documentation that ships with the project |
+| **GitOps** | Optional | Sync releases from a Git repository |
+
+## General
 
 | Field | Notes |
 |---|---|
-| **Display name** | Shown throughout the portal — not unique |
-| **Project slug** | Unique across the deployment. No spaces, not only digits, no `@`. Saved exactly as typed — not lowercased or hyphenated for you |
-| **Tag line** | One short line, max 20 characters |
-| **Category** | The project type — see below |
+| **Project name** | One field that is both the project's identity and its display name. Unique across the deployment. No spaces, not only digits, no `@`, no length limit. Saved exactly as typed — not lowercased or hyphenated for you. The **Project ID** shown just below it mirrors what you type and is assigned automatically — it's there for reference only, not a separate field to fill in |
+| **Categories** | The project type, picked as chips — see below |
+| **Tagline** | One short line, max 20 characters |
 
-![New project form — Display name "Maps Pro", Project slug "maps-pro", Tag line "Offline field mapping", and a Category dropdown set to Product](/img/manual/project/new-project-form.png)
+### Category (project type)
 
-## Category (project type)
-
-In practice, most projects you create day-to-day are one of two categories:
+The category is chosen from chips. By default the wizard offers the two you reach for most:
 
 - **Application** — a standalone installable app with its own UI, the thing an end user or a
-  technician actually opens
+  technician actually opens (selected by default)
 - **Infrastructure** — a background service, agent, or daemon with no UI of its own
 
-The full picker also offers **Product** (the technical default), **Library**, **Bundle**,
-**Configuration**, and **Config map** — see [Overview](./project-overview) for what each of those is.
+## Members
 
-Once created, a project's Category can still be changed later from its
-[Settings tab](./project-detail#settings).
+Give individual people access to the project up front, instead of inviting them afterwards.
+This step needs the **update-project** role — if you don't have it the step is greyed out and
+skipped, and you can still create the project.
+
+Add people by email and assign a role — **Owner**, **Admin**, or **Member**. A debounced
+search against the user directory helps you find people, but a typed email is valid even with
+no match. The people you add are staged here and invited the moment the project is created.
+
+## Docs
+
+Write documentation that lives with the project. Add one or more docs, each a **title** and a
+**Markdown** body. Like members, docs are staged here and created once the project exists.
+
+## GitOps
+
+Connect the project to a Git repository so its releases sync from the repo instead of being
+authored by hand. Leave the clone URL empty to skip GitOps entirely.
+
+| Field | What it does |
+|---|---|
+| **Git clone URL** | The HTTPS or SSH repository URL. Nothing else here matters until this is set |
+| **Branch** | Which branch to track — defaults to the repository's default branch |
+| **Clone interval (min)** | How often (in minutes) to poll the repo — defaults to 60 |
+| **HTTPS username / password** | Credentials for a private repository |
+| **.getapp file path** | Path within the repo to the `.getapp` manifest GitOps reads |
 
 ## After creating
 
-The project is ready immediately — publish a [release](../release/release-overview) to make it
-available to devices.
+Create Project is reachable from any step once General is valid. On success you land on the new
+project's [Releases tab](./project-detail#releases), ready to publish its first
+[release](../release/release-overview).
+
+Members and docs are applied as a best-effort follow-up: if one can't be saved, the project is
+still created and you get a warning rather than a failure — add the missing member or doc later
+from [Project Detail](./project-detail).
+
+## Customizing the form
+
+The fields, their order, and which categories appear as chips are driven by a per-deployment
+layout. An administrator can tailor the create-project form for an environment — relabel
+fields, reorder them, or re-add the other categories — without changing the application. This
+is an optional deployment-level override; out of the box you get the form described above.
 
 ## See also
 

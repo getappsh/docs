@@ -24,8 +24,10 @@ permission specifically.
 | `config` | A CONFIG project — see [ConfigMap](../../admin/catalog/configmap) |
 | `config_map` | A ConfigMap project |
 
-All seven are created the same way — see
-[New Project](./new-project#category-project-type).
+The [New Project](./new-project#category-project-type) wizard offers **Application** and
+**Infrastructure** as chips by default; the other types are set afterwards from a project's
+[Settings](./project-detail#settings) (or re-added to the create form by a deployment
+override).
 
 ## What a project owns
 

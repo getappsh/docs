@@ -53,8 +53,9 @@ Who has access to this project, separately from the platform-wide Admin roles.
 
 ### General
 
-Edit the project's display name, description, tag line, and Category (see
-[New Project](./new-project#category-project-type)).
+Edit the project's display name, description, tag line, and Category — including the full list
+of project types that the [New Project](./new-project#category-project-type) wizard doesn't
+offer as chips.
 
 ### GitOps
 
