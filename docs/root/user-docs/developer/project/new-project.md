@@ -45,8 +45,7 @@ later from the project's [Settings](./project-detail#settings).
 ### Tags
 
 Type a tag and press **Enter** or a comma to add it; it appears as a chip below the field. Click
-a chip's **×**, or press **Backspace** in the empty field, to remove the last one. The dropdown
-suggests tags other projects already use, so similar projects share the same words.
+a chip's **×**, or press **Backspace** in the empty field, to remove the last one.
 
 - At most **three** tags per project.
 - Each tag is up to **20** characters of lowercase letters, digits, and hyphens, for example
