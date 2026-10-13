@@ -23,11 +23,11 @@ New Project is a wizard with a step rail down the left. Only **General** is requ
 them entirely. **Create Project** is available from any step, and you can revisit everything
 later from the project's [Settings](./project-detail#settings).
 
-![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field "payments-service" with the auto-assigned Project ID below it, Application/Infrastructure category chips with Application selected, and a Tagline field](/img/manual/project/new-project-form.png)
+![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field "payments-service" with the auto-assigned Project ID below it, Application/Infrastructure category chips with Application selected, and a Tags field](/img/manual/project/new-project-form.png)
 
 | Step | Required? | What it's for |
 |---|---|---|
-| **General** | Yes | The name, category, and tagline |
+| **General** | Yes | The name, category, tags, description, and distribution label |
 | **Members** | Optional | Give people access up front |
 | **Docs** | Optional | Write documentation that ships with the project |
 | **GitOps** | Optional | Sync releases from a Git repository |
@@ -38,7 +38,32 @@ later from the project's [Settings](./project-detail#settings).
 |---|---|
 | **Project name** | One field that is both the project's identity and its display name. Unique across the deployment. No spaces, not only digits, no `@`, no length limit. Saved exactly as typed — not lowercased or hyphenated for you. The **Project ID** shown just below it mirrors what you type and is assigned automatically — it's there for reference only, not a separate field to fill in |
 | **Categories** | The project type, picked as chips — see below |
-| **Tagline** | One short line, max 20 characters |
+| **Tags** | Up to three short tags — see below. Shown under the project name |
+| **Description** | A longer description of the project, max 500 characters |
+| **Distribution label** | The group the agent shows the project under. Pick an existing label from the dropdown or type a new one — see below |
+
+### Tags
+
+Type a tag and press **Enter** or a comma to add it; it appears as a chip below the field. Click
+a chip's **×**, or press **Backspace** in the empty field, to remove the last one. The dropdown
+suggests tags other projects already use, so similar projects share the same words.
+
+- At most **three** tags per project.
+- Each tag is up to **20** characters of lowercase letters, digits, and hyphens, for example
+  `maps` or `field-ops`. What you type is lowercased and spaces become hyphens; anything else,
+  such as `_` or `@`, is refused.
+
+### Distribution label
+
+Projects that share a label are grouped together in the agent. Open the dropdown to see the
+labels that already exist, and type to filter them; pick one to join that group. To create a new
+label, just type its name. The dropdown shows **Create “name”**, and the label is created when
+the project is saved. The label is optional.
+
+Only labels the project can use are suggested. A label can be tied to the **user** or
+**technician** application category; a new Application project is a **user** application, so
+labels tied to technician applications are not offered. Labels with no category, and every label
+you create here, fit any project.
 
 ### Category (project type)
 
