@@ -23,11 +23,11 @@ New Project is a wizard with a step rail down the left. Only **General** is requ
 them entirely. **Create Project** is available from any step, and you can revisit everything
 later from the project's [Settings](./project-detail#settings).
 
-![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field "payments-service" with the auto-assigned Project ID below it, Application/Infrastructure category chips with Application selected, and a Tags field](/img/manual/project/new-project-form.png)
+![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field "payments-service" with the auto-assigned Project ID below it, Application/Infrastructure software type chips with Application selected, and a Tags field](/img/manual/project/new-project-form.png)
 
 | Step | Required? | What it's for |
 |---|---|---|
-| **General** | Yes | The name, category, tags, description, and distribution label |
+| **General** | Yes | The name, software type, categories, summary, tags, and description |
 | **Members** | Optional | Give people access up front |
 | **Docs** | Optional | Write documentation that ships with the project |
 | **GitOps** | Optional | Sync releases from a Git repository |
@@ -37,10 +37,33 @@ later from the project's [Settings](./project-detail#settings).
 | Field | Notes |
 |---|---|
 | **Project name** | One field that is both the project's identity and its display name. Unique across the deployment. No spaces, not only digits, no `@`, no length limit. Saved exactly as typed — not lowercased or hyphenated for you. The **Project ID** shown just below it mirrors what you type and is assigned automatically — it's there for reference only, not a separate field to fill in |
-| **Categories** | The project type, picked as chips — see below |
+| **Software Type** | The project type, picked as chips — see below |
+| **Categories** | The group the agent shows the project under (its distribution label). Pick an existing category from the dropdown or type a new one — see below |
+| **Summary** | A short one-line summary of the project, for example `Offline field maps`. Up to **20** characters — the same limit as a single tag. Optional |
 | **Tags** | Up to three short tags — see below. Shown under the project name |
 | **Description** | A longer description of the project, max 500 characters |
-| **Distribution label** | The group the agent shows the project under. Pick an existing label from the dropdown or type a new one — see below |
+
+### Software Type
+
+The software type is chosen from chips. By default the wizard offers the two you reach for most:
+
+- **Application** — a standalone installable app with its own UI, the thing an end user or a
+  technician actually opens (selected by default)
+- **Infrastructure** — a background service, agent, or daemon with no UI of its own
+
+### Categories
+
+Projects in the same category are grouped together in the agent. Open the dropdown to see the
+categories that already exist, and type to filter them; pick one to join that group. To create a
+new category, just type its name. The dropdown shows **Create “name”**, and the category is
+created when the project is saved. Categories are optional.
+
+Only categories the project can use are suggested. A category can be tied to **user** apps or
+**technician** apps; a new Application project is a **user** app, so categories tied to
+technician apps are not offered. Categories with no such tie, and every category you create here,
+fit any project.
+
+In the API and the layout override this field is `label` (the distribution label).
 
 ### Tags
 
@@ -51,26 +74,6 @@ a chip's **×**, or press **Backspace** in the empty field, to remove the last o
 - Each tag is up to **20** characters of lowercase letters, digits, and hyphens, for example
   `maps` or `field-ops`. What you type is lowercased and spaces become hyphens; anything else,
   such as `_` or `@`, is refused.
-
-### Distribution label
-
-Projects that share a label are grouped together in the agent. Open the dropdown to see the
-labels that already exist, and type to filter them; pick one to join that group. To create a new
-label, just type its name. The dropdown shows **Create “name”**, and the label is created when
-the project is saved. The label is optional.
-
-Only labels the project can use are suggested. A label can be tied to the **user** or
-**technician** application category; a new Application project is a **user** application, so
-labels tied to technician applications are not offered. Labels with no category, and every label
-you create here, fit any project.
-
-### Category (project type)
-
-The category is chosen from chips. By default the wizard offers the two you reach for most:
-
-- **Application** — a standalone installable app with its own UI, the thing an end user or a
-  technician actually opens (selected by default)
-- **Infrastructure** — a background service, agent, or daemon with no UI of its own
 
 ## Members
 
@@ -116,6 +119,44 @@ The fields, their order, and which categories appear as chips are driven by a pe
 layout. An administrator can tailor the create-project form for an environment — relabel
 fields, reorder them, or re-add the other categories — without changing the application. This
 is an optional deployment-level override; out of the box you get the form described above.
+
+### Required or optional fields
+
+Only **Project name** and **Software Type** are always required. Every other field is optional by
+default, and the layout can make it required (or optional again) per environment:
+
+| Step | Fields that can be switched |
+|---|---|
+| **General** | Categories, Summary, Tags, Description |
+| **GitOps** | Git clone URL, Branch, Clone interval, HTTPS username, HTTPS password, `.getapp` file path |
+
+A required field is marked with **\*** and the project can't be created until it is filled.
+The same rule applies on the project's [Settings](./project-detail#settings) tab, so a required
+field can't be emptied there later.
+
+The override is the file `public/config/project-form.layout.json` in the GetApp Pro
+deployment. It is a sparse patch matched by field key, for example:
+
+```json
+{
+  "version": 1,
+  "fields": [
+    { "key": "tagline", "required": true },
+    { "key": "description", "required": true },
+    { "key": "gitCloneUrl", "required": true }
+  ]
+}
+```
+
+The field keys are `tagline` (Summary), `tags`, `description`, `label`, `gitCloneUrl`,
+`gitBranch`, `gitCloneInterval`, `gitHttpsUsername`, `gitHttpsPassword`, and
+`gitGetappFilePath`. A field can't be both `required` and `hidden`.
+
+:::note Summary length
+The 20-character limit on **Summary** comes from the server setting `PROJECT_TAG_MAX_LENGTH`,
+which also limits each tag. The layout can lower the limit with `maxLength` but can't raise it
+above the server's value.
+:::
 
 ## See also
 

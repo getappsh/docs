@@ -63,12 +63,17 @@ The same fields as the [New Project](./new-project#general) wizard:
 | Field | Notes |
 |---|---|
 | **Project name** | Also the project ID, used in URLs and by devices. Same rules as in the wizard: no spaces, not only digits, no `@`. Renaming also updates the display name |
+| **Software Type** | **Application** or **Infrastructure** — see [Software Type](./new-project#software-type). A project created with another type keeps it until you change it |
+| **Categories** | Pick an existing category or type a new one — see [Categories](./new-project#categories) |
+| **Summary** | A short one-line summary, up to 20 characters — see [General](./new-project#general) |
 | **Tags** | Up to three tags, edited as chips — see [Tags](./new-project#tags). Shown under the project name at the top of this page |
 | **Description** | A longer description, max 500 characters |
-| **Distribution label** | Pick an existing label or type a new one — see [Distribution label](./new-project#distribution-label) |
-| **Project type** | **Application** or **Infrastructure**. A project created with another type keeps it until you change it |
 
-**Save changes** sends only the fields you changed. Emptying a field and saving clears it.
+**Save changes** sends only the fields you changed. Emptying a field and saving clears it —
+unless the deployment made that field required (marked **\***, see
+[Required or optional fields](./new-project#required-or-optional-fields)). In that case the
+save is blocked with a message listing the fields to fill in. The same applies to the GitOps
+fields below.
 
 ### GitOps
 
