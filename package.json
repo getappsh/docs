@@ -35,6 +35,9 @@
     "eslint": "^9.5.0",
     "typescript": "^5.8.3"
   },
+  "resolutions": {
+    "@easyops-cn/docusaurus-search-local/cheerio": "1.0.0"
+  },
   "browserslist": {
     "production": [
       ">0.5%",
