@@ -162,7 +162,29 @@ const config = {
       attributes: { src: '/config.js' },
     },
   ],
-  themes: ["docusaurus-theme-openapi-docs", "@docusaurus/theme-mermaid"], // export theme components
+  themes: [
+    "docusaurus-theme-openapi-docs",
+    "@docusaurus/theme-mermaid",
+    [
+      // Offline/local full-text search. Indexes content at build time (see
+      // Dockerfile's `yarn build`), no external service or API keys required.
+      // Note: search only works on production builds, not `yarn start` (dev).
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      // Options type: import('@easyops-cn/docusaurus-search-local').PluginOptions
+      // Cast to `any` because Docusaurus's themes tuple expects a DeepPartial with
+      // a string index signature, which the plugin's concrete PluginOptions lacks.
+      /** @type {any} */
+      ({
+        hashed: true,
+        indexDocs: true,
+        indexBlog: true,
+        indexPages: false,
+        language: ["en"],
+        docsRouteBasePath: "/docs",
+        highlightSearchTermsOnTargetPage: true,
+      }),
+    ],
+  ], // export theme components
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -194,6 +216,7 @@ const config = {
             label: 'Agent',
           },
           { to: '/changelog', label: 'Changelog', position: 'left' },
+          { type: 'search', position: 'left' },
           {
             // Reads DASHBOARD_URL from the runtime config; see src/pages/goto/dashboard.js.
             to: '/goto/dashboard',

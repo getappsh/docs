@@ -10,7 +10,7 @@ sidebar_position: 2
 What a platform's identity actually consists of — the enrollment fields set once at install,
 and the metadata reported continuously afterward. For the *how-to* of editing `.env` and
 restarting the service, see [Enrollment](./enrollment). For how devices combine into a
-multi-device platform (master and children), see [Platform Architecture](../platform-architecture).
+multi-device platform (master and children), see [Platform Architecture](../platform/platform-architecture).
 
 ## Enrollment — set once, rarely changes
 
@@ -53,7 +53,7 @@ picture on the server current.
 
 ## See also
 
-- [Platform Architecture](../platform-architecture)
+- [Platform Architecture](../platform/platform-architecture)
 - [Enrollment](./enrollment)
 - [GetConfig](./getconfig)
 - [Platform Table](../../../user-docs/admin/manage-platform/platform-table)
