@@ -403,6 +403,22 @@ Configuration is cached locally on the device. If the device loses connectivity:
 - Local overrides continue to function
 - The agent will sync the latest version once connectivity is restored
 
+## Using Config in Deploy V2 Manifests
+
+A release's `install.yaml` can read the synced config groups at install time through placeholders,
+so one manifest adapts to each device's configuration:
+
+| Placeholder | Resolves to |
+|---|---|
+| `{Config.<group>.<key>}` | The value at that key: a scalar or a JSON object/array (e.g. `{Config.network.proxy.host}` or `{Config.network.proxy}`). Objects/arrays are embedded as JSON when the placeholder is the entire request `Body` value or a field value within it; use `ConfigJson` in string contexts. |
+| `{Config.<group>}` | The whole group — embedded as JSON when it is the only content of a request `Body` value |
+| `{ConfigJson.<group>}` | The group (or value) as compact JSON text, for command-line arguments and query params |
+| `{ConfigPath.<group>}` | The absolute path of the group's YAML file on the device, so a script or tool can read it |
+
+The agent's own runtime settings are read with `{DeviceConfig.<zone>.<key>}`. See
+[Deploy V2 — Tasks](../../../user-docs/developer/deploy/v2/deploy-v2-tasks#placeholders--dynamic-values-at-runtime)
+for the full rules.
+
 ## CDN Configuration Distribution
 
 A CDN agent (master node) can act as a local configuration and command server for managed
