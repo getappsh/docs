@@ -71,19 +71,8 @@ const config = {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
-          // NOTE: this id is named "server" (kept for CLI-command compat) but currently produces
-          // the FULL/uncurated doc, wired under sidebars.js's "Full" section — see the comment
-          // there. api-getapp-dev.apps.getapp.sh hasn't been redeployed with PR #156
-          // "remanaged-swagger-apis" (apps/api/src/swagger/setup-swagger.ts) yet, so "/docs-json"
-          // still serves the old undifferentiated (v1+v2, no curation) document rather than the
-          // curated V2 one. Once it has, swap this specPath for the real curated-V2 route and add:
-          //   serverFull: {
-          //     specPath: "https://api-getapp-dev.apps.getapp.sh/docs/full-json",
-          //     outputDir: "docs/server-full/",
-          //     sidebarOptions: { groupPathsBy: "tag", categoryLinkSource: "tag" },
-          //   },
-          // (and add "/docs/server-full/" to .gitignore — already reserved there), then update
-          // sidebars.js so "V2" and "Full" each point at their own real generated output.
+          // Curated, resource-grouped "GetApp Server API V2" served at "/docs" — wired under
+          // sidebars.js's "V2" section. (The id stays "server" for CLI-command compat.)
           server: {
             specPath: "https://api-getapp-dev.apps.getapp.sh/docs-json",
             outputDir: "docs/server/", // output directory for generated files
@@ -92,10 +81,28 @@ const config = {
               categoryLinkSource: "tag",
             },
           },
+          serverFull: {
+            // Every decorated endpoint, v1 + v2, uncurated ("/docs/full") — sidebars.js's "Full".
+            specPath: "https://api-getapp-dev.apps.getapp.sh/docs/full-json",
+            outputDir: "docs/server-full/",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag",
+            },
+          },
           serverDevice: {
             // Device-facing subset only ("/docs/device") — the surface agents/devices talk to.
             specPath: "https://api-getapp-dev.apps.getapp.sh/docs/device-json",
             outputDir: "docs/server-device/",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag",
+            },
+          },
+          serverDeviceV2: {
+            // Device-facing V2 subset only ("/docs/v2/device") — the V2 surface the agent talks to.
+            specPath: "https://api-getapp-dev.apps.getapp.sh/docs/v2/device-json",
+            outputDir: "docs/server-device-v2/",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
@@ -250,7 +257,7 @@ const config = {
             items: [
               {
                 label: 'Server API',
-                to: '/docs/server/get-app',
+                to: '/docs/server-api-intro/v2',
               },
               {
                 label: 'Environment Variables',

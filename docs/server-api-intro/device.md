@@ -15,7 +15,7 @@ agent ↔ server calls.
 
 <SwaggerLink path="/docs/device" />
 
-See also [Full](./full) for every endpoint, or [V2](./v2) for the curated resource-grouped
-view (pending on the server side).
+See also [Device V2](./device-v2) for only its V2 endpoints, [Full](./full) for every endpoint,
+or [V2](./v2) for the curated resource-grouped view.
 
 <SwaggerLink path="/docs/device" label="Open in Swagger ↗" />

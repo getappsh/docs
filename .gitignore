@@ -26,6 +26,7 @@ yarn-error.log*
 /docs/server/
 /docs/server-full/
 /docs/server-device/
+/docs/server-device-v2/
 /docs/env
 
 /src/pages/about.md

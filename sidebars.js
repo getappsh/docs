@@ -31,20 +31,22 @@ const sidebars = {
       link: {
         type: 'generated-index',
         title: 'Server API',
-        description: 'GetApp Server API — V2 (curated), Full (everything), and Device surfaces',
+        description: 'GetApp Server API — V2 (curated), Full (everything), Device and Device V2 surfaces',
       },
       items: [
-        // The dev server this site builds against hasn't been redeployed with the curated-V2
-        // route yet, so what's actually live at /docs-json today is still the old
-        // undifferentiated (v1+v2, uncurated) document — generated here under "Full", not "V2".
-        // See the note on the V2 intro page and `docusaurus.config.js`.
-        { type: 'doc', id: 'server-api-intro/v2', label: 'V2' },
+        {
+          label: 'V2',
+          collapsed: false,
+          type: 'category',
+          link: { type: 'doc', id: 'server-api-intro/v2' },
+          items: require("./docs/server/sidebar.ts"),
+        },
         {
           label: 'Full',
           collapsed: true,
           type: 'category',
           link: { type: 'doc', id: 'server-api-intro/full' },
-          items: require("./docs/server/sidebar.ts"),
+          items: require("./docs/server-full/sidebar.ts"),
         },
         {
           label: 'Device',
@@ -52,6 +54,13 @@ const sidebars = {
           type: 'category',
           link: { type: 'doc', id: 'server-api-intro/device' },
           items: require("./docs/server-device/sidebar.ts"),
+        },
+        {
+          label: 'Device V2',
+          collapsed: true,
+          type: 'category',
+          link: { type: 'doc', id: 'server-api-intro/device-v2' },
+          items: require("./docs/server-device-v2/sidebar.ts"),
         },
       ],
     },
