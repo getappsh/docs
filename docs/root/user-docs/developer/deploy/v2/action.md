@@ -15,14 +15,21 @@ A [task's](./deploy-v2-tasks) `Type` is the action it performs.
 | `Verification/v2` | **Check a step succeeded** — an HTTP, script, or event-stream check that *gates* its group. See [Verifying a step](#verifying-a-step). |
 | `Revert/v2` | **Undo a step** — nested cleanup that runs when the step it covers fails. See [Reverting a step](#reverting-a-step-undo). |
 | `Group/v2` | **Bind child tasks** — a container that runs no installer of its own; it groups several tasks (and their verification/revert) as one unit. See [Orchestrator](./deploy-v2-orchestrator). |
-| `Deploy/v2` | **Sub-deploy a dependent release** — delegates a full nested Deploy V2 of another release, the orchestrator. See [Orchestrator](./deploy-v2-orchestrator). |
-| `FleetDeploy/v2` | **Roll a release out across the managed fleet** — resolves a rule across this agent + its managed devices and deploys the release to every match (self locally, remotes over the A2A mesh). See [Fleet deploy](./deploy-v2-orchestrator#fleet-deploy-across-managed-devices). |
+| `Deploy/v2` (alias `Action/v2`) | **Run a lifecycle action of a release** — this release's own (`Action: restart`) or a dependent release's, as a full nested Deploy V2. See [Lifecycle Actions](./deploy-v2-lifecycle-actions#from-another-task) and [Orchestrator](./deploy-v2-orchestrator). |
+| `FleetDeploy/v2` (alias `FleetAction/v2`) | **Run a lifecycle action across the managed fleet** — resolves a rule across this agent + its managed devices and runs the action on every match (self locally, remotes over the A2A mesh). See [Fleet deploy](./deploy-v2-orchestrator#fleet-deploy-across-managed-devices). |
 | `Config/v2`, `Map/v2` | Reserved — fail as "unsupported" if used today. |
 | `Up/v2`, `Down/v2`, `Restart/v2` | Reserved — planned service/stack lifecycle actions (bring up, tear down, restart a running deploy) for capabilities like `DockerCompose`. Not runnable today. |
 
 `Deploy` is distinct from `Execute`/`Verification`/`Revert` in one important way: those three
 all act on *this* task's own artifact. `Deploy` carries no local artifact at all — its whole
-job is handing off to another release entirely.
+job is handing off to a [lifecycle action](./deploy-v2-lifecycle-actions), of this release or
+another one.
+
+:::note Task type vs. lifecycle action
+This page is about a task's `Type`. The named sections of a manifest (`install`, `uninstall`,
+`restart`, …) are [lifecycle actions](./deploy-v2-lifecycle-actions). The reserved `Up/v2`,
+`Down/v2` and `Restart/v2` task types are unrelated to the `up`, `down` and `restart` action names.
+:::
 
 ## Verifying a step
 

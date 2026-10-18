@@ -18,6 +18,8 @@ Every Deploy V2 run writes a dedicated log file:
 ```
 
 - The whole dependency tree writes into the **parent's** file — one file tells the full story
+- Every [lifecycle action](./deploy-v2-lifecycle-actions) of a release writes into the same file;
+  the engine's lines name the action (`Deploy V2 started for release … action 'restart'`)
 - It's UTF-16LE encoded so Windows `msiexec`, which appends its own installer log to the same
   file, reads back as one consistent document
 - Every line is also mirrored to the agent's global log/console with the real caller module
@@ -27,6 +29,11 @@ Deploy status is pushed live over SSE on every task transition, so a UI can foll
 real time.
 
 ## The status document (`message_log`)
+
+Each lifecycle action keeps its **own deploy record** — the `install` status and a `restart` status
+never overwrite each other. Read one with `GET /api/v2/deploy/action/{catalog_id}/{action}`; every
+record, SSE event and status report carries its `action`. The release status view shows the most
+recent state-changing action (`install`, `uninstall`, `revert`).
 
 The deploy record's `message_log` is a **structured JSON document** in every state — running,
 succeeded, and failed alike (a failed run's reason rides inside its task's own status line,
@@ -56,7 +63,7 @@ not a bare error string). Consumers parse it rather than reading raw text:
 | `total` | Number of tasks in the tree. |
 | `completed` | Tasks in a terminal-complete state (`Done` or `Skipped`). |
 | `skipped` / `failed` / `cancelled` | Counts by state. |
-| `current` | The running task as a `task [<path>] (<label>)` reference, with its max time when known. |
+| `current` | The running task as a `task [<path>] (<label>)` reference, with its max time when known. The label is the task's `Name` when set. |
 | `messages` | One chain-pathed status line per reached task, in order. A verify/revert line names the task it acts on; a failed task's reason is on its own line. |
 | `advisories` | Machine-actionable hints (see below). |
 

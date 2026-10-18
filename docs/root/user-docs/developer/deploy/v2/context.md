@@ -7,8 +7,8 @@ sidebar_position: 6
 
 # Context
 
-What's actually inside the `{Device.*}` [placeholder](./deploy-v2-tasks#placeholders--dynamic-values-at-runtime)
-source, and what a task's `Rule` evaluates against.
+What's actually inside the `{Device.*}` and `{Config.*}` [placeholder](./deploy-v2-tasks#placeholders--dynamic-values-at-runtime)
+sources, and what a task's `Rule` evaluates against.
 
 ## Device metadata
 
@@ -33,6 +33,18 @@ So `{Device.os}` resolves the OS string, `{Device.bandwidth.downloadKbps}` (or h
 custom field is nested) resolves into that object, and `{Device.customField}` reaches anything
 you've added yourself — same rules as every other placeholder: it must resolve to a scalar, or
 the task fails.
+
+## Device config groups
+
+`{Config.*}`, `{ConfigJson.*}` and `{ConfigPath.*}` read the configuration groups the device has
+synced from the server ([GetConfig](../../../../technician/agent/configurations/getconfig)) — the
+groups the agent keeps on disk. They are read once when the action starts running. A device with no
+synced config leaves every `{Config.*}` unresolved, which
+fails the task that uses it. See [Tasks](./deploy-v2-tasks#config-groups-in-depth) for how paths
+and group values resolve.
+
+`{DeviceConfig.*}` is different: it reads the agent's **own** runtime settings (`config.yaml`),
+dotted by zone — e.g. `{DeviceConfig.device.meta_data.name}`.
 
 ## See also
 
