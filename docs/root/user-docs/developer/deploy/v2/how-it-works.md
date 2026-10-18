@@ -21,6 +21,13 @@ directory for `install.yaml`:
 The V2 deploy is launched asynchronously (it does not block the request) and the deploy
 record's status is set to `Start` immediately, so a UI reflects progress right away.
 
+A normal deploy runs the manifest's `install` action. Any other
+[lifecycle action](./deploy-v2-lifecycle-actions) is started by name — from the action API, from a
+`Deploy/v2` / `FleetDeploy/v2` task, or from the orchestrator. Every start goes through the same
+entry, which checks for loops, takes the action's single-run lock (a second start of a running
+action is rejected with `409`), and then validates and runs that action's task tree. These start
+checks run before the action's status is reset to `Start`, so a rejected start never overwrites it.
+
 ## Per-task flow
 
 Each task is one unit of work — install a file, verify a step succeeded, undo one (revert),
@@ -67,6 +74,12 @@ stateDiagram-v2
 | `Cancelled` | Skipped because the deploy was cancelled before it started. |
 | `Skipped` | A **terminal, successful** state: a `Revert` task whose cleanup was not needed (its target succeeded and verified). It counts as complete for progress and status. |
 
+:::note Fleet rollouts add per-device outcomes
+A [`FleetDeploy`](./deploy-v2-orchestrator#which-devices-are-acted-on) task also classifies each
+**target device** — *targeted*, *excluded*, *rejected*, or *deferred* — on top of the task's own
+status above.
+:::
+
 :::warning Installs are all-or-nothing
 An install step never silently "skips ahead". A rule mismatch, error, or timeout **fails** the
 task and the deploy — it does not move on. If a step should only apply to some devices,
@@ -107,16 +120,18 @@ fails and the deploy stops.
 
 ## Crash recovery & resume
 
-Every task's status and timestamps are persisted to the agent database as they change. If the
-agent restarts mid-deploy and the same deploy is requested again, the engine reloads saved
-state, **skips tasks already `Done`**, and resumes from the first unfinished task. Task
-*definitions* always come fresh from the manifest — only *progress* is restored.
+Every task's status and timestamps are persisted to the agent database, **per action**, as they
+change. If the agent restarts mid-deploy and the same action is requested again, the engine
+reloads saved state, **skips tasks already `Done`**, and resumes from the first unfinished task.
+Task *definitions* always come fresh from the manifest — only *progress* is restored. A
+[repeatable](./deploy-v2-lifecycle-actions#once-vs-repeatable) action is the exception: it starts
+fresh on every run (except when resuming after a planned reboot).
 
 ## Cancellation
 
-Active deploys register a cancellation token. Cancelling marks all not-yet-started tasks
-`Cancelled` and stops the chain. For nested dependency deploys, cancelling the parent
-propagates to the children.
+Each running action registers a cancellation token. Cancelling (pausing) an action marks all its
+not-yet-started tasks `Cancelled` and stops the chain. Actions it started through `Deploy/v2` are
+cancelled with it.
 
 ## Self-update (installing the agent itself)
 
@@ -147,9 +162,9 @@ Understanding the rationale helps you predict behavior in new situations:
 
 ```mermaid
 flowchart LR
-    Req[Deploy request] --> DC[deploy_comp<br/>detects install.yaml]
-    DC --> V2[deploy_comp_v2<br/>entry]
-    V2 --> VAL[validation pipeline]
+    Req[Deploy request<br/>or action start] --> SA[start_action<br/>loop guard + run lock]
+    SA --> V2[deploy_comp_v2<br/>entry]
+    V2 --> VAL[validation pipeline<br/>for the action]
     VAL --> EX[TaskExecutor]
     EX --> H{DeployType}
     H --> MSI
@@ -164,7 +179,8 @@ flowchart LR
 |---|---|
 | **Delivery** | Artifacts and dependent releases must be delivered and "ready" before deploy. |
 | **Rule engine** | Evaluates each task's `Rule` against device metadata/context. |
-| **SettingsIO / CONFIG** | Backs `{Config.*}` placeholders, timeout defaults, and `DEPLOY_MAX_DEPENDENCY_DEPTH`. |
+| **SettingsIO / CONFIG** | Backs `{DeviceConfig.*}` placeholders, timeout defaults, and `DEPLOY_MAX_DEPENDENCY_DEPTH`. |
+| **GetConfig (synced config groups)** | Backs `{Config.*}`, `{ConfigJson.*}` and `{ConfigPath.*}` placeholders. |
 | **Deployers** | Runs each task by a method keyed on `DeployType` — MSI/RPM/DEB/Script installs, MSI/RPM/DEB uninstall, and API/SSE handlers. |
 | **Database** | Persists per-task state for resume. |
 | **SSE** | Pushes live status on every task transition. |

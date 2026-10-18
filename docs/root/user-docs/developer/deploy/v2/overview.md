@@ -63,7 +63,10 @@ guardrails — without changing the agent.
 
 ## What it gives you today
 
-- **Strict, up-front validation** — the whole manifest is checked **before any task runs**:
+- **Lifecycle actions** — a manifest carries a named task tree per lifecycle step (`install`,
+  `uninstall`, `configuration`, `restart`, or your own), each runnable on its own from the API,
+  from another task, or across the fleet. See [Lifecycle Actions](./deploy-v2-lifecycle-actions).
+- **Strict, up-front validation** — the action being run is checked **before any task runs**:
   structure, task ordering, per-method inputs, and cross-task rules. A bad manifest fails
   immediately with a precise, path-addressed reason (e.g. `Task[1.0.2]: …`) instead of
   half-installing.
@@ -77,11 +80,13 @@ guardrails — without changing the agent.
   when they fail their check, so a failed group does not leave a half-applied install behind.
 - **Install *and* uninstall** — dedicated removal methods (MSI / RPM / DEB uninstall, script,
   or API).
+- **Fleet rollout** — a `FleetDeploy` task rolls a release out across the managed fleet,
+  selecting target devices by rule and tracking every device in one live status tree.
 - **Controllable task ordering** — tasks run in the order written.
 - **Dependent-deployment control** — a task can install *and drive* another release's full
   deployment, waiting for it to finish before continuing.
 - **Device-aware installs** — per-task rules and `{placeholder}` arguments adapt one manifest
-  to many devices.
+  to many devices, including values from the device's synced config groups.
 - **Reboot-aware** — a task can declare that it reboots the device and resume correctly
   afterwards.
 - **Actionable status** — a structured status document with per-task progress and
@@ -109,9 +114,11 @@ See [Orchestrator](./deploy-v2-orchestrator#roadmap) for detail.
 |---|---|
 | Manifest file | `install.yaml` (in the release's artifacts dir) |
 | Manifest `Type` | `Deploy/V2` |
-| Task types | `Execute/v2`, `Verification/v2`, `Revert/v2`, `Group/v2`, `Deploy/v2` |
+| Lifecycle actions | `Actions:` map — `install`, `uninstall`, `configuration`, `restart`, `up`, `down`, `revert`, or custom (a legacy top-level `Tasks:` = `install`) |
+| Task types | `Execute/v2`, `Verification/v2`, `Revert/v2`, `Group/v2`, `Deploy/v2` (`Action/v2`), `FleetDeploy/v2` (`FleetAction/v2`) |
 | Deploy methods | Install: `MSI`, `RPM`, `DEB`, `Script`, `API` · Uninstall: `MSI_Uninstall`, `RPM_Uninstall`, `DEB_Uninstall` · Verify: `API`, `Script`, `SSE` |
-| Placeholder sources | `Device`, `Env`, `Config`, `Release` (metadata via `Release.metadata.*`) |
+| Placeholder sources | `Device`, `Release` (metadata via `Release.metadata.*`), `Config` / `ConfigJson` / `ConfigPath` (synced config groups), `DeviceConfig` (agent settings), `Env` |
+| Action API | `POST/GET /api/v2/deploy/action/{catalog_id}/{action}`, `POST …/{action}/pause`, `GET /api/v2/deploy/{catalog_id}/actions` |
 | Default launch timeout | `60` s (or `Release.metadata.timeoutLaunch`) |
 | Default execution timeout | `15` min (or `Release.metadata.timeoutInstallation`); a parent's bounds its whole subtree |
 | Max dependency depth | `DEPLOY_MAX_DEPENDENCY_DEPTH` (default `10`) |
@@ -123,6 +130,7 @@ See [Orchestrator](./deploy-v2-orchestrator#roadmap) for detail.
 
 - [How It Works](./deploy-v2-how-it-works)
 - [Tasks](./deploy-v2-tasks)
+- [Lifecycle Actions](./deploy-v2-lifecycle-actions)
 - [Action](./deploy-v2-action)
 - [Orchestrator](./deploy-v2-orchestrator)
 - [Deploy V1](../v1/deploy-v1-overview)

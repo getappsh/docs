@@ -8,7 +8,7 @@ Release notes for GetApp Server, Agent, and Agent UI.
 
 ---
 
-## v1.6 (Upcoming Version)
+## v1.6
 
 ### Platform
 - Platform status reporting
@@ -16,18 +16,19 @@ Release notes for GetApp Server, Agent, and Agent UI.
 - Platform actions and event tracking
 
 ### Actions & Deployment Orchestrator
-- Deployment actions via Command
 - Installation across devices on a platform
-- Rule-based decision engine - Skip mode
 - Configuration Action
 - Uninstall Action
 - Verification Action
 - Up/Down/Restart Action
-- Support Path Location Placeholder
 
 ### CDN
 - Deliver release artifacts to the CDN from the edge, with a Load option
 - New CRUD API on the server
+
+### GetConfig
+- Support upload a file as config
+- Delivery to end device files by groups
 
 ### Agent UI
 - New Agent UI
@@ -38,14 +39,9 @@ Release notes for GetApp Server, Agent, and Agent UI.
 ### Dashboard
 - Support for additional repositories
 - Workspace support
-- Server settings
 - Dashboard permissions
 - User-group assignment
 - User and permission management via the UI
-- GetIcon: add an icon to a project
-
-### Security
-- HTTPS support for Agent UI agent creation
 
 ---
 

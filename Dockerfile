@@ -30,7 +30,16 @@ RUN yarn build
 FROM nginx:stable-alpine as deploy
 WORKDIR /opt/docusaurus
 # Copy what we've installed/built from production
-COPY --from=base /opt/docusaurus/build /usr/share/nginx/html/ 
+COPY --from=base /opt/docusaurus/build /usr/share/nginx/html/
+
+## envsubst, used by the entrypoint to render runtime config from env vars.
+RUN apk add --no-cache gettext
+
+COPY docker/config.template.js /opt/docusaurus/config.template.js
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 # docker build -t docs .
-# docker run --rm -d -p 3000:80 --name docs-container docs
+# docker run --rm -d -p 3000:80 -e DASHBOARD_URL=https://dashboard.getapp.sh --name docs-container docs
