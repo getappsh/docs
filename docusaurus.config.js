@@ -79,6 +79,14 @@ const config = {
               categoryLinkSource: "tag",
             },
           },
+          serverDeviceV2: {
+            specPath: "https://api-getapp-dev.apps.getapp.sh/docs/v2/device-yaml", // device-facing (agent) V2 surface
+            outputDir: "docs/server-device",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag"
+            },
+          },
           agentV2: {
             specPath: "https://minio-api.apps.getapp.sh/getapp-develop-public/agent/openAPI-V2.json",
             outputDir: "docs/agent",

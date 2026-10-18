@@ -19,16 +19,27 @@ const sidebars = {
 
   serverSidebar: [
     {
-      label: 'Server',
+      label: 'V2',
       collapsed: false,
       type: 'category',
       link: {
         type: 'generated-index',
-        title: 'Server API docs',
-        description: 'Generated Server docs for the OpenAPI spec',
+        title: 'Server API V2',
+        description: 'GetApp Server API V2 — resource-oriented management API',
       },
       items: require("./docs/server/sidebar.ts"),
-    }
+    },
+    {
+      label: 'Device V2',
+      collapsed: true,
+      type: 'category',
+      link: {
+        type: 'generated-index',
+        title: 'Server Device API V2',
+        description: 'Device-facing V2 endpoints consumed by the GetApp Agent',
+      },
+      items: require("./docs/server-device/sidebar.ts"),
+    },
   ],
 
   agentSidebar: [
