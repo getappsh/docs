@@ -2,10 +2,16 @@
 id: logs-and-metrics
 title: Logs and Metrics — Transfer Agent to Server
 sidebar_label: Logs and Metrics
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # GetApp Logs and Metrics — Transfer Agent to Server
+
+:::tip
+For the telemetry pipeline (agent, deployment and third-party logs and metrics stored in
+Elasticsearch / VictoriaMetrics and streamed live to GetApp Pro), see
+[Telemetry — Agent Logs and Metrics](./telemetry).
+:::
 
 Two independent, always-local-first mechanisms push agent data up to the server: log
 dispatch, and Matomo analytics. Neither blocks the agent's normal operation if the server is
@@ -50,5 +56,6 @@ These settings are pushed the same way as any other agent setting — see the
 
 ## See also
 
+- [Telemetry — Agent Logs and Metrics](./telemetry)
 - [GetConfig](../configurations/getconfig)
 - [Agent Configuration & Settings](../configurations/agent-settings)

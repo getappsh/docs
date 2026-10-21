@@ -134,6 +134,7 @@ for the full behavior of each enforcement mode.
 | `telemetry.metrics_enabled` | `false` | Include metrics in telemetry |
 | `telemetry.send_interval_mins` | `60` | Minutes between telemetry send attempts |
 | `telemetry.log_min_level` | `ERROR` | Minimum log level included in telemetry |
+| `telemetry.deploy_log_min_level` | `DEBUG` | Minimum log level for per-component deployment logs |
 | `telemetry.send_batch_size` | `500` | Max records per telemetry send batch |
 | `telemetry.backup_retention_hours` | `48` | Hours to retain un-sent telemetry backups |
 | `telemetry.reactive_mode` | `false` | Send telemetry reactively rather than on a fixed interval |
