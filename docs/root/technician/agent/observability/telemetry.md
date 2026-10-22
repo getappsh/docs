@@ -11,7 +11,7 @@ sidebar_position: 1
 
 Telemetry is the pipeline that moves **logs** and **metrics** from devices to the GetApp
 server so they can be searched, charted and — for installations — watched **live** from
-GetApp Pro.
+GetApp Platform.
 
 On the device, the agent gathers four kinds of data:
 
@@ -40,7 +40,7 @@ flowchart LR
         API[API service] -- Kafka INGEST_LOGS / INGEST_METRICS --> DEP[Deploy service]
         DEP --> ES[(Elasticsearch<br/>getapp-logs)]
         DEP --> VM[(VictoriaMetrics)]
-        API -- "SSE /api/v2/alerts/stream?logs=true" --> UI[GetApp Pro]
+        API -- "SSE /api/v2/alerts/stream?logs=true" --> UI[GetApp Platform]
         UI -- "GET /api/v2/telemetry/logs" --> API
         API -- Kafka QUERY_LOGS --> DEP
     end
@@ -198,7 +198,7 @@ In reactive mode, the scheduled job doesn't read the log files (lines are alread
 live). It still runs as a safety net and sends anything left in `telemetry.db`.
 
 :::tip
-For **live installation logs** in GetApp Pro, enable `logs_enabled` and `reactive_mode` on
+For **live installation logs** in GetApp Platform, enable `logs_enabled` and `reactive_mode` on
 the device. In scheduled mode, logs reach the server only once every `send_interval_mins`.
 :::
 
@@ -384,9 +384,9 @@ device:
 
 ---
 
-## 5. Viewing logs in GetApp Pro
+## 5. Viewing logs in GetApp Platform
 
-When a component is being installed, or has failed, on a device, GetApp Pro shows its
+When a component is being installed, or has failed, on a device, GetApp Platform shows its
 deployment logs inline:
 
 1. Open **Platforms**, expand a device row, and open the **Platform Status** panel.
@@ -465,7 +465,7 @@ sequenceDiagram
     participant K as Kafka
     participant DS as Deploy service
     participant ES as Elasticsearch
-    participant UI as GetApp Pro
+    participant UI as GetApp Platform
 
     UI->>API: GET /api/v2/telemetry/logs (history, last hour)
     API->>DS: QUERY_LOGS
@@ -480,7 +480,7 @@ sequenceDiagram
     API-->>UI: event: log (filtered by device/topic/severity)
 ```
 
-### How GetApp Pro consumes the stream
+### How GetApp Platform consumes the stream
 
 - **One connection per device.** `DeviceStreamProvider` (`contexts/DeviceStreamContext.tsx`)
   keeps a single `/api/v2/alerts/stream?deviceId=…` connection per device, shared by the

@@ -193,7 +193,7 @@ its next sync. Older revisions in **History** still show the files they had.
 
 ```mermaid
 sequenceDiagram
-    participant UI as GetApp Pro / API client
+    participant UI as GetApp Platform / API client
     participant API as API Gateway
     participant Up as Upload Service
     participant S3 as Object Storage (MinIO/S3)
@@ -235,9 +235,12 @@ ConfigMaps allow you to define shared configuration that can be inherited by mul
 
 #### Creating a ConfigMap Project
 
-1. Navigate to **Projects** > **Create Project**
-2. Select project type **CONFIG_MAP**
-3. Define your shared configuration groups
+1. Create a project of type **CONFIG_MAP**. The GetApp Platform
+   [New Project](../../../user-docs/developer/project/new-project.md) wizard offers only
+   Application and Infrastructure by default, so an administrator must first add
+   **Config map** to the wizard with a
+   [layout override](../../../user-docs/developer/project/new-project.md#customizing-the-form)
+2. Define your shared configuration groups
 
 ![Screenshot: Creating a ConfigMap project](/img/placeholder_configmap_create.png)
 

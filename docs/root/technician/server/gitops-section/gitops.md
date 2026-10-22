@@ -29,30 +29,30 @@ Both modes follow the same flow:
 
 ## Configuring GitOps in the Dashboard
 
-GitOps settings are available under **Advanced Settings → GitOps** when creating or editing a project.
-
 ### New project
 
-When creating a project, fill in the GitOps fields are display under the advanced settings section:
-
-![GitOps settings panel — create state](/img/gitops_settings.png)
+GitOps is the optional **GitOps** step of the
+[New Project](../../../user-docs/developer/project/new-project.md#gitops) wizard. Leave the
+clone URL empty to skip it.
 
 ### Existing project
 
-When a project with a Git source is opened, a **CURRENT GIT CONFIGURATION** summary appears at the top of the panel showing whether an SSH Key and HTTPS Credentials are configured, and the generated **Webhook URL**:
-
-![GitOps settings panel — configured state with current git configuration](/img/gitops_settings_configured.png)
+Open the project's **Settings** tab, fill in the **GitOps** card, and click **Save Git settings**.
 
 ### Available fields
 
 | Field | Description |
 |---|---|
-| **Git Repository URL** | HTTPS or SSH URL of the repository to clone (e.g. `git@github.com:my-org/my-project.git`) |
-| **Authentication Method** | **SSH Key** or **HTTPS Credentials** |
-| **SSH Private Key (Base64)** | Base64-encoded SSH private key. Leave blank to keep the existing key unchanged. |
+| **Git clone URL** | HTTPS or SSH URL of the repository to clone |
 | **Branch** | Branch to clone. Defaults to the repository's default branch if left empty. |
-| **Clone Interval (minutes)** | How often GetApp polls the repository. Defaults to 60. Set to 0 to disable periodic sync. |
-| **.getapp File Path** | Path to the `.getapp` file within the repository. Defaults to `.getapp` in the repository root. |
+| **Clone interval (min)** | How often GetApp polls the repository. Defaults to 60. |
+| **HTTPS username** | Username for a private repository |
+| **HTTPS password / token** | Password or personal access token. On an existing project, leave blank to keep the stored one. |
+| **.getapp file path** | Path to the `.getapp` file within the repository. Defaults to `.getapp` in the repository root. |
+
+The GetApp Platform dashboard authenticates with HTTPS credentials only and doesn't show the
+webhook URL. For SSH key authentication or to read the webhook URL, use the API (`gitSshKey`,
+`gitWebhookUrl`).
 
 ---
 

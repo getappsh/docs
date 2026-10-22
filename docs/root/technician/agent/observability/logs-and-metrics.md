@@ -9,7 +9,7 @@ sidebar_position: 2
 
 :::tip
 For the telemetry pipeline (agent, deployment and third-party logs and metrics stored in
-Elasticsearch / VictoriaMetrics and streamed live to GetApp Pro), see
+Elasticsearch / VictoriaMetrics and streamed live to GetApp Platform), see
 [Telemetry — Agent Logs and Metrics](./telemetry).
 :::
 
