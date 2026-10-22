@@ -237,8 +237,7 @@ ConfigMaps allow you to define shared configuration that can be inherited by mul
 
 1. Create a project of type **CONFIG_MAP**. The GetApp Pro
    [New Project](../../../user-docs/developer/project/new-project.md) wizard offers only
-   Application and Infrastructure by default, so either use the legacy Dashboard
-   (**Projects** > **Create Project**, type **CONFIG_MAP**) or have an administrator add
+   Application and Infrastructure by default, so an administrator must first add
    **Config map** to the wizard with a
    [layout override](../../../user-docs/developer/project/new-project.md#customizing-the-form)
 2. Define your shared configuration groups
