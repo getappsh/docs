@@ -24,10 +24,11 @@ permission specifically.
 | `config` | A CONFIG project — see [ConfigMap](../../admin/catalog/configmap) |
 | `config_map` | A ConfigMap project |
 
-The [New Project](./new-project#software-type) wizard offers **Application** and
-**Infrastructure** as chips by default; the other types are set afterwards from a project's
-[Settings](./project-detail#settings) (or re-added to the create form by a deployment
-override).
+The [New Project](./new-project#software-type) wizard and a project's
+[Settings](./project-detail#settings) offer only **Application** and **Infrastructure**. The
+other types can be re-added to the create form by a
+[deployment override](./new-project#customizing-the-form); the legacy Dashboard can also create
+`lib`, `bundle`, and `config_map` projects.
 
 ## What a project owns
 

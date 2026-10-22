@@ -10,7 +10,8 @@ sidebar_position: 3
 Create a new [project](./project-overview).
 
 **Permission level:** Developer portal access, plus the project-create permission (users
-without it don't see this entry at all)
+without it don't see this entry at all; opening the page by its URL shows *You don't have
+permission to create projects* and returns you to My Projects)
 
 ## Where it lives
 
@@ -20,10 +21,12 @@ without it don't see this entry at all)
 
 New Project is a wizard with a step rail down the left. Only **General** is required —
 **Members**, **Docs**, and **GitOps** are optional, and you can fill them in any order or skip
-them entirely. **Create Project** is available from any step, and you can revisit everything
-later from the project's [Settings](./project-detail#settings).
+them entirely. Every step has **Next**; on the last step (**GitOps**) it becomes
+**Create Project**. Click a step in the rail to jump straight to it, so you can go from General
+to the last step and create the project without visiting the optional ones. You can revisit
+everything later from the project's [Settings](./project-detail#settings).
 
-![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field "payments-service" with the auto-assigned Project ID below it, Application/Infrastructure software type chips with Application selected, and a Tags field](/img/manual/project/new-project-form.png)
+![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field with the auto-assigned Project ID line below it, Software Type chips Application (selected) and Infrastructure, a Categories picker, Summary (0/20), Tags, and Description (0/500), with Cancel, Back, and Next in the footer](/img/manual/project/new-project-form.png)
 
 | Step | Required? | What it's for |
 |---|---|---|
@@ -88,7 +91,9 @@ no match. The people you add are staged here and invited the moment the project 
 ## Docs
 
 Write documentation that lives with the project. Add one or more docs, each a **title** and a
-**Markdown** body. Like members, docs are staged here and created once the project exists.
+**Markdown** body. Like members, docs are staged here and created once the project exists. A
+doc left with neither a title nor a body is skipped; one with a body but no title is saved as
+*Untitled doc*.
 
 ## GitOps
 
@@ -105,9 +110,13 @@ authored by hand. Leave the clone URL empty to skip GitOps entirely.
 
 ## After creating
 
-Create Project is reachable from any step once General is valid. On success you land on the new
-project's [Releases tab](./project-detail#releases), ready to publish its first
-[release](../release/release-overview).
+**Create Project** is on the last step; reach it with **Next** or by clicking it in the rail.
+On success you land on the new project's [Releases tab](./project-detail#releases), ready to
+publish its first [release](../release/release-overview).
+
+If a General field is invalid when you click **Create Project**, the wizard jumps back to
+**General** to show the error. If the name is already taken, the **Project name** field shows
+*That name is already in use — project names must be unique.*
 
 Members and docs are applied as a best-effort follow-up: if one can't be saved, the project is
 still created and you get a warning rather than a failure — add the missing member or doc later
@@ -115,10 +124,11 @@ from [Project Detail](./project-detail).
 
 ## Customizing the form
 
-The fields, their order, and which categories appear as chips are driven by a per-deployment
-layout. An administrator can tailor the create-project form for an environment — relabel
-fields, reorder them, or re-add the other categories — without changing the application. This
-is an optional deployment-level override; out of the box you get the form described above.
+The fields, their order, and which software types appear as chips are driven by a
+per-deployment layout. An administrator can tailor the create-project form for an environment —
+relabel fields, reorder them, or re-add the other software types (such as Library or Config
+map) — without changing the application. This is an optional deployment-level override; out of
+the box you get the form described above.
 
 ### Required or optional fields
 

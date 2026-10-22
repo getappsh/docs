@@ -27,13 +27,40 @@ Both modes follow the same flow:
 
 ---
 
-## Configuring GitOps in the Dashboard
+## Configuring GitOps in GetApp Pro
+
+### New project
+
+GitOps is the optional **GitOps** step of the
+[New Project](../../../user-docs/developer/project/new-project.md#gitops) wizard. Leave the
+clone URL empty to skip it.
+
+### Existing project
+
+Open the project's **Settings** tab, fill in the **GitOps** card, and click **Save Git settings**.
+
+### Available fields
+
+| Field | Description |
+|---|---|
+| **Git clone URL** | HTTPS or SSH URL of the repository to clone |
+| **Branch** | Branch to clone. Defaults to the repository's default branch if left empty. |
+| **Clone interval (min)** | How often GetApp polls the repository. Defaults to 60. |
+| **HTTPS username** | Username for a private repository |
+| **HTTPS password / token** | Password or personal access token. On an existing project, leave blank to keep the stored one. |
+| **.getapp file path** | Path to the `.getapp` file within the repository. Defaults to `.getapp` in the repository root. |
+
+GetApp Pro authenticates with HTTPS credentials only and doesn't show the webhook URL. For SSH
+key authentication or to read the webhook URL, use the legacy Dashboard (below) or the API
+(`gitSshKey`, `gitWebhookUrl`).
+
+## Configuring GitOps in the legacy Dashboard
 
 GitOps settings are available under **Advanced Settings → GitOps** when creating or editing a project.
 
 ### New project
 
-When creating a project, fill in the GitOps fields are display under the advanced settings section:
+When creating a project, fill in the GitOps fields under the Advanced Settings section:
 
 ![GitOps settings panel — create state](/img/gitops_settings.png)
 
