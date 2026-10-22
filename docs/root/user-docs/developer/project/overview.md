@@ -27,8 +27,7 @@ permission specifically.
 The [New Project](./new-project#software-type) wizard and a project's
 [Settings](./project-detail#settings) offer only **Application** and **Infrastructure**. The
 other types can be re-added to the create form by a
-[deployment override](./new-project#customizing-the-form); the legacy Dashboard can also create
-`lib`, `bundle`, and `config_map` projects.
+[deployment override](./new-project#customizing-the-form).
 
 ## What a project owns
 

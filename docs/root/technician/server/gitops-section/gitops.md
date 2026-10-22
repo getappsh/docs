@@ -27,7 +27,7 @@ Both modes follow the same flow:
 
 ---
 
-## Configuring GitOps in GetApp Pro
+## Configuring GitOps in the Dashboard
 
 ### New project
 
@@ -50,36 +50,9 @@ Open the project's **Settings** tab, fill in the **GitOps** card, and click **Sa
 | **HTTPS password / token** | Password or personal access token. On an existing project, leave blank to keep the stored one. |
 | **.getapp file path** | Path to the `.getapp` file within the repository. Defaults to `.getapp` in the repository root. |
 
-GetApp Pro authenticates with HTTPS credentials only and doesn't show the webhook URL. For SSH
-key authentication or to read the webhook URL, use the legacy Dashboard (below) or the API
-(`gitSshKey`, `gitWebhookUrl`).
-
-## Configuring GitOps in the legacy Dashboard
-
-GitOps settings are available under **Advanced Settings → GitOps** when creating or editing a project.
-
-### New project
-
-When creating a project, fill in the GitOps fields under the Advanced Settings section:
-
-![GitOps settings panel — create state](/img/gitops_settings.png)
-
-### Existing project
-
-When a project with a Git source is opened, a **CURRENT GIT CONFIGURATION** summary appears at the top of the panel showing whether an SSH Key and HTTPS Credentials are configured, and the generated **Webhook URL**:
-
-![GitOps settings panel — configured state with current git configuration](/img/gitops_settings_configured.png)
-
-### Available fields
-
-| Field | Description |
-|---|---|
-| **Git Repository URL** | HTTPS or SSH URL of the repository to clone (e.g. `git@github.com:my-org/my-project.git`) |
-| **Authentication Method** | **SSH Key** or **HTTPS Credentials** |
-| **SSH Private Key (Base64)** | Base64-encoded SSH private key. Leave blank to keep the existing key unchanged. |
-| **Branch** | Branch to clone. Defaults to the repository's default branch if left empty. |
-| **Clone Interval (minutes)** | How often GetApp polls the repository. Defaults to 60. Set to 0 to disable periodic sync. |
-| **.getapp File Path** | Path to the `.getapp` file within the repository. Defaults to `.getapp` in the repository root. |
+The GetApp Platform dashboard authenticates with HTTPS credentials only and doesn't show the
+webhook URL. For SSH key authentication or to read the webhook URL, use the API (`gitSshKey`,
+`gitWebhookUrl`).
 
 ---
 

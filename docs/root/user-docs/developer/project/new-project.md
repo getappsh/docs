@@ -144,7 +144,7 @@ A required field is marked with **\*** and the project can't be created until it
 The same rule applies on the project's [Settings](./project-detail#settings) tab, so a required
 field can't be emptied there later.
 
-The override is the file `public/config/project-form.layout.json` in the GetApp Pro
+The override is the file `public/config/project-form.layout.json` in the GetApp Platform
 deployment. It is a sparse patch matched by field key, for example:
 
 ```json
