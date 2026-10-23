@@ -25,9 +25,10 @@ the only differences are in the type and its association fields.
 
 ## What you can do
 
-- Build the condition exactly as for a policy, except **version-typed fields
-  (`release.version`, `installed.version`) are excluded** — a restriction can't be
-  version-scoped, only device-scoped
+- Build the condition exactly as for a policy — including
+  [Installed Version](./rules-overview#installed-version), e.g. restrict devices that have
+  `legacy-driver` older than `2.0.0` installed, or devices where `my-runtime` **Is Not
+  Installed**
 - Associate the restriction with any combination of:
   - **Device types** — search and multi-select
   - **OS types** — search and multi-select
