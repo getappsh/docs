@@ -8,6 +8,37 @@ Release notes for GetApp Server, Agent, and Agent UI.
 
 ---
 
+## v1.6.2
+
+### AppStore
+- Agent UI for the AppStore
+- Notification banners
+- AppStore improvements
+
+### Dashboard
+- Orchestrator builder fix
+- Device type entry improvements and latest version
+- Fix duplicate release
+- Configuration Catalog
+- Improved new project form
+- Monitor and clipboard widgets in the workspace
+- Access the dashboard without the Keycloak UI
+- Fix platform name
+- Pagination fix for platforms, catalog, and users
+- Dashboard search fix
+- Platform sort and filter improvements
+
+### Authentication
+- User groups
+
+### Agent
+- Fix OpenSSL support
+
+### Upload
+- Fix S3 support
+
+---
+
 ## v1.6
 
 ### Platform
