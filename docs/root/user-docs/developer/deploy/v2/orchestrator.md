@@ -90,6 +90,11 @@ its artifacts present), and must itself be a **Deploy V2** component (carry its 
 `install.yaml`). V2 releases can only depend on V2 releases. The nested deploy is bounded by
 the task's `ExecutionTimeoutMin`, and its cancellation is linked to the parent.
 
+The server checks the same rules before devices ever see the release: it refuses to save a
+dependency list that would create a cycle, and refuses to publish a release whose `install.yaml`
+deploys a release that isn't a registered dependency (see
+[Errors when saving or publishing](./deploy-v2-troubleshooting#errors-when-saving-or-publishing-a-release)).
+
 ## The dependency tree
 
 Dependencies form a **tree** the engine walks depth-first and validates entirely up front:
@@ -106,7 +111,7 @@ flowchart TD
 
 | Guard | Behavior |
 |---|---|
-| **Cycle detection** | A release + action appearing as its own ancestor fails — across releases (A → B → A) and within one release (`configuration → restart → configuration`). |
+| **Cycle detection** | A release + action appearing as its own ancestor fails — across releases (A → B → A) and within one release (`configuration → restart → configuration`). Cycles between releases are already blocked by the server when dependencies are saved; the agent check is a safety net. |
 | **Depth limit** | The tree may not go deeper than `DEPLOY_MAX_DEPENDENCY_DEPTH` (env var, default `10`). |
 | **Idempotency / diamond de-dup** | A *once* action that already finished (`Done`) — e.g. `Base`'s `install` reached via both `Runtime` and `Plugin` above — is not re-run; the second visit short-circuits. A *repeatable* action runs on every visit. |
 | **One run per action** | The same release + action never runs twice at the same time; a second start is rejected while the first is running. |
