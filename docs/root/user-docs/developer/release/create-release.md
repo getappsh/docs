@@ -42,7 +42,18 @@ is still uploading.
 ## Step 3 — Dependencies
 
 Add other releases (any project, any version) this one depends on — an unordered list in the
-current release stage. Removing a dependency here doesn't affect the dependency's own release.
+current release stage. In a Deploy V2 release, dependencies are added and listed in the wizard's
+**Orchestrator** step.
+
+Before a dependency is added, the server checks it. It is refused, with the reason shown under
+the picker, when it would:
+
+- create a **dependency cycle** — for example this release → B → this release. The cycle is shown
+  as a chain of release chips, each linking to that release
+- point to **this release itself**, or to a release that doesn't exist
+
+Removing a dependency also removes every task that deploys it, and is saved when you move to the
+next step. It doesn't affect the dependency's own release.
 
 ![Release wizard — Dependencies step, with GetApp-Upload@1.4.65-main added and a project/version picker to add more](/img/manual/release/wizard-dependencies.png)
 
@@ -65,6 +76,22 @@ read-only — they still block matching devices regardless of what you set in th
 
 A read-only summary of every step, each with a quick **Edit** link back to it. **Publish**
 (gated on `publish-release`) flips the release's status to `released`.
+
+This step also shows the server's **publish checks** for the saved draft. Publishing is refused
+while any of them fails:
+
+| Check | Fails when |
+|---|---|
+| Dependency cycle | The release's dependencies lead back to it |
+| Dependencies released | A dependency is still a draft, in review, or archived |
+| `install.yaml` syntax and shape | The file isn't valid YAML, `Type` isn't `Deploy/V2`, `ReleaseId` is empty, or a task type is unknown (the line number is shown) |
+| Deploy targets | A `Deploy/v2` / `FleetDeploy/v2` task targets a release that isn't a registered dependency |
+| Artifacts | An `ExeFile` in `install.yaml` isn't an uploaded artifact of this release |
+
+An artifact used by `install.yaml` that isn't signed shows as a warning only.
+
+The same checks run when a release in review is promoted to `released` automatically (for
+example once its regulations are compliant) — if they fail, it stays in review.
 
 ![Release wizard — Review & Publish step, summarizing Basics, Components, Dependencies, and Policies each with an Edit link](/img/manual/release/wizard-review.png)
 

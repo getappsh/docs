@@ -129,7 +129,7 @@ What the upload service does with each section:
 
 - **`dockerImages`** — registered synchronously as artifacts of type `DOCKER_IMAGE`. The release won't see them after creation if this step fails for an individual image (the import logs and continues).
 - **`artifacts`** — file artifacts are queued for **background download** by URL. The release becomes available immediately as a `DRAFT`; artifacts trickle in (with SHA-256 verification) and any that fail produce `ArtifactWarningDto` entries.
-- **`dependencies`** — looked up against the catalog by `catalogId` and linked to the release.
+- **`dependencies`** — looked up against the catalog by `catalogId` and linked to the release. The import is rejected (`422 RELEASE.validationFailed`) if a dependency doesn't exist or is listed twice.
 - **`status`** is informational; the import always creates the release in `DRAFT` regardless.
 
 The `metadata` object you supply is preserved on the release, with `metadata.gitSync = true` injected automatically so downstream consumers can tell GitOps imports apart from manual ones.
