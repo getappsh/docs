@@ -3,8 +3,8 @@
 FROM node:lts AS base
 ## Disable colour output from yarn to make logs easier to read.
 ENV FORCE_COLOR=0
-## Enable corepack.
-RUN corepack enable
+## Enable corepack (no longer bundled with Node 25+).
+RUN npm install -g corepack && corepack enable
 ## Set the working directory to `/opt/docusaurus`.
 WORKDIR /opt/docusaurus
 
