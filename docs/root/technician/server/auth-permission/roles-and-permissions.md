@@ -162,10 +162,11 @@ The system comes with five composite roles that cover most use cases, ordered fr
 **What they can do**:
 - ✅ Everything a viewer can do
 - ✅ View the catalog, releases, and artifacts
+- ✅ Download artifacts
 - ✅ View SBOM scan results
 - ❌ **Cannot** create, update, or delete anything
 
-**Use case**: Give this role to technicians who need to browse the catalog and inspect releases and artifacts.
+**Use case**: Give this role to technicians who need to browse the catalog, inspect releases and artifacts, and download artifacts.
 
 ### 4. Contributor
 

@@ -51,7 +51,7 @@ Composite roles bundle multiple individual roles together for easier management.
 |------|-------------|----------------|
 | `user` | End user - can access the appstore and add a device | 1 role |
 | `viewer` | Read-only **platform** monitoring: dashboard, activities, logs, metrics, and configuration | 8 roles |
-| `tech` | Everything `viewer` can see **plus** the **catalog** (offerings/appstore, releases, artifacts, SBOM scans) — still read-only | 14 roles |
+| `tech` | Everything `viewer` can see **plus** the **catalog** (offerings/appstore, releases, artifacts, SBOM scans) and artifact downloads — otherwise read-only | 15 roles |
 | `contributor` | Can contribute to projects - create releases, upload artifacts, manage projects, and define policies | 34 roles |
 | `system-administrator` | Can deploy applications, manage devices, configure the system, and manage all policies and restrictions | 44 roles |
 
