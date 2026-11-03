@@ -16,9 +16,10 @@ page in this section.
 ## Artifact
 
 One or more files attached to the release — an installer, a binary, a docker image, an rpm/deb
-package, a data file. Exactly one can be flagged as the **install** artifact: the thing that
-actually runs. See [Attach an Artifact](./attach-artifact) for pulling one in from an existing
-source instead of uploading fresh bytes.
+package, a data file. For [Deploy V1](../deploy/v1/deploy-v1-overview) agents, one of them is
+chosen as the **installer**: the thing that actually runs. See
+[Attach an Artifact](./attach-artifact) for pulling one in from an existing source instead of
+uploading fresh bytes.
 
 ## Manifest
 
@@ -32,10 +33,10 @@ an ordered list of **tasks**. Each task carries:
 - Fields that can reference the release's own **data and metadata** at run time instead of a
   fixed value (e.g. a timeout sourced from `Release.metadata.timeoutInstallation`)
 
-`install.yaml` is a reserved name — the wizard blocks uploading a file with it directly. The
-concepts above (tasks, actions, orchestrated dependents, metadata templating) are real and
-already how Deploy V2 works; the manifest is composed server-side, not hand-edited through the
-dashboard today.
+`install.yaml` is a reserved name — the wizard blocks uploading a file with it directly. You
+build the plan in the wizard's [Orchestrator (V2)](./create-release#step-4--orchestrator-v2)
+step, and the wizard writes `install.yaml` from it (you can also edit the YAML there). A release
+with an empty plan has no `install.yaml` and installs with Deploy V1 only.
 
 ## Lifecycle
 

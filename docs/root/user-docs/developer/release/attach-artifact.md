@@ -14,7 +14,7 @@ bytes.
 
 ## Where it lives
 
-[Create a Release](./create-release) → Components step → **Attach from source**.
+[Create a Release](./create-release) → File Upload step → **Attach from source**.
 
 ## Choose a source
 
@@ -42,9 +42,10 @@ all to the release.
 
 ![Attach from source — Review step, showing the one selected file ready to Attach](/img/manual/release/attach-review.png)
 
-:::note Not install-bound by default
-Attached artifacts arrive without the install flag — go back to the Components list afterward
-to mark whichever one is the actual installer.
+:::note Not an installer by itself
+An attached artifact is only delivered. To make it run, pick it in the
+[Install (V1)](./create-release#step-3--install-v1) step, or use it in a task in the
+[Orchestrator (V2)](./create-release#step-4--orchestrator-v2) step.
 :::
 
 ## See also

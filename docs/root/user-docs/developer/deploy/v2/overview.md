@@ -17,7 +17,9 @@ validates it end-to-end, and executes the tasks one by one.
 :::info When does it activate?
 Deploy V2 turns on **automatically** the moment a delivered release contains an `install.yaml`
 in its artifacts directory. Releases without one keep using the classic
-([V1](../v1/deploy-v1-overview)) deploy path, unchanged.
+([V1](../v1/deploy-v1-overview)) deploy path, unchanged. In the release wizard, the
+[Orchestrator (V2)](../../release/create-release#step-4--orchestrator-v2) step writes
+`install.yaml` for you; leaving its plan empty ships a V1-only release.
 :::
 
 ## What it is
