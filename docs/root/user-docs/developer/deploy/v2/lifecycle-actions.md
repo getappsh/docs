@@ -83,6 +83,35 @@ Every action runs in one of two modes:
 
 Set `Repeatable: true` / `false` on an action to override its default.
 
+For example, this manifest makes `restart` a **once** action even though it is repeatable by
+default:
+
+```yaml
+ReleaseId: ID.X@1.0.0
+Type: Deploy/V2
+Actions:
+  Install:
+    Tasks:
+      - Type: Execute/v2
+        DeployType: MSI
+        ExeFile: a.msi
+  Uninstall:
+    Tasks:
+      - Type: Execute/v2
+        DeployType: MSI_Uninstall
+        Target: "{ProductCode}"
+  restart:
+    Repeatable: false
+    Tasks:
+      - Type: Execute/v2
+        DeployType: Script
+        ExeFile: restart.ps1
+```
+
+Here, `Install` and `Uninstall` use their default once mode. `restart` also preserves progress
+and skips a completed run because of its explicit override. Set `Repeatable: true` instead to
+start fresh on every invocation.
+
 A once action becomes runnable again when a later **state-changing** action finishes after it:
 `install` → `uninstall` → `install` runs the install again.
 
