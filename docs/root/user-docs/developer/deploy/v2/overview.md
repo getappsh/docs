@@ -120,7 +120,7 @@ See [Orchestrator](./deploy-v2-orchestrator#roadmap) for detail.
 | Placeholder sources | `Device`, `Release` (metadata via `Release.metadata.*`), `Config` / `ConfigJson` / `ConfigPath` (synced config groups), `DeviceConfig` (agent settings), `Env` |
 | Action API | `POST/GET /api/v2/deploy/action/{catalog_id}/{action}`, `POST …/{action}/pause`, `GET /api/v2/deploy/{catalog_id}/actions` |
 | Default launch timeout | `60` s (or `Release.metadata.timeoutLaunch`) |
-| Default execution timeout | `15` min (or `Release.metadata.timeoutInstallation`); a parent's bounds its whole subtree |
+| Default execution timeout | `15` min (or `Release.metadata.timeoutInstallation`) per handler or delegated local action; a delegated-action deadline includes its task tree; `Group/v2` adds no deadline |
 | Max dependency depth | `DEPLOY_MAX_DEPENDENCY_DEPTH` (default `10`) |
 | Deploy log | `<logs_dir>/deployments/<catalog_id>.log` (UTF-16LE) |
 | Status document | `message_log` — JSON `{ total, completed, skipped, failed, cancelled, current, messages, advisories }` |

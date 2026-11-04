@@ -32,8 +32,8 @@ is how you bind several related steps (and the check or cleanup that covers them
 unit that succeeds or fails together.
 
 Use `Type: Group/v2` when you want a container that runs **nothing itself** — it installs no
-file, it just groups its children under one node (one rolled-up status, one subtree timeout,
-its own share of the progress bar). A `Group` must have a non-empty `Tasks` list.
+file, it just groups its children under one node (one rolled-up status and its own share of
+the progress bar). A `Group` must have a non-empty `Tasks` list.
 
 ```yaml
 Tasks:
@@ -50,9 +50,14 @@ Tasks:
 
 Children are addressed by a **chain path** — `1` is the second root task, `1.0` its first
 child, `1.0.2` the third grandchild — and that path appears in validation errors and the
-status trail so you always know *where* in the tree something happened. A parent's
-`ExecutionTimeoutMin` bounds its **whole subtree**: if the group runs past it, the engine stops
-the running children and fails the group.
+status trail so you always know *where* in the tree something happened.
+
+A `Group` has no execution timeout of its own: `ExecutionTimeoutMin` on a `Group` is ignored.
+For an `Execute` parent, the timeout bounds its own handler: if that handler times out, the
+parent fails and its children do not start. After the handler succeeds, children use their
+own timeout settings, not the parent's remaining time. A `Deploy/v2` task is different: its
+timeout bounds the entire delegated action, including that action's task tree, and signals
+cancellation when it expires. See [Dependencies on other releases](#dependencies-on-other-releases).
 
 An `Execute` task can also bind children directly (not only a `Group`): it runs its own
 install first, then its children — so a `Verification`/`Revert` child can target the parent
@@ -75,6 +80,7 @@ Actions:
       - Type: Deploy/v2               # ← dependency: install this release first
         ReleaseId: ID.Runtime@1.1.0
         Action: install
+        ExecutionTimeoutMin: 5
       - Type: Execute/v2
         DeployType: MSI
         ExeFile: main-app.msi         # ← then install the main app
@@ -88,7 +94,12 @@ component catalog — a manifest cannot pull in a release the server never regis
 dependency, whether direct or transitive), **delivered and ready** (delivery `Done` with all
 its artifacts present), and must itself be a **Deploy V2** component (carry its own
 `install.yaml`). V2 releases can only depend on V2 releases. The nested deploy is bounded by
-the task's `ExecutionTimeoutMin`, and its cancellation is linked to the parent.
+the calling task's `ExecutionTimeoutMin`, and its cancellation is linked to the parent. In the
+example, the entire `ID.Runtime` install action, including its nested tasks, must complete
+within five minutes. If that deadline expires, the engine signals cancellation to the nested
+action and fails the calling task; longer timeouts on tasks inside that action do not extend
+the outer deadline. The same local-action deadline applies when a `FleetDeploy/v2` targets
+this agent; it is not a single timeout for the whole remote fleet rollout.
 
 ## The dependency tree
 

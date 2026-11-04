@@ -139,7 +139,7 @@ future way to source a component beyond uploading a file — see
 | `RetryCount` | retryable tasks | Maximum attempts before failing. |
 | `RetryBackoffSec` | retryable tasks | Delay between retries. |
 | `LaunchTimeoutSec` | Execute | Time to *launch* before failing. Literal or `{placeholder}`. Default `60`; falls back to `Release.metadata.timeoutLaunch`. |
-| `ExecutionTimeoutMin` | Execute + any parent/group | Time to *complete* before it's killed. Literal or `{placeholder}`. Default `15`; falls back to `Release.metadata.timeoutInstallation`. On a parent it bounds the **whole subtree**. |
+| `ExecutionTimeoutMin` | Execute, Verification, Revert, Deploy; FleetDeploy (local target) | Completion timeout for the handler or the entire delegated local action. Literal or `{placeholder}`. Default `15`; falls back to `Release.metadata.timeoutInstallation`. A handler timeout prevents its children from starting; a delegated-action timeout signals cancellation to its task tree. Ignored on `Group/v2`. See [Orchestrator](./deploy-v2-orchestrator#dependencies-on-other-releases). |
 | `Scope` | FleetDeploy | Which slice of the managed fleet to target — `Platform` (default), `Reactive`, or `All`. |
 | `CompletionPolicy` | FleetDeploy | How success/failure propagates across matched devices — `AllConnected` (default), `Partial`, or `AllReachable`. |
 
