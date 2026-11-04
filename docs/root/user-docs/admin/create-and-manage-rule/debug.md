@@ -7,8 +7,8 @@ sidebar_position: 5
 
 # Debug
 
-Test a rule before trusting it — see exactly which devices or releases it matches right now,
-without waiting for it to fire for real.
+Test a rule before trusting it — see exactly which devices it matches right now, without
+waiting for it to fire for real.
 
 **Permission level:** Admin
 
@@ -19,10 +19,6 @@ in its detail panel.
 
 ## What you see and can do
 
-What opens depends on the rule:
-
-### Device-scoped rules (restrictions, and most policies)
-
 - **Matching** count vs. **Total Evaluated**
 - A table of every matching device: name/ID, OS, platform, and its groups
 
@@ -31,15 +27,9 @@ What opens depends on the rule:
   **context** — the JSON payload the rule engine evaluated against, fetched on demand
 - Long lists are capped at 20 rows with a "+N more devices" note
 
-### Version-scoped policies (associated releases)
-
-A `release.version` / `installed.version` condition can't match *devices* — a release isn't a
-device — so these evaluate against each **associated release** instead:
-
-- **Applies to devices** — the same device-type/OS scope chips the policy would otherwise
-  target
-- **Matching releases** vs. **Total Evaluated**
-- A table of every associated release with a **Passes** / **Blocked** result per version
+[Installed Version](./rules-overview#installed-version) conditions are evaluated the same way:
+each device is checked against the projects its agent last reported as installed (the
+`installed.projects` part of the context).
 
 ## See also
 
