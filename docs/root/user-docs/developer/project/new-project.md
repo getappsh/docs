@@ -24,7 +24,9 @@ New Project is a wizard with a step rail down the left. Only **General** is requ
 them entirely. Every step has **Next**; on the last step (**GitOps**) it becomes
 **Create Project**. Click a step in the rail to jump straight to it, so you can go from General
 to the last step and create the project without visiting the optional ones. You can revisit
-everything later from the project's [Settings](./project-detail#settings).
+everything later from the project's [Settings](./project-detail#settings). A step you don't have
+the role for (for example **Members**, which needs `update-project`) is greyed out, and **Next**
+and **Back** skip it.
 
 ![New Project wizard — a left step rail with General (required) plus Members, Docs, and GitOps (optional), showing the General step: a Project name field with the auto-assigned Project ID line below it, Software Type chips Application (selected) and Infrastructure, a Categories picker, Summary (0/20), Tags, and Description (0/500), with Cancel, Back, and Next in the footer](/img/manual/project/new-project-form.png)
 

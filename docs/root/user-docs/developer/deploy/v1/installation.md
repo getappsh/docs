@@ -12,8 +12,8 @@ explicitly, so the agent works it out from what's there.
 
 ## Picking the artifact
 
-1. **First pass** — look for an artifact flagged `is_executable` (the same **install** flag you
-   set in [Components](../../release/create-release#step-2--components) when authoring the
+1. **First pass** — look for an artifact flagged `is_executable` (the **Installer file** you
+   pick in [Install (V1)](../../release/create-release#step-3--install-v1) when authoring the
    release). Route it by file extension: `.msi` → the MSI installer, `.rpm` → the RPM
    installer, anything else → run it as a script
 2. **Second pass** — if nothing was flagged, fall back to the same extension-based routing over

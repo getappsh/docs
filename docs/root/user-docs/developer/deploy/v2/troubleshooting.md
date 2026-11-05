@@ -34,6 +34,35 @@ Before shipping, check a manifest against the rules on [Tasks](./deploy-v2-tasks
 At runtime the agent enforces all of these; a failure appears in
 `<logs_dir>/deployments/<catalog_id>.log` with the failing stage or task index.
 
+## Errors when saving or publishing a release
+
+The server checks a release's dependencies when they are saved, and its dependencies and
+`install.yaml` when it is published. A failure returns `422` with `errorCode:
+"RELEASE.validationFailed"`, and `data` lists every problem — each with a `code`, a `message`, and
+either the cycle `path` or the `install.yaml` `line`.
+
+To run the same checks without saving anything (for example from CI), call
+`POST /api/v1/catalog/releases/project/{project}/version/{version}/validate` with
+`{ "scope": "dependencies" | "full", "dependencies"?: [...], "installYaml"?: "..." }`.
+It returns `200` with `{ "valid": true }`, or the same `422`. Nothing is saved, the release doesn't
+have to exist yet, and the caller needs `create-release` or `update-release`.
+
+| Code | Meaning | Fix |
+|---|---|---|
+| `CYCLIC_DEPENDENCY` | The dependencies lead back to this release; `path` shows the full cycle (e.g. `A@1.0.0 → B@2.1.0 → A@1.0.0`) | Remove one dependency on the path |
+| `SELF_DEPENDENCY` | The release lists itself as a dependency | Remove it |
+| `DUPLICATE_DEPENDENCY` | The same dependency is listed twice | Keep one |
+| `MISSING_DEPENDENCY` | A dependency id doesn't exist | Use an existing release's catalog id |
+| `DEPENDENCY_NOT_RELEASED` | Publish only: a dependency isn't `released` | Publish the dependency first |
+| `INVALID_YAML` | `install.yaml` isn't valid YAML | The reported `line` |
+| `INVALID_MANIFEST` | Wrong shape: `Type` isn't `Deploy/V2`, empty `ReleaseId`, `Actions` and `Tasks` together, unknown task `Type` or `DeployType` | See [Validating your manifest](#validating-your-manifest) |
+| `UNREGISTERED_DEPLOY_TARGET` | A `Deploy/v2` / `FleetDeploy/v2` task targets a release that isn't a registered dependency | Add it as a dependency, or fix the task's `ReleaseId` |
+| `MISSING_ARTIFACT` | An `ExeFile` isn't an artifact of the release, or isn't uploaded yet | Upload it, or fix the name |
+| `UNSIGNED_ARTIFACT` | Warning only: an artifact used by `install.yaml` has no signature | — |
+
+A release in review that fails these checks is not promoted to `released` automatically; it
+stays in review until the problem is fixed.
+
 ## Symptoms
 
 | Symptom | Likely cause | Where to look |
