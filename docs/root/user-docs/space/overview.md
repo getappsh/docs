@@ -17,6 +17,7 @@ own devices. Unlike Admin and Developer, it needs no special role: every user ge
 The portal switcher at the top of the sidebar — **Store**.
 
 - [Workspace](./workspace) — the Store portal's own landing tab
+- [Categories](./space-categories) — browse apps by category; manage categories with `manage-categories`
 - [Settings](./space-settings) — *coming soon*
 
 Three more pages are grouped here too — [Dashboard](./space-dashboard), [Users & Roles](./users-and-roles),

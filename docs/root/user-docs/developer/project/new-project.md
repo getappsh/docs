@@ -41,7 +41,7 @@ everything later from the project's [Settings](./project-detail#settings).
 |---|---|
 | **Project name** | One field that is both the project's identity and its display name. Unique across the deployment. No spaces, not only digits, no `@`, no length limit. Saved exactly as typed — not lowercased or hyphenated for you. The **Project ID** shown just below it mirrors what you type and is assigned automatically — it's there for reference only, not a separate field to fill in |
 | **Software Type** | The project type, picked as chips — see below |
-| **Categories** | The group the agent shows the project under (its distribution label). Pick an existing category from the dropdown or type a new one — see below |
+| **Categories** | The group the agent shows the project under (its distribution label). Pick an existing category from the dropdown — see below |
 | **Summary** | A short one-line summary of the project, for example `Offline field maps`. Up to **20** characters — the same limit as a single tag. Optional |
 | **Tags** | Up to three short tags — see below. Shown under the project name |
 | **Description** | A longer description of the project, max 500 characters |
@@ -57,14 +57,17 @@ The software type is chosen from chips. By default the wizard offers the two you
 ### Categories
 
 Projects in the same category are grouped together in the agent. Open the dropdown to see the
-categories that already exist, and type to filter them; pick one to join that group. To create a
-new category, just type its name. The dropdown shows **Create “name”**, and the category is
-created when the project is saved. Categories are optional.
+categories that already exist, and type to filter them; pick one to join that group. Categories
+are optional.
+
+You can only pick a category that already exists. New categories are created, described, and
+filled with projects in [Space › Categories](../../space/space-categories) by users with the
+`manage-categories` role. Text that doesn't match an existing category is cleared when you leave
+the field, and the API rejects an unknown category with `400`.
 
 Only categories the project can use are suggested. A category can be tied to **user** apps or
 **technician** apps; a new Application project is a **user** app, so categories tied to
-technician apps are not offered. Categories with no such tie, and every category you create here,
-fit any project.
+technician apps are not offered. Categories with no such tie fit any project.
 
 In the API and the layout override this field is `label` (the distribution label).
 

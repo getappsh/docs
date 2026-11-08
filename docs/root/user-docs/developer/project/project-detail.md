@@ -64,7 +64,7 @@ The same fields as the [New Project](./new-project#general) wizard:
 |---|---|
 | **Project name** | Also the project ID, used in URLs and by devices. Same rules as in the wizard: no spaces, not only digits, no `@`. Renaming also updates the display name |
 | **Software Type** | **Application** or **Infrastructure** — see [Software Type](./new-project#software-type). A project created with another type keeps it until you change it |
-| **Categories** | Pick an existing category or type a new one — see [Categories](./new-project#categories) |
+| **Categories** | Pick an existing category — see [Categories](./new-project#categories) |
 | **Summary** | A short one-line summary, up to 20 characters — see [General](./new-project#general) |
 | **Tags** | Up to three tags, edited as chips — see [Tags](./new-project#tags). Shown under the project name at the top of this page |
 | **Description** | A longer description, max 500 characters |
