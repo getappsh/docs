@@ -63,7 +63,7 @@ The device requests to be **fully managed** by the parent. The parent must expli
 
 #### Reactive Mode (Lightweight)
 
-The device subscribes to the parent's command channel **without needing approval*cts immediately but:
+The device subscribes to the parent's command channel **without needing approval* immediately but:
 
 - The device keeps its own identity and platform
 - The parent can send commands, but the device isn't grouped into the fleet platform
