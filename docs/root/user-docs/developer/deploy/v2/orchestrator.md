@@ -101,6 +101,12 @@ action and fails the calling task; longer timeouts on tasks inside that action d
 the outer deadline. The same local-action deadline applies when a `FleetDeploy/v2` targets
 this agent; it is not a single timeout for the whole remote fleet rollout.
 
+:::caution Cancellation is not a confirmed stop
+A local nested-action timeout signals cancellation and ends the wait for that action. It does
+not guarantee that every running installer has stopped or that every nested task has been
+persisted as `Cancelled`.
+:::
+
 ## The dependency tree
 
 Dependencies form a **tree** the engine walks depth-first and validates entirely up front:
@@ -215,9 +221,19 @@ acted on:
 **Reachability** means the child currently holds an active managed connection to this agent. A
 device that matches the rule but is offline is *deferred* under `AllConnected`/`Partial`; under
 `AllReachable` an unreachable match **fails the task up front**, before any device is driven. A
-device that goes offline **mid-rollout** is bounded by the same delivery and execution timeouts a
-local deploy uses — reconnect within the window and the rollout resumes, otherwise that device
-fails.
+device that goes offline **mid-rollout** is bounded by the remote stage waits: reconnect within
+the window and the rollout can continue; otherwise the parent reports that target as failed.
+
+### Timeout and stop behavior
+
+Remote targets use per-stage waits, not the `FleetDeploy/v2` task's `ExecutionTimeoutMin` as one
+fleet-wide deadline. A stage timeout is reported as a target failure; the timed-out target is
+not automatically sent a stop command by that timeout path and may still be running.
+
+Under `AllConnected` or `AllReachable`, a target failure sends best-effort stop commands to the
+other still-running remote targets. Under `Partial`, the other targets continue. Stop commands
+request `DeployPause` or `DeliveryStop`; a request alone does not confirm that an offline child
+or an external installer has stopped.
 
 ## Roadmap
 
@@ -239,7 +255,6 @@ roadmap — see [Action](./deploy-v2-action) and [Tasks](./deploy-v2-tasks) for 
 | Reserved | Kind | For |
 |---|---|---|
 | `Config/v2`, `Map/v2` | Task type | Config-group and map/data delivery |
-| `Up/v2`, `Down/v2`, `Restart/v2` | Task type | Service/stack lifecycle control (bring up, tear down, restart a running deploy — e.g. a `DockerCompose` stack) |
 | `DockerCompose`, `Helm` | Deploy method | Compose-stack and Helm-release installs |
 | `Command` | Deploy method | A raw command line, alongside `API`, without a delivered script file |
 

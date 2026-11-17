@@ -1,0 +1,107 @@
+#!/bin/sh
+# Pre-push hook: scans commits about to be pushed for leaked secrets using
+# gitleaks (run via Docker, so no local gitleaks/Node/Python install is needed).
+#
+# This hook is NOT installed automatically (Git never auto-runs hooks that
+# ship inside a tracked folder - that would be a supply-chain risk). Each
+# contributor needs to point Git at this folder once per clone:
+#
+#   git config core.hooksPath .githooks
+#
+# It is generic/stack-agnostic: works the same in Node, non-Node, or docs-only
+# repos, since the only dependency is Docker (already used across this org).
+#
+# Fail-closed: the push is blocked whenever the scan does not pass - on
+# findings, and also if Docker is missing/stopped or gitleaks cannot run.
+#
+# NOTE: this is a convenience layer, not real enforcement - it can be bypassed
+# with `git push --no-verify`, by not running the `git config` line above, or
+# by removing/editing this file locally. The non-bypassable backstop is the
+# `secret-scan` GitHub Actions workflow + a required branch-protection check.
+
+GITLEAKS_IMAGE="zricethezav/gitleaks:v8.30.1" # bump deliberately; avoid :latest (see .githooks/README.md)
+ZERO_SHA="0000000000000000000000000000000000000000"
+
+# Buffer stdin (the "local_ref local_sha remote_ref remote_sha" lines Git
+# feeds a pre-push hook) to a file so it can be replayed into the legacy
+# hook below and then into our own read loop, without losing it to a pipe.
+stdin_file="$(mktemp)"
+trap 'rm -f "$stdin_file"' EXIT
+cat > "$stdin_file"
+
+# Redirecting core.hooksPath to .githooks makes Git stop looking at
+# .git/hooks/ entirely. If a hook was already installed there directly
+# (by another tool, or a previous manual setup), chain to it first - run it
+# as-is, don't reimplement it - and abort immediately if it fails, exactly
+# like Git would if it had invoked that hook itself.
+# Use --git-common-dir, not --git-path hooks: the latter honors
+# core.hooksPath and would resolve back to this script (infinite recursion).
+legacy_hook="$(git rev-parse --git-common-dir)/hooks/pre-push"
+if [ -f "$legacy_hook" ] && [ -x "$legacy_hook" ] && ! [ "$legacy_hook" -ef "$0" ]; then
+  echo "pre-push: chaining to existing local hook: $legacy_hook"
+  if ! "$legacy_hook" "$@" < "$stdin_file"; then
+    echo "pre-push: existing local hook failed - push aborted." >&2
+    exit 1
+  fi
+fi
+
+# Resolve the repo root as a Docker-friendly path (handles Git Bash/MSYS on
+# Windows, where a bare /path gets silently rewritten by path conversion).
+if command -v cygpath >/dev/null 2>&1; then
+  REPO_DIR="$(cygpath -w "$(git rev-parse --show-toplevel)")"
+else
+  REPO_DIR="$(git rev-parse --show-toplevel)"
+fi
+
+if ! command -v docker >/dev/null 2>&1; then
+  echo "pre-push: docker is not installed (or not on PATH) - push aborted." >&2
+  echo "          The secret scan runs gitleaks in Docker; install Docker and push again." >&2
+  exit 1
+fi
+
+# `command -v` only proves the CLI is installed; Docker Desktop may be stopped.
+if ! docker_err="$(docker info 2>&1 >/dev/null)"; then
+  echo "pre-push: cannot reach the Docker daemon - push aborted." >&2
+  echo "          Start Docker (e.g. Docker Desktop) and push again." >&2
+  echo "          docker said: $(printf '%s\n' "$docker_err" | head -n 3)" >&2
+  exit 1
+fi
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "$ZERO_SHA" ] && continue  # branch deletion, nothing to scan
+
+  # Scan only commits not already on any branch of this remote ($1 = remote
+  # name). Works for new branches (no full-history rescan) and force-pushes
+  # (no dependency on remote_sha existing locally). If $1 is a URL or nothing
+  # has been fetched yet, nothing is excluded and everything is scanned.
+  range="$local_sha --not --remotes=$1"
+
+  echo "pre-push: scanning $local_ref commits not yet on '$1' for secrets with gitleaks..."
+  # TODO: linked git worktrees are NOT scanned. There .git is a pointer file to
+  # a host path that doesn't exist inside the container, so gitleaks can't read
+  # the commits - yet it still exits 0, and the push goes through unscanned.
+  # Fix: mount `git rev-parse --git-common-dir` and scan that, and fail the push
+  # if gitleaks reports scanning 0 commits when non-merge commits with changes
+  # were expected.
+  MSYS_NO_PATHCONV=1 docker run --rm -v "$REPO_DIR:/repo" "$GITLEAKS_IMAGE" \
+    detect --source=/repo --log-opts="$range" --redact -v
+  rc=$?
+  # gitleaks exits 1 on findings; any other non-zero code means the scan
+  # itself could not run (docker error, image pull failure, bad args, ...).
+  # Either way the push is blocked - never push unscanned commits.
+  if [ $rc -eq 1 ]; then
+    echo "" >&2
+    echo "pre-push: gitleaks found potential secrets in $local_ref - push aborted." >&2
+    echo "          Fix the findings above, or if they are false positives, see" >&2
+    echo "          .githooks/README.md#ignoring-false-positives--known-secrets" >&2
+    exit 1
+  elif [ $rc -ne 0 ]; then
+    echo "" >&2
+    echo "pre-push: gitleaks scan could not run (exit code $rc) - push aborted." >&2
+    echo "          Commits were NOT scanned. Check the docker/gitleaks error above" >&2
+    echo "          (e.g. image $GITLEAKS_IMAGE could not be pulled - are you offline?)." >&2
+    exit 1
+  fi
+done < "$stdin_file"
+
+exit 0
