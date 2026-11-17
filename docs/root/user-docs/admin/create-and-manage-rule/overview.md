@@ -25,8 +25,8 @@ conditions apply across every project — not just one.
 They work together: a release only reaches a device when it satisfies whatever
 [policy](./policy) scopes it, and the target device doesn't violate any active
 [restriction](./restrictions). A [Push Policy](./push-policy) is just a policy with delivery
-turned on, and [Debug](./debug) lets you check either kind against real devices or releases
-before you trust it.
+turned on, and [Debug](./debug) lets you check either kind against real devices before you
+trust it.
 
 ## The rule engine
 
@@ -36,16 +36,42 @@ Every rule — policy or restriction — shares the same structure and condition
 Association (what it targets), and a Rule Expression (the conditions below).
 
 **Conditions:** nested AND/OR groups of Field / Operator / Value rows. Fields come from the
-server's rule-field list plus two built-in version fields (`release.version`,
-`installed.version`). Operators depend on the field's type:
+server's rule-field list plus the built-in **Installed Version** field (`installed.version`).
+Operators depend on the field's type:
 
 | Field type | Operators |
 |---|---|
 | Number | Equals, Not Equals, Greater/Less Than, Greater/Less Than or Equal |
-| String | Equals, Not Equals, Contains, Not Contains, Starts With, Ends With, Matches (regex) |
+| String | Equals, Not Equals, Contains, Not Contains, Starts With, Ends With, Matches (regex); under **More operators**: Version Equals/Not Equal, Version Greater/Less Than, Version Greater/Less Than or Equal |
 | Array | Contains, Not Contains, In, Not In |
-| Version | Version Equals/Not Equal, Version Greater/Less Than, Version Greater/Less Than or Equal |
+| Installed Version | Version Equals/Not Equal, Version Greater/Less Than, Version Greater/Less Than or Equal, Is Installed, Is Not Installed |
 | Any field | Existence — is set / is not set |
+
+Version operators compare semantic versions (`2.10.0` is newer than `2.9.0`). On a text field
+such as **Agent Version** the value is a version, e.g. `Agent Version` **<** `1.7.0`; a device
+that doesn't report that field never matches.
+
+### Installed Version
+
+An **Installed Version** condition checks what is already installed on the device, regardless
+of which releases the rule is attached to. Its value is a **project** — picked by its unique
+project name — and a **version**:
+
+- `Installed Version` — project `my-runtime` — **≥** `3.0.0` matches a device that has
+  `my-runtime` 3.0.0 or newer installed
+- Every installed version of that project on the device is checked; the condition matches
+  when **any** of them satisfies the operator
+- A device that doesn't have the project installed never matches a version operator
+- **Is Installed** / **Is Not Installed** take only the project and check whether any version
+  of it is installed. Combine them with OR, e.g. "`myapp` is not installed **OR** installed
+  `myapp` < `2.1.0`" to allow fresh installs and upgrades but not re-installs or downgrades
+
+Under the hood the condition is saved as
+`{ "field": "installed.version", "operator": "semver-gte", "value": { "projectName": "my-runtime", "version": "3.0.0" } }`,
+or `{ "field": "installed.version", "operator": "not-exists", "value": { "projectName": "my-runtime" } }`
+for Is Not Installed (`exists` for Is Installed).
+The server rejects the rule if the project name doesn't exist or the version isn't a valid
+semantic version.
 
 Each condition can also carry an optional **validation message** — free text explaining why
 that condition exists, surfaced wherever the blocking rule is shown (see
@@ -74,9 +100,9 @@ that condition exists, surfaced wherever the blocking rule is shown (see
 
 ![Rules table showing 6 real rules — Test, Test_5, mendentory push, Allow All Devices (Policy), amit-restriction and Is charching (Restriction)](/img/manual/rules/rules-table.png)
 
-- Clicking a row opens its detail panel: full type/target/description/status, any semver
-  conditions in plain English (e.g. `Release Version ≥ 2.0.0`), associated releases, and
-  device-type/OS chips
+- Clicking a row opens its detail panel: full type/target/description/status, any installed-
+  version conditions in plain English (e.g. `Installed my-runtime ≥ 3.0.0`), associated
+  releases, and device-type/OS chips
 
 ![Rule detail panel for a policy named "mendentory push" — Policy type, target release mendentory_push_test@0.0.2, Active, Push mode Yes, with Evaluate/Edit/Disable/Delete actions](/img/manual/rules/rule-detail.png)
 

@@ -34,14 +34,16 @@ inactive) works exactly like [Policy](./policy).
 
 **Auto-upgrade everyone below the latest release**
 - Type: **Policy**
-- Selected release: `MyApp @ 2.1.0`
-- Condition: `Release Version` `<` `2.1.0`
+- Selected release: `myapp @ 2.1.0`
+- Condition: `Installed Version` — project `myapp` — `<` `2.1.0`
 - Push to devices: **on**
 
-This is the push version of Policy's "Gate a release" example — instead of just recording who
-qualifies, turning the toggle on means MyApp 2.1.0 is delivered automatically wherever the
-condition holds, no manual [Multiple Software Delivery](../catalog/multiple-software-delivery)
-run required. Check [Debug](./debug) first to see who it would reach before switching it on.
+This is the push version of Policy's "Flag out-of-date installs" example — instead of just
+recording who qualifies, turning the toggle on means myapp 2.1.0 is delivered automatically
+to every device running an older myapp, no manual
+[Multiple Software Delivery](../catalog/multiple-software-delivery) run required. Devices that
+don't have myapp installed aren't touched. Check [Debug](./debug) first to see who it would
+reach before switching it on.
 
 ## See also
 
