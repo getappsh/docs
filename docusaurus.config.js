@@ -222,6 +222,7 @@ const config = {
             position: 'left',
             label: 'Agent',
           },
+          { to: '/products', label: 'Products', position: 'left' },
           { to: '/changelog', label: 'Changelog', position: 'left' },
           { type: 'search', position: 'left' },
           {

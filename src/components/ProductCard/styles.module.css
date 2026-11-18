@@ -1,0 +1,140 @@
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 14px;
+  padding: 1.25rem;
+  background: var(--ifm-background-color);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ifm-color-primary-lightest);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  color: var(--ifm-color-primary-darker);
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+}
+
+[data-theme='dark'] .icon {
+  color: var(--ifm-color-primary-lighter);
+}
+
+.category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.name {
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+}
+
+.tagline {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.description {
+  margin: 0 0 0.9rem;
+  font-size: 0.93rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.capabilities {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.capabilities li {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.capabilities li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--ifm-color-primary);
+}
+
+.footer {
+  margin-top: auto;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.audience {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.audiencePill {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  color: var(--ifm-color-emphasis-700);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--ifm-color-emphasis-200);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.link:hover svg {
+  transform: translateX(2px);
+}
+
+.link svg {
+  transition: transform 120ms ease;
+}
