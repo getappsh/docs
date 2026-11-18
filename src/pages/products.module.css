@@ -1,0 +1,186 @@
+.hero {
+  padding: 3.5rem 0 1.5rem;
+  background: radial-gradient(ellipse 70% 100% at 10% 0%, color-mix(in srgb, var(--ifm-color-primary) 10%, transparent), transparent);
+}
+
+.kicker {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 2.6rem;
+  line-height: 1.1;
+  margin: 0 0 0.75rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  max-width: 62ch;
+  color: var(--ifm-color-emphasis-700);
+  margin: 0;
+}
+
+@media (max-width: 996px) {
+  .title {
+    font-size: 2rem;
+  }
+}
+
+.toolbar {
+  position: sticky;
+  top: var(--ifm-navbar-height);
+  z-index: 2;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  background: var(--ifm-background-color);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  margin-bottom: 1.5rem;
+}
+
+.searchWrap {
+  position: relative;
+  max-width: 480px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ifm-color-emphasis-500);
+  pointer-events: none;
+}
+
+.search {
+  width: 100%;
+  padding: 0.6rem 0.8rem 0.6rem 2.4rem;
+  border-radius: 10px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+}
+
+.search:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.chip:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.chipActive {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+}
+
+[data-theme='dark'] .chipActive {
+  color: #0b1f19;
+}
+
+.chipCount {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.audienceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.audienceLabel {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.select {
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+}
+
+.resultCount {
+  margin-left: auto;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 400px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.bottomCta {
+  margin: 3rem 0 4rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.bottomCta h2 {
+  margin: 0 0 0.35rem;
+}
+
+.bottomCta p {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
