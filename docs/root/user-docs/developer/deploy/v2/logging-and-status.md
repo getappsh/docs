@@ -64,7 +64,7 @@ not a bare error string). Consumers parse it rather than reading raw text:
 | `completed` | Tasks in a terminal-complete state (`Done` or `Skipped`). |
 | `skipped` / `failed` / `cancelled` | Counts by state. |
 | `current` | The running task as a `task [<path>] (<label>)` reference, with its max time when known. The label is the task's `Name` when set. |
-| `messages` | One chain-pathed status line per reached task, in order. A verify/revert line names the task it acts on; a failed task's reason is on its own line. |
+| `messages` | One chain-pathed status line per reached task, in order. A verify/revert line names the step it acts on; a failed task's reason is on its own line. A task skipped by its rule (`OnRuleUnmet: Skip`) has one line with the reason — `… — skipped — rule not met (OnRuleUnmet: Skip): <details>` — and its children add no lines. |
 | `advisories` | Machine-actionable hints (see below). |
 
 ## Advisories

@@ -22,8 +22,9 @@ Before shipping, check a manifest against the rules on [Tasks](./deploy-v2-tasks
    `Revert/v2` has a removal method; each `Deploy/v2` / `FleetDeploy/v2` sets an `Action` that exists
    (in this manifest when it targets itself); each `FleetDeploy/v2` has a `Rule`; each `Group/v2` is
    non-empty; any `Rule` has at least one condition
-4. **Ordering** — every `Verification`/`Revert` has a target (a preceding `Execute` sibling or
-   an actionable parent); every rebooting task has a nested `Verification`
+4. **Ordering** — every `Verification`/`Revert` has a target (a preceding `Execute`, `Deploy`,
+   `FleetDeploy`, or `Group` sibling, or an actionable parent); every rebooting task has a nested
+   `Verification`
 5. **Artifacts** — every `ExeFile` is actually included in the release; every `Deploy/v2`
    target is a registered dependency, delivered (`Done` + artifacts on disk), and itself a V2
    component
@@ -56,8 +57,10 @@ At runtime the agent enforces all of these; a failure appears in
 | "specify either a top-level Tasks (legacy) or Actions (new), not both" / "duplicate action" | Both manifest forms used, or two keys for one action (`Install` and `install`) | Keep only `Actions`, with one key per action |
 | Starting a once action does nothing | It already finished `Done` | The action's status; run a state-changing action (e.g. `uninstall`) first, or mark it `Repeatable: true` |
 | Task fails with "Launch timeout" / "did not complete within …min" | Installer slow or stuck | `LaunchTimeoutSec` / `ExecutionTimeoutMin`; installer behavior |
-| Rule task fails on a device that "should" match | Rule condition/field mismatch | The task `Rule` and the device metadata in the log |
-| `Task[…]: a Verification/Revert must have a target` | A `Verification`/`Revert` has no preceding `Execute` sibling and a pure-`Group`/root parent | Add an `Execute` before it, or nest it under an actionable task |
+| Rule task fails on a device that "should" match | Rule condition/field mismatch | The task `Rule` and the device metadata in the log; if the step simply doesn't apply on some devices, set `OnRuleUnmet: Skip` |
+| A task shows `skipped — rule not met (OnRuleUnmet: Skip): …` | Its `Rule` did not match this device, so the task and its children were skipped on purpose | The details after the colon, the task `Rule`, and the device metadata |
+| Task fails with `Task[…].rule: evaluation error: …` even with `OnRuleUnmet: Skip` | The rule could not be evaluated — most often it reads a field **missing** from the device data (with a non-version operator such as `equals`) | Make sure the device reports the field, or use a version operator (`semver-*`), which treats a missing field as passing |
+| `Task[…]: Verification needs a preceding Execute/Deploy/FleetDeploy/Group sibling or an actionable parent` (or `Revert needs …`) | A `Verification`/`Revert` is first in its list, at the top level or directly inside a `Group` | Add a step before it, or nest it under an `Execute` |
 | `Task[…]: Group must have a non-empty tasks list` | An empty `Group/v2` | Give the group children, or remove it |
 | `Task[…]: a task with CausesReboot: true must have a nested Verification child` | A rebooting task with no nested `Verification` | Add a `Verification` child under the reboot task |
 | `Task[…]: SSE Verification requires a Message object` | An `SSE` verification with no `Message` | Add a `Message` object to match stream frames |
@@ -67,7 +70,8 @@ At runtime the agent enforces all of these; a failure appears in
 
 - Keep tasks **idempotent** (safe to re-run on resume)
 - Prefer **metadata-driven timeouts** over hard-coded numbers where installers vary
-- Scope tasks with **rules** instead of shipping the wrong artifact to the wrong device
+- Scope tasks with **rules** instead of shipping the wrong artifact to the wrong device; use
+  `OnRuleUnmet: Skip` for optional steps, and keep the default `Fail` for real requirements
 - Keep **dependency trees shallow**
 
 ## See also

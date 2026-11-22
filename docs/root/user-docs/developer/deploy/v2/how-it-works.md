@@ -36,7 +36,7 @@ pull in a dependency, or group several child tasks. A task carries its own:
 - `Type` (what kind of task) and `DeployType` (the method that runs it) — see [Action](./deploy-v2-action)
 - its input — an `ExeFile` (a delivered artifact) or a `Target` (an endpoint URL or removal
   handle)
-- optional `Rule` (whether this device qualifies)
+- optional `Rule` (whether this device qualifies) and `OnRuleUnmet` (fail or skip when it doesn't)
 - optional `Arguments` (with runtime placeholders)
 - optional `LaunchTimeoutSec` / `ExecutionTimeoutMin`
 - optionally its own nested `Tasks` — children it runs and waits for — see
@@ -58,7 +58,7 @@ stateDiagram-v2
     Pending --> Running: engine picks it up
     Running --> Done: success
     Running --> Failed: error / timeout / rule fail
-    Pending --> Skipped: revert not needed
+    Pending --> Skipped: revert not needed / rule not met (OnRuleUnmet: Skip)
     Pending --> Cancelled: deploy cancelled
     Done --> [*]
     Failed --> [*]
@@ -70,9 +70,9 @@ stateDiagram-v2
 | `Pending` | Not started yet. |
 | `Running` | Currently executing. |
 | `Done` | Completed successfully. |
-| `Failed` | Errored, timed out, or its rule was not satisfied. Fails the whole deploy. |
+| `Failed` | Errored, timed out, or its rule was not satisfied (default `OnRuleUnmet: Fail`). Fails the whole deploy. |
 | `Cancelled` | Skipped because the deploy was cancelled before it started. |
-| `Skipped` | A **terminal, successful** state: a `Revert` task whose cleanup was not needed (its target succeeded and verified). It counts as complete for progress and status. |
+| `Skipped` | A **terminal, successful** state: a `Revert` task whose cleanup was not needed (its target succeeded and verified), or a task whose `Rule` was not met with `OnRuleUnmet: Skip` — plus all its children. It counts as complete for progress and status. |
 
 :::note Fleet rollouts add per-device outcomes
 A [`FleetDeploy`](./deploy-v2-orchestrator#which-devices-are-acted-on) task also classifies each
@@ -81,11 +81,12 @@ status above.
 :::
 
 :::warning Installs are all-or-nothing
-An install step never silently "skips ahead". A rule mismatch, error, or timeout **fails** the
-task and the deploy — it does not move on. If a step should only apply to some devices,
-express that with a `Rule`: on non-matching devices the deploy fails loudly rather than
-half-installing. The only task that ends `Skipped` is a **`Revert`** whose cleanup was not
-required.
+An install step never silently "skips ahead". By default a rule mismatch, error, or timeout
+**fails** the task and the deploy — it does not move on. If a step should only apply to some
+devices, express that with a `Rule`: on non-matching devices the deploy fails loudly rather than
+half-installing. To skip a step that simply doesn't apply (e.g. "node is already installed"),
+opt in explicitly with `OnRuleUnmet: Skip` — the skip is logged and shown with its reason. See
+[Skipping a task by rule](./deploy-v2-tasks#skipping-a-task-by-rule).
 :::
 
 ## What happens for one Execute task
@@ -93,7 +94,8 @@ required.
 ```mermaid
 flowchart TD
     A[Task Running] --> B[Evaluate device Rule]
-    B -- fails --> Z[Fail task + deploy]
+    B -- not met, OnRuleUnmet: Skip --> S[Skip task + children,<br/>deploy continues]
+    B -- not met / evaluation error --> Z[Fail task + deploy]
     B -- passes --> C[Resolve Arguments placeholders]
     C -- error --> Z
     C --> D[Pick deployer for DeployType]
@@ -149,7 +151,7 @@ Understanding the rationale helps you predict behavior in new situations:
 | Design choice | Why |
 |---|---|
 | **Manifest-as-data** (recipe ships with the release) | One agent installs anything; releases evolve without agent releases. |
-| **Installs are all-or-nothing** | Deterministic, safe outcome — a mismatched device fails loudly instead of half-installing; the only planned skip is a revert that was not needed. |
+| **Installs are all-or-nothing** | Deterministic, safe outcome — a mismatched device fails loudly instead of half-installing; the only planned skips are a revert that was not needed and a step whose rule opts in with `OnRuleUnmet: Skip`. |
 | **Strictly ordered, parent-awaits-child** | Predictable, resumable, easy to reason about; a group finishes only when its children do. |
 | **Per-task state persisted** | Enables resume after a mid-install restart (critical for self-update). |
 | **Dependencies are themselves full V2 manifests** | Recursion reuses one engine — "a plan is a manifest of manifests". |

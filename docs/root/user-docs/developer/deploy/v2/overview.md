@@ -75,9 +75,9 @@ guardrails — without changing the agent.
 - **Grouped, nested tasks** — a task can bind a group of child tasks and only completes once
   they do, so related steps succeed or fail as one unit.
 - **Verify a step succeeded** — a verification task (HTTP, script, or event stream) gates a
-  group: the install is not accepted until the check passes.
-- **Undo on failure (revert)** — a revert task nested in a group cleans up the steps it covers
-  when they fail their check, so a failed group does not leave a half-applied install behind.
+  group or a whole action: the install is not accepted until the check passes.
+- **Undo on failure (revert)** — a revert task after the steps it covers cleans them up when they
+  fail their check, so a failed group or action does not leave a half-applied install behind.
 - **Install *and* uninstall** — dedicated removal methods (MSI / RPM / DEB uninstall, script,
   or API).
 - **Fleet rollout** — a `FleetDeploy` task rolls a release out across the managed fleet,
@@ -86,7 +86,9 @@ guardrails — without changing the agent.
 - **Dependent-deployment control** — a task can install *and drive* another release's full
   deployment, waiting for it to finish before continuing.
 - **Device-aware installs** — per-task rules and `{placeholder}` arguments adapt one manifest
-  to many devices, including values from the device's synced config groups.
+  to many devices, including values from the device's synced config groups. A rule either
+  requires the device to match (default) or, with `OnRuleUnmet: Skip`, skips a step that doesn't
+  apply.
 - **Reboot-aware** — a task can declare that it reboots the device and resume correctly
   afterwards.
 - **Actionable status** — a structured status document with per-task progress and
@@ -124,7 +126,7 @@ See [Orchestrator](./deploy-v2-orchestrator#roadmap) for detail.
 | Max dependency depth | `DEPLOY_MAX_DEPENDENCY_DEPTH` (default `10`) |
 | Deploy log | `<logs_dir>/deployments/<catalog_id>.log` (UTF-16LE) |
 | Status document | `message_log` — JSON `{ total, completed, skipped, failed, cancelled, current, messages, advisories }` |
-| Failure model | Installs are all-or-nothing; the only `Skipped` task is a revert that wasn't needed |
+| Failure model | Installs are all-or-nothing; a task is `Skipped` only when it is a revert that wasn't needed, or its rule wasn't met with `OnRuleUnmet: Skip` |
 
 ## See also
 

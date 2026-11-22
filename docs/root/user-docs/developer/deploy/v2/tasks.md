@@ -67,7 +67,8 @@ Tasks:
     Name: install-app          # optional — label used in the log and status lines
     DeployType: MSI            # required — the method used to run it
     ExeFile: my-app.msi        # the delivered artifact to run
-    Rule: { ... }              # optional — device must satisfy this or the deploy fails
+    Rule: { ... }              # optional — the device must satisfy this, else OnRuleUnmet decides
+    OnRuleUnmet: Skip          # optional — Fail (default) fails the deploy; Skip skips this task
     Arguments: "/qn PORT=8080" # optional — CLI arguments, may contain {placeholders}
     Weight: 60                 # optional — relative share of the progress bar
     LaunchTimeoutSec: 60       # optional — seconds allowed to start the process
@@ -125,7 +126,8 @@ future way to source a component beyond uploading a file — see
 | `ReleaseId` | Deploy, FleetDeploy | The release whose action a `Deploy/v2` runs on this device or a `FleetDeploy/v2` runs across the fleet. Optional — omitted (or equal to the manifest's own) means **this release**. The all-caps `ReleaseID` spelling is also accepted. |
 | `Action` | Deploy, FleetDeploy | The [lifecycle action](./deploy-v2-lifecycle-actions) of the target release to run (e.g. `install`, `restart`, `uninstall`). Omitted means `install` — deprecated, always set it. |
 | `Tasks` | all | A nested list of child tasks this task binds and awaits (see [Orchestrator](./deploy-v2-orchestrator)). |
-| `Rule` | all | A rule-engine condition evaluated on the device right before the task runs. YAML object or inline JSON string. |
+| `Rule` | all | A rule-engine condition evaluated on the device right before the task runs. YAML object or inline JSON string. When it is not met, `OnRuleUnmet` decides what happens. |
+| `OnRuleUnmet` | all except FleetDeploy | What a `Rule` that is not met does: `Fail` (default) fails the task and the deploy; `Skip` skips the task and all its children, and the deploy continues. See [Skipping a task by rule](#skipping-a-task-by-rule). |
 | `Arguments` | Execute, Revert | A single CLI argument string for the process. May contain `{placeholders}`. |
 | `Message` | Verification (SSE) | The expected object a stream frame must match to pass; string values may be `{placeholders}`. |
 | `Method` | Execute/Verification (API) | HTTP method for an API call (default `GET`). |
@@ -194,7 +196,14 @@ flowchart LR
 
 A `Verification` or `Revert` only makes sense when it has something to act on — see
 [Action](./deploy-v2-action) for what triggers each and how nesting works. Validation checks this within
-each `Tasks` list and reports the offending **chain path** (e.g. `Task[1.0.2]`).
+each `Tasks` list and reports the offending **chain path** (e.g. `Task[1.0.2]`):
+
+- A `Verification` or `Revert` must follow a **step** in the same list — an `Execute`, `Deploy`,
+  `FleetDeploy`, or `Group` sibling — or be a child of a task that runs its own handler (an `Execute`).
+- The rule is the same at every level, so an action's own task list may end in a `Verification` /
+  `Revert` that covers the whole action.
+- A `Verification` or `Revert` that is first in its list, at the top level or directly inside a
+  `Group`, is rejected — there is nothing before it to act on.
 
 ### Requirements checklist
 
@@ -210,8 +219,45 @@ For a manifest to deploy successfully on a device:
       task has a nested `Verification`
 - [ ] Every `Deploy/v2` target action exists; another release is a registered dependency of its
       parent, ready, and ships its own `install.yaml`
-- [ ] Every task's `Rule` passes on the target device, and every `{placeholder}` resolves to a
-      value that fits its slot
+- [ ] Every task's `Rule` passes on the target device (or the task sets `OnRuleUnmet: Skip`), and
+      every `{placeholder}` resolves to a value that fits its slot
+
+## Skipping a task by rule
+
+By default a task whose `Rule` is not met **fails** the deploy — the device doesn't qualify, so
+nothing half-installs. When a step simply doesn't apply to some devices, set `OnRuleUnmet: Skip`:
+
+```yaml
+Tasks:
+  - Type: Execute/v2
+    Name: install-node
+    Rule:                        # run only where node is missing or older than 14
+      conditions:                # (nodeVersion: a custom key in the device metadata)
+        and:
+          - { field: $.device.nodeVersion, operator: semver-lt, value: "14.0.0" }
+    OnRuleUnmet: Skip            # node 14+ already installed ⇒ skip this step, keep going
+    DeployType: MSI
+    ExeFile: node.msi
+  - Type: Execute/v2
+    DeployType: MSI
+    ExeFile: app.msi
+```
+
+| `OnRuleUnmet` | Rule not met → |
+|---|---|
+| `Fail` (default) | The task fails and the deploy stops. |
+| `Skip` | The task **and all its children** end `Skipped`; the deploy continues with the next task. |
+
+- A skipped task counts as complete for progress, and its status line carries the reason
+  (`… — skipped — rule not met (OnRuleUnmet: Skip): <details>`). Its children are skipped
+  silently.
+- The rule is still checked right before the task runs, so it sees the device as earlier tasks
+  left it.
+- **A rule that cannot be evaluated always fails**, whatever `OnRuleUnmet` says. This includes a
+  rule that reads a field **missing** from the device data with an operator such as `equals`.
+  Version operators (`semver-lt`, `semver-gte`, …) are the exception: they treat a missing field as
+  passing — which is why the example above runs the install when `nodeVersion` is absent.
+- `FleetDeploy` ignores `OnRuleUnmet` — its `Rule` selects the target devices.
 
 ## Placeholders — dynamic values at runtime
 

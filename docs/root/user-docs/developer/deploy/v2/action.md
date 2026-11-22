@@ -12,8 +12,8 @@ A [task's](./deploy-v2-tasks) `Type` selects the operation it performs, not a li
 | `Type` | What it does |
 |---|---|
 | `Execute/v2` | **Run a thing** — install a file, run a script, call an endpoint, or remove a package. The workhorse task. |
-| `Verification/v2` | **Check a step succeeded** — an HTTP, script, or event-stream check that *gates* its group. See [Verifying a step](#verifying-a-step). |
-| `Revert/v2` | **Undo a step** — nested cleanup that runs when the step it covers fails. See [Reverting a step](#reverting-a-step-undo). |
+| `Verification/v2` | **Check a step succeeded** — an HTTP, script, or event-stream check that *gates* its group (or the whole action). See [Verifying a step](#verifying-a-step). |
+| `Revert/v2` | **Undo a step** — cleanup that runs when a step before it fails. See [Reverting a step](#reverting-a-step-undo). |
 | `Group/v2` | **Bind child tasks** — a container that runs no installer of its own; it groups several tasks (and their verification/revert) as one unit. See [Orchestrator](./deploy-v2-orchestrator). |
 | `Deploy/v2` (alias `Action/v2`) | **Run a lifecycle action of a release** — this release's own (`Action: restart`) or a dependent release's, as a full nested Deploy V2. See [Lifecycle Actions](./deploy-v2-lifecycle-actions#from-another-task) and [Orchestrator](./deploy-v2-orchestrator). |
 | `FleetDeploy/v2` (alias `FleetAction/v2`) | **Run a lifecycle action across the managed fleet** — resolves a rule across this agent + its managed devices and runs the action on every match (self locally, remotes over the A2A mesh). See [Fleet deploy](./deploy-v2-orchestrator#fleet-deploy-across-managed-devices). |
@@ -36,8 +36,9 @@ from another task with `Type: Deploy/v2` (or `FleetDeploy/v2`) and, for example,
 
 A `Verification/v2` task checks that a step actually worked, and **gates** the group it sits
 in: the group's install is not accepted as `Done` until the check passes. Place a verification
-as the last child of a group (or as a child of an `Execute`) so it covers the install(s)
-before it.
+after the step(s) it covers — a preceding `Execute`, `Deploy`, `FleetDeploy`, or `Group` sibling in
+the same list — or as a child of an `Execute`. The rule is the same at every level, so a
+verification at the end of an action's task list verifies **the whole action**.
 
 Three check methods:
 
@@ -68,17 +69,39 @@ Three check methods:
         status: ready
 ```
 
+A verification can also check a whole action built from other actions and groups:
+
+```yaml
+Actions:
+  upgrade:
+    Tasks:
+      - Type: Deploy/v2             # run the base release's install
+        ReleaseId: ID.Base@2.0.0
+        Action: install
+      - Type: Group/v2              # then migrate
+        Tasks:
+          - Type: Execute/v2
+            DeployType: Script
+            ExeFile: migrate.ps1
+      - Type: Verification/v2       # action-level check: is the whole upgrade healthy?
+        DeployType: API
+        Target: "http://localhost/health"
+```
+
 ## Reverting a step (undo)
 
-A `Revert/v2` task **undoes the install(s) it covers** when they don't succeed — a per-step
-cleanup, not a version rollback. Place it as the last child of a group; it targets the
-preceding `Execute` sibling(s) in that group (or its actionable parent).
+A `Revert/v2` task **undoes the step(s) it covers** when they don't succeed — a per-step
+cleanup, not a version rollback. Place it as the last child of a list; it covers the preceding
+`Execute`, `Deploy`, `FleetDeploy`, or `Group` sibling(s) in that list (or its actionable parent),
+at any level — including the end of an action's task list.
 
 **When it fires:**
 
-- **Execute → Revert** (no verification between) — the revert runs only if the install failed
-- **Execute → Verification → Revert** — the revert runs only if the verification did not pass
-  (a failed install before the verification also triggers it)
+- **Step → Revert** (no verification between) — the revert runs only if a step before it failed
+- **Step → Verification → Revert** — the revert runs only if the verification did not pass
+  (a failed step before the verification also triggers it)
+
+A "step" is any `Execute`, `Deploy`, `FleetDeploy`, or `Group` sibling before the revert.
 
 **What happens:**
 
@@ -90,6 +113,15 @@ preceding `Execute` sibling(s) in that group (or its actionable parent).
 - If the covered step **succeeded** (and verified), the revert is not needed and ends
   `Skipped` — a clean deploy still reaches 100%
 - Tasks outside the group are untouched
+
+:::caution What a revert can and cannot undo
+- **After a `Deploy`** — the revert runs in *this* action; it cannot reach inside the action the
+  `Deploy` ran. Write the undo yourself (for example a cleanup script).
+- **After a `FleetDeploy`** — the revert runs on **this device only**. A failure on a remote device
+  fires the local cleanup, even when the local part succeeded.
+- **Nested reverts** — in `Group[Execute, Revert]` followed by an outer `Revert`, a failing inner
+  `Execute` fires **both** reverts: the inner one, then the outer one.
+:::
 
 ```yaml
 - Type: Group/v2
