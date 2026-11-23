@@ -10,6 +10,9 @@ Release notes for GetApp Server, Agent, and Agent UI.
 
 ## v1.6.3
 
+### Agent 
+- Abillity to change log level
+
 ### Agent UI
 - Initiate Discovery from the Agent UI on refresh
 - Redeliver from the Delivery Agent panel
