@@ -8,6 +8,22 @@ Release notes for GetApp Server, Agent, and Agent UI.
 
 ---
 
+## v1.6.3
+
+### Agent UI
+- Initiate Discovery from the Agent UI on refresh
+- Redeliver from the Delivery Agent panel
+
+### Security
+- Cosign signing and SBOM support, with UI display
+- Scheduled (cron) hash verification of files
+
+### Dashboard
+- Fix creating groups in the config map
+- Fix selecting all versions compatible with a device type
+
+---
+
 ## v1.6.2
 
 ### AppStore
