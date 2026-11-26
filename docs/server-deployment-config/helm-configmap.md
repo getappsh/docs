@@ -65,11 +65,20 @@ Only present when `airGapedEnv.enabled` (or `global.enabled`) is `true`.
 
 | Variable | Source | Description |
 |---|---|---|
-| `DASHBOARD_URL` | computed: `dashboard-<namespace>.<routeMainUrl>` | Public Dashboard URL. Used by the docs site's Dashboard link |
+| `DASHBOARD_URL` | `dashboard.url`; empty = computed `https://<getappPro.ingressHost>-<namespace>.<routeMainUrl>` (GetApp Pro), or the classic dashboard's URL when `getappPro.enabled` is `false` | Public URL of the main dashboard. Used by the docs site's Dashboard link |
+
+The link the other way, from the dashboards to this docs site, lives in the
+`dashboard-<namespace>` ConfigMap (shared by GetApp Pro and the classic dashboard), not here:
+
+| Variable | Source | Description |
+|---|---|---|
+| `DOCS_URL` / `NEXT_PUBLIC_DOCS_URL` | `docs.url`; empty = computed `https://docs-<namespace>.<routeMainUrl>` | Public docs site URL, for the dashboards' docs links |
 
 :::note
-`DASHBOARD_URL` is pending merge into the Helm chart —
-[getappsh/getapp-release-control#22](https://github.com/getappsh/getapp-release-control/pull/22).
+GetApp Pro is the main dashboard at `dashboard-<namespace>.<routeMainUrl>`; the classic
+dashboard moved to `classic-dashboard-<namespace>.<routeMainUrl>` (`dashboard.ingressHost`).
+`DOCS_URL`, the `dashboard.url` / `docs.url` overrides and the host swap are pending merge into the Helm chart —
+[getappsh/getapp-release-control#31](https://github.com/getappsh/getapp-release-control/pull/31).
 :::
 
 ## Kafka
