@@ -5,6 +5,8 @@ sidebar_label: Getting Started
 sidebar_position: 1
 ---
 
+import InstallCommand from '@site/src/components/InstallCommand';
+
 # Getting Started
 
 Install the GetApp **Agent** and **Agent UI** on a device, and confirm it shows up connected
@@ -22,6 +24,31 @@ on the server.
 For now, download both installers from the **Catalog → Applications** tab in the Admin
 dashboard — see [Catalog Overview](./user-docs/admin/catalog/catalog-overview). *(Direct download
 links will be added here later.)*
+
+---
+
+## Linux — RPM
+
+### 1. Download
+
+Download the `.rpm` from **Catalog → Applications** (see [Download](#download) — direct links
+coming later).
+
+### 2. Install — Agent
+
+<InstallCommand envKey="INSTALL_CMD_RPM_AGENT" language="bash">{`sudo env GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh \\
+    GETAPP_GATEWAY_PORT=2220 \\
+    dnf install -y ./GetAppAgent-Services-x.y.z.rpm`}</InstallCommand>
+
+Recommended extras — `DEVICE_ID`, `DEVICE_TYPE_TOKEN`, `SECURE_TLS` (see the table under
+[Windows — MSI](#recommended-extras-silent-install-only)). On Linux these are individual
+`GETAPP_KEY=value` vars, prefix stripped into `.env`, e.g. `GETAPP_DEVICE_ID=field-tablet-07`.
+
+### Agent UI
+
+<InstallCommand envKey="INSTALL_CMD_RPM_UI" language="bash">{`sudo dnf install -y ./GetAppAgent-UI-x.y.z.rpm`}</InstallCommand>
+
+Just installs — no host or config needed; it talks to the local Agent's API.
 
 ---
 
@@ -57,11 +84,9 @@ install:
 | `DEVICE_TYPE_TOKEN` | Categorizes the device (default is just `agent`) — set it to something meaningful, e.g. `field-tablet` |
 | `SECURE_TLS=false` | Disables TLS verification — for self-signed certs or a local test server only |
 
-```powershell
-msiexec /i GetAppAgent-Services-x.y.z-x86_64.msi /qn `
-    GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh `
-    GETAPP_EXTRA_VARS="DEVICE_ID=field-tablet-07;DEVICE_TYPE_TOKEN=field-tablet;SECURE_TLS=false"
-```
+<InstallCommand envKey="INSTALL_CMD_MSI_AGENT" language="powershell">{`msiexec /i GetAppAgent-Services-x.y.z-x86_64.msi /qn \`
+    GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh \`
+    GETAPP_EXTRA_VARS="DEVICE_ID=field-tablet-07;DEVICE_TYPE_TOKEN=field-tablet;SECURE_TLS=false"`}</InstallCommand>
 
 Full property and env-var reference: [Package Bundles](./technician/agent/deployment/package-bundles),
 [Environment Variables (.env)](/docs/agent-envs/env-file).
@@ -70,44 +95,6 @@ Full property and env-var reference: [Package Bundles](./technician/agent/deploy
 
 Run the Agent UI `.msi` — Welcome → Install Directory → Install. No settings to configure; it
 talks to the Agent installed on the same device.
-
----
-
-## Linux — RPM
-
-### 1. Download
-
-Download the `.rpm` from **Catalog → Applications** (same as above — direct links coming
-later).
-
-### 2. Install — Agent
-
-```bash
-# Default — host and port only
-sudo env GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh \
-    GETAPP_GATEWAY_PORT=2220 \
-    dnf install -y ./GetAppAgent-Services-x.y.z.rpm
-```
-
-Recommended, with the same extras as the MSI (on Linux these are individual `GETAPP_KEY=value`
-vars, prefix stripped into `.env`):
-
-```bash
-sudo env GETAPP_BASE_URL=https://api-getapp-dev.apps.getapp.sh \
-    GETAPP_GATEWAY_PORT=2220 \
-    GETAPP_DEVICE_ID=field-tablet-07 \
-    GETAPP_DEVICE_TYPE_TOKEN=field-tablet \
-    GETAPP_SECURE_TLS=false \
-    dnf install -y ./GetAppAgent-Services-x.y.z.rpm
-```
-
-### Agent UI
-
-```bash
-sudo dnf install -y ./GetAppAgent-UI-x.y.z.rpm
-```
-
-Just installs — no host or config needed; it talks to the local Agent's API.
 
 ---
 
