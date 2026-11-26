@@ -11,6 +11,15 @@ import { themes as prismThemes } from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'GetApp Developer Site',
+  customFields: {
+    // Full install commands for Getting Started, from .env or the shell at build/start time.
+    // Docker runtime config (window.__RUNTIME_CONFIG__) wins over these when set.
+    installCommands: {
+      INSTALL_CMD_RPM_AGENT: process.env.INSTALL_CMD_RPM_AGENT || '',
+      INSTALL_CMD_RPM_UI: process.env.INSTALL_CMD_RPM_UI || '',
+      INSTALL_CMD_MSI_AGENT: process.env.INSTALL_CMD_MSI_AGENT || '',
+    },
+  },
   tagline: 'Managed Digital Assets',
   favicon: 'img/logo.svg',
 
