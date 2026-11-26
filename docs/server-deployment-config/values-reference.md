@@ -27,7 +27,7 @@ via its own comments; this page mirrors that.
 | `nameSpace` | `getapp-global` | **Deprecated** — no effect, the chart uses the Helm release namespace |
 | `getappRelease` | e.g. `1.4.33-getapp-maalot-1.2` | Overall release version label (surfaced as `getappRelease` on every resource) |
 | `repository` | `harbor.getapp.sh/getapp-dev/` | Image registry prefix for all first-party images |
-| `tag.*` | per-service | Image tag for each service: `api`, `delivery`, `deploy`, `discovery`, `offering`, `projectmanagment`, `upload`, `dashboard`, `getmap`, `docs`, `sbomgenerator`, `agentWatch`, `dashboardGetmap` |
+| `tag.*` | per-service | Image tag for each service: `api`, `delivery`, `deploy`, `discovery`, `offering`, `projectmanagment`, `upload`, `dashboard`, `getappPro`, `getmap`, `docs`, `sbomgenerator`, `agentWatch`, `dashboardGetmap` |
 | `image.pullPolicy` | `IfNotPresent` | Pull policy applied to first-party images |
 
 ## [B] Air-gapped & OpenShift
@@ -73,6 +73,9 @@ like everything else — set `<service>.image.repository` to pull from elsewhere
 | `agentWatch.enabled` | `false` | Deploy the Agent Watch microservice (monitors/manages agents) |
 | `dashboardGetmap.enabled` | `false` | Deploy the Dashboard GetMap frontend |
 | `docs.enabled` | `true` | Deploy this docs site |
+| `docs.url` | `""` | Public docs URL given to the dashboards as `DOCS_URL`. Empty = `https://docs-<namespace>.<routeMainUrl>` |
+| `getappPro.enabled` | `true` | Deploy GetApp Pro, the main dashboard (only when `deploymentMode` is `getapp` or `both`) |
+| `getappPro.ingressHost` | `dashboard` | Host prefix of GetApp Pro: `https://<ingressHost>-<namespace>.<routeMainUrl>` |
 | `sbomGenerator.enabled` | `true` | Deploy the SBOM Generator (only when `deploymentMode` is `getapp` or `both`) |
 
 ## [E] ConfigMap values
@@ -84,8 +87,12 @@ service-specific and previously undocumented:
 
 ### `dashboard` → `configmap-dashboard.yaml`
 
+Shared by the classic dashboard and GetApp Pro (GetApp Pro overrides only `NEXTAUTH_URL`).
+
 | Key | Description |
 |---|---|
+| `ingressHost` | Host prefix of the classic dashboard (default `classic-dashboard`): `https://<ingressHost>-<namespace>.<routeMainUrl>` |
+| `url` | Public URL of the main dashboard, given to the docs site as `DASHBOARD_URL`. Empty = GetApp Pro's URL (the classic dashboard's when `getappPro.enabled` is `false`) |
 | `nextauthSecret` | NextAuth.js signing secret — **change in production** |
 | `sessionMaxAge` | Session max age, seconds (default `1800` = 30 min) |
 | `probes.enabled` | Adds a readinessProbe hitting `/` on port 3002 |
@@ -157,7 +164,7 @@ The largest of the service-specific blocks (~35 keys). Grouped by what it config
 | `ingress.annotations` | — | nginx-ingress annotations applied to every Ingress (SSL redirect, proxy buffer sizes, timeouts, ...) |
 | `hpa.enabled` | `false` | Global HPA switch — must be `true` **and** the per-service switch below to actually enable autoscaling for that service |
 | `hpa.<service>.*` | `enabled: false`, `minReplicas: 1`, `maxReplicas: 10`, `cpuUtilization: 70`, `memoryUtilization: 70` | Per-service HPA, for: `api`, `delivery`, `deploy`, `discovery`, `getmap`, `offering`, `projectManagement`, `sbomGenerator`, `upload` |
-| `globalDashboard.*` | — | Separate "getapp-pro" global dashboard app: `enabled`, `image.{name,tag}`, `nextauthSecret`, `sessionMaxAge`, `demoMode`, `adminEmail`/`adminPassword`, `nodeTlsRejectUnauthorized`, `basePath`, `nextauthUrl`, `publicIssuer`, `issuer`, `resources` |
+| `getappPro.*` | — | GetApp Pro, the main dashboard: `enabled`, `ingressHost`, `probes.enabled`, `resources`. Image tag is `tag.getappPro`. See also [Other GetApp services](#d-other-getapp-services) |
 
 ## See also
 

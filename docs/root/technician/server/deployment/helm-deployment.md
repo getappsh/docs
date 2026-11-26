@@ -325,7 +325,8 @@ URL pattern: `https://<service>-<namespace>.<routeMainUrl>`.
 |---|---|---|
 | API Gateway / Swagger | All modes | `api-{ns}.{domain}` / `api-{ns}.{domain}/docs/` |
 | Documentation | All modes | `docs-{ns}.{domain}` |
-| Dashboard | `getapp` / `both` | `dashboard-{ns}.{domain}` |
+| Dashboard (GetApp Pro) | `getapp` / `both` | `dashboard-{ns}.{domain}` |
+| Classic Dashboard | `getapp` / `both` | `classic-dashboard-{ns}.{domain}` |
 | Agent Watch | `getapp` / `both`, if enabled | `agent-watch-{ns}.{domain}` |
 | GetMap Node | `getmap` / `both` | via API Gateway |
 | Dashboard GetMap | `getmap` / `both`, if enabled | `dashboard-getmap-{ns}.{domain}` |
